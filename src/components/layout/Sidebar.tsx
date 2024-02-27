@@ -1,5 +1,6 @@
 import { TUser, useCurrentToken } from "@/redux/features/auth/authSlice";
 import { useAppSelector } from "@/redux/hooks";
+import { adminPaths } from "@/routes/admin.routes";
 import { buyerPaths } from "@/routes/buyer.routes";
 import { sellerPaths } from "@/routes/seller.routes";
 import { sidebarItemsGenerator } from "@/utils/sidebarItemsGenerator";
@@ -8,6 +9,7 @@ import { Layout, Menu } from "antd";
 const { Sider } = Layout;
 
 const userRole = {
+  ADMIN: "admin",
   SELLER: "seller",
   BUYER: "buyer",
 };
@@ -22,6 +24,10 @@ const Sidebar = () => {
   let sidebarItems;
 
   switch ((user as TUser)?.role) {
+    case userRole.ADMIN:
+      sidebarItems = sidebarItemsGenerator(adminPaths, userRole.ADMIN);
+      break;
+
     case userRole.SELLER:
       sidebarItems = sidebarItemsGenerator(sellerPaths, userRole.SELLER);
       break;

@@ -6,11 +6,21 @@ import { routeGenerator } from "@/utils/routesGenerator";
 import { sellerPaths } from "./seller.routes";
 import { buyerPaths } from "./buyer.routes";
 import ProtectedRoute from "@/components/layout/ProtectedRoute";
+import { adminPaths } from "./admin.routes";
 
 const router = createBrowserRouter([
   {
     path: "/",
     element: <App />,
+  },
+  {
+    path: "/admin",
+    element: (
+      <ProtectedRoute role="admin">
+        <App />
+      </ProtectedRoute>
+    ),
+    children: routeGenerator(adminPaths),
   },
   {
     path: "/seller",

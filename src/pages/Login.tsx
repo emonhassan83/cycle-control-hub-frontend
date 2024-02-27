@@ -38,6 +38,10 @@ const Login = () => {
       const userRole = res?.data?.user?.role;
       
       //* Navigate user based on user role
+      if (userRole === 'admin') {
+        navigate(`/${userRole}/dashboard`);
+      }
+
       if (userRole === 'seller') {
         navigate(`/${userRole}/view-sales-bike`);
       }
