@@ -1,15 +1,11 @@
-import {
-  useDeleteBikeMutation,
-  useGetSellerBikesQuery,
-} from "../../redux/features/bikeManagement/bikeManagementApi";
-import { Button, Pagination, Table, TableColumnsType, TableProps } from "antd";
-import BikeUpdateDialog from "@/components/dialog/BikeUpdateDialog";
-import { useNavigate } from "react-router-dom";
-import { useAppDispatch } from "@/redux/hooks";
-import { setBike } from "@/redux/features/bikeManagement/bikeSlice";
-import { toast } from "sonner";
+import { selectCurrentUser } from "@/redux/features/auth/authSlice";
+import { useGetBikesQuery } from "@/redux/features/bikeManagement/bikeManagementApi";
+import { usePurchaseBikesMutation } from "@/redux/features/salesManagement/salesManagementApi";
+import { useAppSelector } from "@/redux/hooks";
 import { TBike, TQueryParam } from "@/types";
+import { Button, Pagination, Table, TableColumnsType, TableProps } from "antd";
 import { useState } from "react";
+import { toast } from "sonner";
 
 export type TTableData = Pick<
   TBike,
@@ -27,36 +23,33 @@ export type TTableData = Pick<
   | "manufacturerCountry"
 >;
 
-const ViewBikes = () => {
+const PurchasesBike = () => {
   const [params, setParams] = useState<TQueryParam[]>([]);
   const [page, setPage] = useState(1);
-  const {
-    data: bikeData,
-    isFetching,
-    isLoading,
-  } = useGetSellerBikesQuery([{ name: "page", value: page }, ...params]);
-  const [deleteBike] = useDeleteBikeMutation();
-  const dispatch = useAppDispatch();
-  const navigate = useNavigate();
+  const user = useAppSelector(selectCurrentUser);
+  const { data: bikeData,isFetching, isLoading } = useGetBikesQuery([{ name: "page", value: page }, ...params]);
+  const [purchaseBikes] = usePurchaseBikesMutation();
 
   const metaData = bikeData?.meta;
-
-  const handleCreateVariant = (bike: TBike) => {
-    //* set bike credentials in state
-    dispatch(setBike(bike));
-    navigate("/bike-management/add-a-bike");
-  };
-
-  const handleDeleteBike = (id: string) => {
-    const toastId = toast.loading("Try to delete bike in database!");
+  
+  const handlePurchaseBike = (id: string, seller:any) => {
+    const toastId = toast.loading("Bike purchase in!");
+    
     try {
-      // * delete bike into database
-      deleteBike(id);
+      const bikePurchaseInfo = {
+        buyerName:  (user as { username?: string })?.username,
+        buyerEmail: user?.email,
+        phoneNumber: 1234567890,
+        seller: seller._id,
+        bike: id,
+        buyingDate: new Date().toISOString(),
+        isConfirmed: false
+      };
+      
+      //* Purchase bike from database
+      purchaseBikes(bikePurchaseInfo);
 
-      toast.success("Delete bike in database successfully!", {
-        id: toastId,
-        duration: 3000,
-      });
+      toast.success("Bike purchase successfully!", { id: toastId, duration: 2000 });
     } catch (error: any) {
       toast.error(error.message, { id: toastId });
     }
@@ -89,7 +82,7 @@ const ViewBikes = () => {
       type,
       size,
       color,
-      seller: seller.username as string,
+      seller: seller,
       frameMaterial,
       suspensionType,
       manufacturerCountry,
@@ -100,6 +93,12 @@ const ViewBikes = () => {
     {
       title: "Product",
       dataIndex: "productName",
+    },
+    {
+      title: "Product Image",
+      dataIndex: "productImage",
+      key: "x1",
+      render: (productImage: string) => <img src={productImage} alt="Bike" style={{ width: 50, height: 50 }} />,
     },
     {
       title: "Quantity",
@@ -177,42 +176,17 @@ const ViewBikes = () => {
     },
     {
       title: "Action",
-      key: "x1",
-      render: (item) => {
-        return (
-          <div>
-            <Button onClick={() => handleCreateVariant(item)} size="small">
-              Create Variant
-            </Button>
-          </div>
-        );
-      },
-    },
-    {
-      title: "Action",
-      key: "x2",
-      render: (item) => {
-        return (
-          <div>
-            <BikeUpdateDialog bike={item} />
-          </div>
-        );
-      },
-    },
-    {
-      title: "Action",
       key: "x3",
       render: (item) => {
         return (
           <div>
             <Button
-              danger
-              onClick={() => handleDeleteBike(item.key)}
+              onClick={() => handlePurchaseBike(item.key, item.seller)}
               type="link"
               size="small"
               style={{ fontSize: "12px", fontWeight: "600" }}
             >
-              Delete
+              Buy Now
             </Button>
           </div>
         );
@@ -228,7 +202,7 @@ const ViewBikes = () => {
   ) => {
     if (extra.action === "filter") {
       const queryParams: TQueryParam[] = [];
-
+     
       filters?.type?.forEach((item) =>
         queryParams.push({ name: "type", value: item })
       );
@@ -241,17 +215,16 @@ const ViewBikes = () => {
         queryParams.push({ name: "size", value: item })
       );
 
-      //* set params array for filter
-      setParams(queryParams);
-    }
-    if (isLoading) {
-      return <p>Loading...</p>;
-    }
-  };
-
+    //* set params array for filter
+    setParams(queryParams); 
+  }
+  if (isLoading) {
+    return <p>Loading...</p>;
+  }
+}
+  
   return (
     <>
-    <h1 className="text-xs font-semibold text-red-500 text-center mb-6">*Warning: You can only update, delete and create-variant your bike where you can't not modify other bikes in Database*</h1>
       <Table
         loading={isFetching}
         columns={columns}
@@ -267,7 +240,7 @@ const ViewBikes = () => {
         total={metaData?.total}
       />
     </>
-  );
+    );
 };
 
-export default ViewBikes;
+export default PurchasesBike;

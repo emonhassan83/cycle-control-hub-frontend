@@ -5,14 +5,20 @@ import { useState } from "react";
 
 export type TTableData = Pick<TPurchaseBike, "buyerName">;
 
-const PurchaseBikes = () => {
+const PurchasesHistory= () => {
   const [page, setPage] = useState(1);
-  const { data: bikeData, isLoading, isFetching } = useGetSellerPurchaseBikesQuery([{ name: "page", value: page }]);
-  const confirmedBikes = bikeData?.data?.filter((bike: any) => bike.isConfirmed);
+  const {
+    data: bikeData,
+    isLoading,
+    isFetching,
+  } = useGetSellerPurchaseBikesQuery([{ name: "page", value: page }]);
+  const confirmedBikes = bikeData?.data?.filter(
+    (bike: any) => bike.isConfirmed
+  );
 
   const metaData = bikeData?.meta;
 
-  const tableData = confirmedBikes?.map(({ _id,buyerName, seller, bike }) => ({
+  const tableData = confirmedBikes?.map(({ _id, buyerName, seller, bike }) => ({
     key: _id,
     buyerName,
     sellerName: seller.username,
@@ -32,7 +38,9 @@ const PurchaseBikes = () => {
       title: "Product Image",
       dataIndex: "productImage",
       key: "x1",
-      render: (productImage: string) => <img src={productImage} alt="Bike" style={{ width: 50, height: 50 }} />,
+      render: (productImage: string) => (
+        <img src={productImage} alt="Bike" style={{ width: 50, height: 50 }} />
+      ),
     },
     {
       title: "Bike Model",
@@ -62,7 +70,7 @@ const PurchaseBikes = () => {
           </div>
         );
       },
-    }
+    },
   ];
 
   const onChange: TableProps<TTableData>["onChange"] = (
@@ -77,25 +85,25 @@ const PurchaseBikes = () => {
       return <p>Loading...</p>;
     }
   };
-  
+
   return (
     <>
-    <Table
-      loading={isFetching}
-      columns={columns}
-      dataSource={tableData}
-      onChange={onChange}
-      pagination={false}
-    />
-    <Pagination
-      style={{ marginTop: "20px" }}
-      current={page}
-      onChange={(value) => setPage(value)}
-      pageSize={metaData?.limit}
-      total={metaData?.total}
-    />
-  </>
+      <Table
+        loading={isFetching}
+        columns={columns}
+        dataSource={tableData}
+        onChange={onChange}
+        pagination={false}
+      />
+      <Pagination
+        style={{ marginTop: "20px" }}
+        current={page}
+        onChange={(value) => setPage(value)}
+        pageSize={metaData?.limit}
+        total={metaData?.total}
+      />
+    </>
   );
 };
 
-export default PurchaseBikes;
+export default PurchasesHistory;

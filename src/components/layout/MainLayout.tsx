@@ -6,7 +6,7 @@ import { useAppDispatch } from "../../redux/hooks";
 import { logout } from "../../redux/features/auth/authSlice";
 import { toast } from "sonner";
 import { sidebarItemsGenerator } from "@/utils/sidebarItemsGenerator";
-import { sellerPaths } from "@/routes/bikeManagement.routes";
+import { sellerPaths } from "@/routes/seller.routes";
 
 const { Header, Content, Footer, Sider } = Layout;
 

@@ -15,7 +15,7 @@ const bikeManagementPaths = [
             {
               name: "View bikes",
               path: "view-bikes",
-              element: "<ViewBikes />",
+              element: "<ViewMyBikes />",
             },
             {
               name: "Sales History",

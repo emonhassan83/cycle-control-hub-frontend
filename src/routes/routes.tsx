@@ -3,11 +3,8 @@ import App from "../App";
 import Login from "../pages/Login";
 import SignUp from "../pages/SignUp";
 import { routeGenerator } from "@/utils/routesGenerator";
-import { sellerPaths } from "./bikeManagement.routes";
-import { buyerPaths } from "./salesManagement.routes";
-// import { bikeManagementRoutes } from "./bikeManagement.routes";
-// import { salesManagementRoutes } from "./salesManagement.routes";
-// import { salesManagementPaths } from "./salesManagement.routes";
+import { sellerPaths } from "./seller.routes";
+import { buyerPaths } from "./buyer.routes";
 
 const router = createBrowserRouter([
   {

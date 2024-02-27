@@ -1,6 +1,5 @@
 import BikeCard from "@/components/card/BikeCard";
 import { useGetSalesBikesQuery } from "@/redux/features/bikeManagement/bikeManagementApi";
-// import { TQueryParam } from "@/types";
 import { Pagination, Row } from "antd";
 import { Input } from 'antd';
 import { SearchProps } from "antd/es/input";
@@ -8,7 +7,6 @@ const { Search } = Input;
 import { useState } from "react";
 
 const ViewSalesBikes = () => {
-  // const [params, setParams] = useState<TQueryParam[]>([]);
   const [page, setPage] = useState(1);
   const [searchTerm, setSearchTerm] = useState("");
   

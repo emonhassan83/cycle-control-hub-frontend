@@ -10,7 +10,7 @@ import { toast } from "sonner";
 
 export type TTableData = Pick<TPurchaseBike, "isConfirmed">;
 
-const BuyBikes = () => {
+const ConfirmPurchase = () => {
   const [page, setPage] = useState(1);
   const {
     data: bikeData,
@@ -159,4 +159,4 @@ const BuyBikes = () => {
   );
 };
 
-export default BuyBikes;
+export default ConfirmPurchase;
