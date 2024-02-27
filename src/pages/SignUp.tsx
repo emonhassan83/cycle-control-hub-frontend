@@ -50,11 +50,20 @@ const SignUp = () => {
         role: data.role,
       };
 
-      // Save to db and wait for the response
-      const response = await saveUser(saveUserInfo).unwrap();
-      dispatch(setUser({ user: user, token: response.data.token }));
+      //* Save to db and wait for the response
+      const res = await saveUser(saveUserInfo).unwrap();
+      dispatch(setUser({ user: user, token: res.data.token }));
 
-      navigate("/bike-management/view-all-sales-bike");
+      const userRole = res?.data?.user?.role;
+
+      //* Navigate user based on user role
+      if (userRole === 'seller') {
+        navigate(`/${userRole}/view-sales-bike`);
+      }
+
+      if (userRole === 'buyer') {
+        navigate(`/${userRole}/available-bikes`);
+      }
 
       toast.success("User sign up successfully!", {
         id: toastId,

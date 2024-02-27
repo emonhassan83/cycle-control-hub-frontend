@@ -1,14 +1,11 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
-import { Button, Layout, Menu } from "antd";
+import { Button, Layout } from "antd";
+const { Header, Content, Footer } = Layout;
 import { Outlet } from "react-router-dom";
-// import { bikeManagementSidebarItems } from "../../routes/bikeManagement.routes";
 import { useAppDispatch } from "../../redux/hooks";
 import { logout } from "../../redux/features/auth/authSlice";
 import { toast } from "sonner";
-import { sidebarItemsGenerator } from "@/utils/sidebarItemsGenerator";
-import { sellerPaths } from "@/routes/seller.routes";
-
-const { Header, Content, Footer, Sider } = Layout;
+import Sidebar from "./Sidebar";
 
 const MainLayout = () => {
   const dispatch = useAppDispatch();
@@ -20,36 +17,7 @@ const MainLayout = () => {
 
   return (
     <Layout style={{ minHeight: "100vh" }}>
-      <Sider
-        breakpoint="lg"
-        collapsedWidth="0"
-        onBreakpoint={(broken) => {
-          console.log(broken);
-        }}
-        onCollapse={(collapsed, type) => {
-          console.log(collapsed, type);
-        }}
-      >
-        <div
-          style={{
-            color: "white",
-            fontSize: "12px",
-            textAlign: "center",
-            height: "3rem",
-            display: "flex",
-            justifyItems: "center",
-            alignItems: "center",
-          }}
-        >
-          <h1>CYCLE CONTROL HUB</h1>
-        </div>
-        <Menu
-          theme="dark"
-          mode="inline"
-          defaultSelectedKeys={["4"]}
-          items={sidebarItemsGenerator(sellerPaths, "seller")}
-        />
-      </Sider>
+      <Sidebar/>
       <Layout>
         <Header
           style={{

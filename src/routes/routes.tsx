@@ -5,6 +5,7 @@ import SignUp from "../pages/SignUp";
 import { routeGenerator } from "@/utils/routesGenerator";
 import { sellerPaths } from "./seller.routes";
 import { buyerPaths } from "./buyer.routes";
+import ProtectedRoute from "@/components/layout/ProtectedRoute";
 
 const router = createBrowserRouter([
   {
@@ -13,12 +14,20 @@ const router = createBrowserRouter([
   },
   {
     path: "/seller",
-    element: <App />,
+    element: (
+      <ProtectedRoute role="seller">
+        <App />
+      </ProtectedRoute>
+    ),
     children: routeGenerator(sellerPaths),
   },
   {
     path: "/buyer",
-    element: <App />,
+    element: (
+      <ProtectedRoute role="buyer">
+        <App />
+      </ProtectedRoute>
+    ),
     children: routeGenerator(buyerPaths),
   },
   {

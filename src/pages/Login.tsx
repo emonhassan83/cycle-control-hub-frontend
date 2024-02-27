@@ -18,8 +18,8 @@ const Login = () => {
   const [login, { data }] = useLoginMutation();
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
-
-  console.log("data =>", data);
+  
+  console.log("Login User Data:", data);
 
   const onSubmit = async (data: FieldValues) => {
     const toastId = toast.loading("Login in!");
@@ -34,7 +34,17 @@ const Login = () => {
       const res = await login(userInfo).unwrap();
       // * set user credentials in state
       dispatch(setUser({ user: res?.data?.user, token: res?.data?.token }));
-      navigate("/bike-management/view-all-sales-bike");
+      
+      const userRole = res?.data?.user?.role;
+      
+      //* Navigate user based on user role
+      if (userRole === 'seller') {
+        navigate(`/${userRole}/view-sales-bike`);
+      }
+
+      if (userRole === 'buyer') {
+        navigate(`/${userRole}/available-bikes`);
+      }
 
       toast.success("Login in successfully!", { id: toastId, duration: 2000 });
     } catch (error: any) {
