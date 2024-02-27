@@ -2,8 +2,11 @@ import { createBrowserRouter } from "react-router-dom";
 import App from "../App";
 import Login from "../pages/Login";
 import SignUp from "../pages/SignUp";
-import { bikeManagementRoutes } from "./bikeManagement.routes";
-import { salesManagementRoutes } from "./salesManagement.routes";
+import { routeGenerator } from "@/utils/routesGenerator";
+import { sellerPaths } from "./bikeManagement.routes";
+import { buyerPaths } from "./salesManagement.routes";
+// import { bikeManagementRoutes } from "./bikeManagement.routes";
+// import { salesManagementRoutes } from "./salesManagement.routes";
 // import { salesManagementPaths } from "./salesManagement.routes";
 
 const router = createBrowserRouter([
@@ -12,14 +15,14 @@ const router = createBrowserRouter([
     element: <App />,
   },
   {
-    path: "/bike-management",
+    path: "/seller",
     element: <App />,
-    children: bikeManagementRoutes,
+    children: routeGenerator(sellerPaths),
   },
   {
-    path: "/sales-management",
+    path: "/buyer",
     element: <App />,
-    children: salesManagementRoutes,
+    children: routeGenerator(buyerPaths),
   },
   {
     path: "/login",

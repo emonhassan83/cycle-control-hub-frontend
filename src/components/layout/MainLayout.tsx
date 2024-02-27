@@ -1,51 +1,14 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import { Button, Layout, Menu } from "antd";
 import { Outlet } from "react-router-dom";
-import { bikeManagementSidebarItems } from "../../routes/bikeManagement.routes";
+// import { bikeManagementSidebarItems } from "../../routes/bikeManagement.routes";
 import { useAppDispatch } from "../../redux/hooks";
 import { logout } from "../../redux/features/auth/authSlice";
 import { toast } from "sonner";
+import { sidebarItemsGenerator } from "@/utils/sidebarItemsGenerator";
+import { sellerPaths } from "@/routes/bikeManagement.routes";
 
 const { Header, Content, Footer, Sider } = Layout;
-
-// const items: MenuProps["items"] = [
-//   {
-//     key: 'Dashboard',
-//     label: <NavLink to="/bike-management/dashboard">Dashboard</NavLink>
-//   },
-//   {
-//     key: 'Bike Management',
-//     label: 'Bike Management',
-//     children: [
-//       {
-//         key: 'Add a bike',
-//         label: <NavLink to="/bike-management/add-a-bike">Add a new bike</NavLink>,
-//       },
-//       {
-//         key: 'View bikes',
-//         label: <NavLink to="/bike-management/view-bikes">View bikes</NavLink>,
-//       },
-//       {
-//         key: 'Sales History',
-//         label: <NavLink to="/bike-management/sales-history">Sales History</NavLink>,
-//       },
-//     ]
-//   },
-//   {
-//     key: 'Sales Management',
-//     label: 'Sales Management',
-//     children: [
-//       {
-//         key: 'Buy bikes',
-//         label: <NavLink to="/sales-management/buy-bikes">Buy bikes</NavLink>
-//       },
-//       {
-//         key: 'Purchase History',
-//         label: <NavLink to="/sales-management/purchase-history">Purchase History</NavLink>
-//       }
-//     ]
-//   },
-// ]
 
 const MainLayout = () => {
   const dispatch = useAppDispatch();
@@ -84,7 +47,7 @@ const MainLayout = () => {
           theme="dark"
           mode="inline"
           defaultSelectedKeys={["4"]}
-          items={bikeManagementSidebarItems}
+          items={sidebarItemsGenerator(sellerPaths, "seller")}
         />
       </Sider>
       <Layout>

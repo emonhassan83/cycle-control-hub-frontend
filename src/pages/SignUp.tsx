@@ -8,21 +8,26 @@ import { Link, useNavigate } from "react-router-dom";
 import { toast } from "sonner";
 import ReusableInput from "../components/form/ReusableInput";
 import ReusableForm from "../components/form/ReusableForm";
+import ReusableSelect from "@/components/form/ReusableSelect";
 
 const SignUp = () => {
-  // const { register, handleSubmit } = useForm({
-  //   defaultValues: {
-  //     username: "susan_anderson",
-  //     email: "susan.anderson@example.com",
-  //     password: "user123",
-  //   },
-  // });
-
   const defaultValues = {
     username: "susan_anderson",
     email: "susan.anderson@example.com",
     password: "user123",
+    role: "seller"
   };
+
+  const userRoleOptions = [
+    {
+      value: "seller",
+      label: "seller",
+    },
+    {
+      value: "buyer",
+      label: "buyer",
+    },
+  ]
 
   const [saveUser] = useSaveUserMutation();
   const dispatch = useAppDispatch();
@@ -36,7 +41,7 @@ const SignUp = () => {
         username: data.username,
         email: data.email,
         password: data.password,
-        role: "user",
+        role: data.role,
       };
 
       const user = {
@@ -76,10 +81,9 @@ const SignUp = () => {
       >
         <ReusableForm onSubmit={onSubmit} defaultValues={defaultValues}>
           <ReusableInput type="text" name="username" label="User Name" />
-
           <ReusableInput type="email" name="email" label="Email" />
-
           <ReusableInput type="password" name="password" label="Password" />
+          <ReusableSelect name="role" options={userRoleOptions} label="Choose Role" />
           <p>
             <small>
               Already have an account? <Link to="/login">Login</Link>
