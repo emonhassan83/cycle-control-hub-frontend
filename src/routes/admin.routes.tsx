@@ -1,29 +1,41 @@
 import AdminDashboard from "@/pages/admin/AdminDashboard";
+import AllServicesStatus from "@/pages/admin/AllServicesStatus";
+import CouponManagement from "@/pages/admin/CouponManagement";
 import CreateCoupon from "@/pages/admin/CreateCoupon";
-import ConfirmPurchase from "@/pages/buyerManagement/ConfirmPurchase";
-import PurchasesHistory from "@/pages/buyerManagement/PurchaseHistory";
 import RequestMaintenance from "@/pages/buyerManagement/RequestMaintenance";
-import ServiceHistory from "@/pages/buyerManagement/ServiceHistory";
+import ViewAllBikes from "@/pages/buyerManagement/ViewAllBikes";
+import AddABike from "@/pages/sellerManagement/AddABike";
+import SalesHistory from "@/pages/sellerManagement/SalesHistory";
+import ViewSalesBikes from "@/pages/sellerManagement/ViewSalesBikes";
 
-//! TODO: Add related components in admin dashboard
 export const adminPaths = [
   {
     name: "Dashboard",
-    path: "dashboard",
+    path: "admin-dashboard",
     element: <AdminDashboard />,
   },
   {
     name: "Bike Management",
     children: [
       {
-        name: "Confirmed Purchase Bike",
-        path: "confirmed-purchase-bike",
-        element: <ConfirmPurchase/>,
+        name: "Add a bike",
+        path: "add-a-bike",
+        element: <AddABike />,
       },
       {
-        name: "Purchase History",
-        path: "purchase-history",
-        element: <PurchasesHistory/>,
+        name: "View sales bikes",
+        path: "view-sales-bike",
+        element: <ViewSalesBikes />,
+      },
+      {
+        name: "View all bikes",
+        path: "view-all-bikes",
+        element: <ViewAllBikes />,
+      },
+      {
+        name: "View seals History",
+        path: "view-sales-history",
+        element: <SalesHistory />,
       },
     ],
   },
@@ -34,16 +46,11 @@ export const adminPaths = [
         name: "All Users",
         path: "all-users",
         element: <RequestMaintenance/>,
-      },
-      {
-        name: "Service History",
-        path: "service-history",
-        element: <ServiceHistory/>,
-      },
+      }
     ],
   },
   {
-    name: "Others",
+    name: "Others Services Management",
     children: [
       {
         name: "Create Coupon",
@@ -51,9 +58,14 @@ export const adminPaths = [
         element: <CreateCoupon/>,
       },
       {
-        name: "Service History",
-        path: "service-history",
-        element: <ServiceHistory/>,
+        name: "Coupon management",
+        path: "coupon-management",
+        element: <CouponManagement/>,
+      },
+      {
+        name: "All Services status",
+        path: "all-services-status",
+        element: <AllServicesStatus />,
       },
     ],
   },
