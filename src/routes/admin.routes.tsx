@@ -1,8 +1,8 @@
 import AdminDashboard from "@/pages/admin/AdminDashboard";
 import AllServicesStatus from "@/pages/admin/AllServicesStatus";
+import AllUsers from "@/pages/admin/AllUsers";
 import CouponManagement from "@/pages/admin/CouponManagement";
 import CreateCoupon from "@/pages/admin/CreateCoupon";
-import RequestMaintenance from "@/pages/buyerManagement/RequestMaintenance";
 import ViewAllBikes from "@/pages/buyerManagement/ViewAllBikes";
 import AddABike from "@/pages/sellerManagement/AddABike";
 import SalesHistory from "@/pages/sellerManagement/SalesHistory";
@@ -45,7 +45,7 @@ export const adminPaths = [
       {
         name: "All Users",
         path: "all-users",
-        element: <RequestMaintenance/>,
+        element: <AllUsers />,
       }
     ],
   },

@@ -27,6 +27,7 @@ const ViewAllBikes = () => {
   const [params, setParams] = useState<TQueryParam[]>([]);
   const [page, setPage] = useState(1);
   const user = useAppSelector(selectCurrentUser);
+  
   const {
     data: bikeData,
     isFetching,
@@ -164,6 +165,10 @@ const ViewAllBikes = () => {
           text: "White",
           value: "White",
         },
+        {
+          text: "Silver",
+          value: "Silver",
+        },
       ],
     },
     {
@@ -195,6 +200,7 @@ const ViewAllBikes = () => {
               type="link"
               size="small"
               style={{ fontSize: "12px", fontWeight: "600" }}
+              disabled={user?.role === 'admin'}
             >
               Buy Now
             </Button>
