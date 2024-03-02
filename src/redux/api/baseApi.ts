@@ -31,6 +31,10 @@ const customBaseQuery: BaseQueryFn<
 > = async (args, api, extraOptions): Promise<any> => {
   const result = await baseQuery(args, api, extraOptions);
 
+  if (result?.error?.status === 409) {
+    toast.error((result?.error?.data as { message?: string })?.message)
+  }
+  
   if (result?.error?.status === 404) {
     toast.error((result?.error?.data as { message?: string })?.message)
   }
@@ -51,6 +55,6 @@ const customBaseQuery: BaseQueryFn<
 export const baseApi = createApi({
   reducerPath: "baseApi",
   baseQuery: customBaseQuery,
-  tagTypes: ["Users", "Bike", "Buyer"],
+  tagTypes: ["Users", "Bike", "Buyer", "Coupon"],
   endpoints: () => ({}),
 });
