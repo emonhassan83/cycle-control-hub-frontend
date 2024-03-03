@@ -3,6 +3,7 @@ import AllServicesStatus from "@/pages/admin/AllServicesStatus";
 import AllUsers from "@/pages/admin/AllUsers";
 import CouponManagement from "@/pages/admin/CouponManagement";
 import CreateCoupon from "@/pages/admin/CreateCoupon";
+import ServiceCategories from "@/pages/admin/ServiceCategories";
 import ViewAllBikes from "@/pages/buyerManagement/ViewAllBikes";
 import AddABike from "@/pages/sellerManagement/AddABike";
 import SalesHistory from "@/pages/sellerManagement/SalesHistory";
@@ -61,6 +62,11 @@ export const adminPaths = [
         name: "Coupon management",
         path: "coupon-management",
         element: <CouponManagement/>,
+      },
+      {
+        name: "Service Categories",
+        path: "service-categories",
+        element: <ServiceCategories/>,
       },
       {
         name: "All Services status",

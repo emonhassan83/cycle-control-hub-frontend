@@ -30,7 +30,6 @@ const AllUsers = () => {
   const [deleteUser] = useDeleteUserMutation();
 
   const metaData = users?.meta;
-  console.log(users);
 
   const handleMakeAdmin = (userId: string) => {
     const toastId = toast.loading("User role change in!");
@@ -196,6 +195,7 @@ const AllUsers = () => {
       return <p>Loading...</p>;
     }
   };
+
   return (
     <div>
       <Table

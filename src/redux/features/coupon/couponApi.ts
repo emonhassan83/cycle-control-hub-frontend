@@ -1,5 +1,5 @@
 import { baseApi } from "@/redux/api/baseApi";
-import { TQueryParam, TResponseRedux } from "@/types";
+import { TCoupon, TQueryParam, TResponseRedux } from "@/types";
 
 const couponApi = baseApi.injectEndpoints({
   endpoints: (builder) => ({
@@ -24,12 +24,12 @@ const couponApi = baseApi.injectEndpoints({
           });
         }
         return {
-          url: "/users",
+          url: "/coupon/all-coupons",
           method: "GET",
           params: params,
         };
       },
-      transformResponse: (response: TResponseRedux<any>) => {
+      transformResponse: (response: TResponseRedux<TCoupon[]>) => {
         return {
           data: response.data,
           meta: response.meta,
