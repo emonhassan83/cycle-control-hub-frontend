@@ -38,11 +38,12 @@ const AllUsers = () => {
         userId: userId,
         role: "admin",
       };
-      //* Change user role into DB
       toast.success("User role change to admin successfully!", {
         id: toastId,
         duration: 2000,
       });
+
+      //* Change user role into DB
       changeRole(userInfo);
     } catch (error: any) {
       toast.error(error?.message, { id: toastId });
@@ -56,11 +57,12 @@ const AllUsers = () => {
         userId: userId,
         role: "seller",
       };
-      //* Change user role into DB
       toast.success("User role change to seller successfully!", {
         id: toastId,
         duration: 2000,
       });
+
+      //* Change user role into DB
       changeRole(userInfo);
     } catch (error: any) {
       toast.error(error?.message, { id: toastId });
@@ -74,11 +76,12 @@ const AllUsers = () => {
         userId: userId,
         role: "buyer",
       };
-      //* Change user role into DB
       toast.success("User role change to seller successfully!", {
         id: toastId,
         duration: 2000,
       });
+
+      //* Change user role into DB
       changeRole(userInfo);
     } catch (error: any) {
       toast.error(error?.message, { id: toastId });
@@ -88,11 +91,12 @@ const AllUsers = () => {
   const handleDeleteUser = (userId: string) => {
     const toastId = toast.loading("User delete in!");
     try {
-      //* Delete user into DB
       toast.success("User delete successfully!", {
         id: toastId,
         duration: 2000,
       });
+      
+      //* Delete user into DB
       deleteUser(userId);
     } catch (error: any) {
       toast.error(error?.message, { id: toastId });

@@ -1,7 +1,7 @@
 import ReusableForm from "@/components/form/ReusableForm";
 import ReusableInput from "@/components/form/ReusableInput";
 import { selectCurrentUser } from "@/redux/features/auth/authSlice";
-import { useCreateServiceCategoryMutation } from "@/redux/features/auth/serviceCategory/serviceCategoryApi";
+import { useCreateServiceCategoryMutation } from "@/redux/features/serviceCategory/serviceCategoryApi";
 
 import { useAppSelector } from "@/redux/hooks";
 import { Button } from "antd";

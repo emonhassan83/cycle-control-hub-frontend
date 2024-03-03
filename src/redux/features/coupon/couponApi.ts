@@ -39,11 +39,11 @@ const couponApi = baseApi.injectEndpoints({
     }),
 
     updateCoupon: builder.mutation({
-      query: (couponInfo) => {
+      query: (option) => {
         return {
-          url: `/coupon/update-coupon/${couponInfo.id}`,
-          method: "PATCH",
-          body: couponInfo.coupon,
+          url: `/coupon/update-coupon/${option.id}`,
+          method: "PUT",
+          body: option.coupon,
         };
       },
       invalidatesTags: ["Coupon"],

@@ -60,11 +60,11 @@ const serviceCategoriesApi = baseApi.injectEndpoints({
     }),
 
     assignCouponInService: builder.mutation({
-      query: (payload) => {
+      query: (option) => {
         return {
-          url: `/service-category/assign-coupon/${payload.id}`,
+          url: `/service-category/assign-coupon/${option.id}`,
           method: "PATCH",
-          body: payload.coupon,
+          body: option.coupon,
         };
       },
       invalidatesTags: ["ServiceCategory"],
