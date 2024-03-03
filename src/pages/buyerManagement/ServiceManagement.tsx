@@ -1,82 +1,82 @@
 import UpdateCouponModal from "@/components/dialog/UpdateCouponModal";
-import {
-  useDeleteCouponMutation,
-  useGetAllCouponsQuery,
-} from "@/redux/features/coupon/couponApi";
-import { TCoupon } from "@/types";
+import { useGetAllMyServicesQuery } from "@/redux/features/service/serviceApi";
+import { TService } from "@/types";
 import { Button, Pagination, Table, TableColumnsType, TableProps } from "antd";
 import { useState } from "react";
-import { toast } from "sonner";
 
 export type TTableData = Pick<
-  TCoupon,
-  "name" | "expiry" | "discountType" | "discountAmount" | "applicableBikeIds"
+  TService,
+  | "lastServicingDate"
+  | "nextServicingDate"
+  | "notes"
+  | "maintenanceRecords"
+  | "serviceBill"
 >;
 
-const CouponManagement = () => {
+const ServiceManagement = () => {
   const [page, setPage] = useState(1);
   const {
-    data: couponData,
+    data: serviceData,
     isFetching,
     isLoading,
-  } = useGetAllCouponsQuery(undefined);
-  const [deleteCoupon] = useDeleteCouponMutation();
-  
+  } = useGetAllMyServicesQuery(undefined);
+  const metaData = serviceData?.meta;
 
-  const metaData = couponData?.meta;
-
-  const handleDeleteCoupon = (id: string) => {
-    const toastId = toast.loading("Delete coupon in!");
-    try {
-      toast.success("Delete coupon successfully!", {
-        id: toastId,
-        duration: 2000,
-      });
-
-      //* Change user role into DB
-      deleteCoupon(id);
-    } catch (error: any) {
-      toast.error(error?.message, { id: toastId });
-    }
-  };
-
-  const tableData = couponData?.data?.map(
+  const tableData = serviceData?.data?.map(
     ({
       _id,
-      name,
-      expiry,
-      discountType,
-      discountAmount,
-      applicableBikeIds,
+      service,
+      bike,
+      serviceProvider,
+      maintenanceRecords,
+      serviceBill,
+      lastServicingDate,
+      nextServicingDate,
+      notes,
     }) => ({
       key: _id,
-      name,
-      expiry,
-      discountType,
-      discountAmount,
-      applicableBikeIds,
+      service: service.serviceName,
+      bike: bike.productName,
+      serviceProvider: serviceProvider.username,
+      maintenanceRecords,
+      serviceBill,
+      lastServicingDate,
+      nextServicingDate,
+      notes,
     })
   );
 
   const columns: TableColumnsType<TTableData> = [
     {
-      title: "Coupon name",
-      dataIndex: "name",
+      title: "Service",
+      dataIndex: "service",
     },
     {
-      title: "Discount Type",
-      dataIndex: "discountType",
+      title: "Bike",
+      dataIndex: "bike",
     },
     {
-      title: "Discount Amount",
-      dataIndex: "discountAmount",
+      title: "Service Provider",
+      dataIndex: "serviceProvider",
     },
     {
-      title: "Expiry",
-      dataIndex: "expiry",
+      title: "Maintenance Records",
+      dataIndex: "maintenanceRecords",
     },
     {
-      title: "Update Coupon",
+      title: "serviceBill",
+      dataIndex: "serviceBill",
+    },
+    {
+      title: "lastServicingDate",
+      dataIndex: "lastServicingDate",
+    },
+    {
+      title: "nextServicingDate",
+      dataIndex: "nextServicingDate",
+    },
+    {
+      title: "Update Request",
       key: "x1",
       render: (item) => {
         return <UpdateCouponModal coupon={item} />;
@@ -85,16 +85,14 @@ const CouponManagement = () => {
     {
       title: "Delete",
       key: "x3",
-      render: (item) => {
+      render: () => {
         return (
           <div>
             <Button
               style={{ fontSize: "12px", fontWeight: "600" }}
-              onClick={() => handleDeleteCoupon(item?.key)}
               danger
               type="link"
               size="small"
-              disabled={item.role === "admin"}
             >
               Delete
             </Button>
@@ -137,4 +135,4 @@ const CouponManagement = () => {
   );
 };
 
-export default CouponManagement;
+export default ServiceManagement;

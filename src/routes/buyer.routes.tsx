@@ -3,6 +3,7 @@ import PurchasesBike from "@/pages/buyerManagement/PurchaseBike";
 import PurchasesHistory from "@/pages/buyerManagement/PurchaseHistory";
 import RequestMaintenance from "@/pages/buyerManagement/RequestMaintenance";
 import ServiceHistory from "@/pages/buyerManagement/ServiceHistory";
+import ServiceManagement from "@/pages/buyerManagement/ServiceManagement";
 
 
 export const buyerPaths = [
@@ -33,6 +34,11 @@ export const buyerPaths = [
         name: "Requesting Maintenance",
         path: "requesting-management",
         element: <RequestMaintenance/>,
+      },
+      {
+        name: "Services Management",
+        path: "services-management",
+        element: <ServiceManagement/>,
       },
       {
         name: "Service History",
