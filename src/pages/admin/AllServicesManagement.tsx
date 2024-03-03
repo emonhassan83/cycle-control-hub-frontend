@@ -1,4 +1,4 @@
-const AllServicesStatus = () => {
+const AllServicesManagement = () => {
     return (
         <div>
             all services page
@@ -6,4 +6,4 @@ const AllServicesStatus = () => {
     );
 };
 
-export default AllServicesStatus;
+export default AllServicesManagement;

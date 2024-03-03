@@ -21,8 +21,7 @@ const discountTypeOptions = [
 
 const CreateCoupon = () => {
   const { data: bikeData } = useGetBikesQuery(undefined);
-  const [createCoupon, { data, error }] = useCreateCouponMutation();
-  console.log(data, error);
+  const [createCoupon] = useCreateCouponMutation();
   
   const applicableBikeOptions = bikeData?.data?.map((item) => ({
     value: item._id,

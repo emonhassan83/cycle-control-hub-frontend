@@ -55,6 +55,6 @@ const customBaseQuery: BaseQueryFn<
 export const baseApi = createApi({
   reducerPath: "baseApi",
   baseQuery: customBaseQuery,
-  tagTypes: ["Users", "Bike", "Buyer", "Coupon"],
+  tagTypes: ["Users", "Bike", "Buyer", "Coupon", "ServiceCategory"],
   endpoints: () => ({}),
 });

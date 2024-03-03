@@ -1,13 +1,14 @@
 import AdminDashboard from "@/pages/admin/AdminDashboard";
-import AllServicesStatus from "@/pages/admin/AllServicesStatus";
 import AllUsers from "@/pages/admin/AllUsers";
 import CouponManagement from "@/pages/admin/CouponManagement";
 import CreateCoupon from "@/pages/admin/CreateCoupon";
 import ServiceCategories from "@/pages/admin/ServiceCategories";
 import ViewAllBikes from "@/pages/buyerManagement/ViewAllBikes";
 import AddABike from "@/pages/sellerManagement/AddABike";
-import SalesHistory from "@/pages/sellerManagement/SalesHistory";
+import SalesHistory from "@/pages/admin/SalesHistory";
 import ViewSalesBikes from "@/pages/sellerManagement/ViewSalesBikes";
+import CreateServiceCategory from "@/pages/admin/CreateServiceCategory";
+import AllServicesManagement from "@/pages/admin/AllServicesManagement";
 
 export const adminPaths = [
   {
@@ -51,7 +52,7 @@ export const adminPaths = [
     ],
   },
   {
-    name: "Others Services Management",
+    name: "Coupon Management",
     children: [
       {
         name: "Create Coupon",
@@ -62,16 +63,26 @@ export const adminPaths = [
         name: "Coupon management",
         path: "coupon-management",
         element: <CouponManagement/>,
+      }
+    ],
+  },
+  {
+    name: "Service Management",
+    children: [
+      {
+        name: "Create service category",
+        path: "create-service-category",
+        element: <CreateServiceCategory/>,
       },
       {
-        name: "Service Categories",
-        path: "service-categories",
-        element: <ServiceCategories/>,
+        name: "All Services category",
+        path: "all-services-category",
+        element: <ServiceCategories />,
       },
       {
-        name: "All Services status",
-        path: "all-services-status",
-        element: <AllServicesStatus />,
+        name: "All Services management",
+        path: "all-services-management",
+        element: <AllServicesManagement />,
       },
     ],
   },
