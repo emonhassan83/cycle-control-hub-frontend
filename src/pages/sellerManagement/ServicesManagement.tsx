@@ -4,7 +4,7 @@ import {
   useGetAllMyServicesQuery,
 } from "@/redux/features/service/serviceApi";
 import { TService } from "@/types";
-import { Button, Pagination, Table, TableColumnsType, TableProps } from "antd";
+import { Button, Pagination, Table, TableColumnsType, TableProps, Tag } from "antd";
 import moment from "moment";
 import { useState } from "react";
 import { toast } from "sonner";
@@ -25,9 +25,8 @@ const ServiceManagement = () => {
     isFetching,
     isLoading,
   } = useGetAllMyServicesQuery(undefined);
-  const [confirmService, { data, error }] = useConfirmBikeServiceMutation();
+  const [confirmService] = useConfirmBikeServiceMutation();
   const [cancelService] = useCancelBikeServiceMutation();
-  console.log({ data, error });
 
   const metaData = serviceData?.meta;
 
@@ -83,7 +82,7 @@ const ServiceManagement = () => {
       serviceBill,
       lastServicingDate: moment(lastServicingDate).format("MMM D, YYYY"),
       nextServicingDate: moment(nextServicingDate).format("MMM D, YYYY"),
-      status,
+      status: status,
     })
   );
 
@@ -101,10 +100,6 @@ const ServiceManagement = () => {
       dataIndex: "serviceReceiver",
     },
     {
-      title: "Maintenance Records",
-      dataIndex: "maintenanceRecords",
-    },
-    {
       title: "serviceBill",
       dataIndex: "serviceBill",
     },
@@ -116,9 +111,18 @@ const ServiceManagement = () => {
       title: "nextServicingDate",
       dataIndex: "nextServicingDate",
     },
-    {
+    { 
       title: "Status",
+      key: "status",
       dataIndex: "status",
+      render: (_, { status }) => {
+        const color = status === 'confirm' ? 'blue' : status === 'denied' ? 'red' : 'geekblue'; 
+        return (
+          <Tag color={color}>
+            {status.toUpperCase()}
+          </Tag>
+        );
+      },
     },
     {
       title: "Action Service",
@@ -137,6 +141,7 @@ const ServiceManagement = () => {
               size="small"
               style={{ fontSize: "12px", fontWeight: "600" }}
               onClick={() => handleConfirmedService(item?.key)}
+              disabled={item.status === "confirmed"}
             >
              Confirm
             </Button>
@@ -147,6 +152,7 @@ const ServiceManagement = () => {
               danger
               type="link"
               size="small"
+              disabled={item.status === "denied"}
             >
               Denied
             </Button>
