@@ -12,7 +12,7 @@ export type TService = {
     nextServicingDate: string
     maintenanceRecords: number
     notes: string
-    isConfirmed: boolean
+    status: string
     isPayed: boolean
     createdAt: string
     updatedAt: string
