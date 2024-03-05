@@ -1,11 +1,16 @@
 import { selectCurrentUser } from "@/redux/features/auth/authSlice";
 import { useGetBikesQuery } from "@/redux/features/bikeManagement/bikeManagementApi";
 import { usePurchaseBikesMutation } from "@/redux/features/salesManagement/salesManagementApi";
+import { Input, Row } from "antd";
+import { SearchProps } from "antd/es/input";
+const { Search } = Input;
 import { useAppSelector } from "@/redux/hooks";
 import { TBike, TQueryParam } from "@/types";
 import { Button, Pagination, Table, TableColumnsType, TableProps } from "antd";
 import { useState } from "react";
 import { toast } from "sonner";
+import { saveAs } from "file-saver";
+import { generatePDF } from "@/components/PDF/generatePDF";
 
 export type TTableData = Pick<
   TBike,
@@ -26,34 +31,74 @@ export type TTableData = Pick<
 const PurchasesBike = () => {
   const [params, setParams] = useState<TQueryParam[]>([]);
   const [page, setPage] = useState(1);
+  const [searchTerm, setSearchTerm] = useState("");
   const user = useAppSelector(selectCurrentUser);
-  const { data: bikeData,isFetching, isLoading } = useGetBikesQuery([{ name: "page", value: page }, ...params]);
+  const {
+    data: bikeData,
+    isFetching,
+    isLoading,
+  } = useGetBikesQuery([
+    { name: "page", value: page },
+    {
+      name: "searchTerm",
+      value: searchTerm,
+    },
+    ...params,
+  ]);
   const [purchaseBikes] = usePurchaseBikesMutation();
 
   const metaData = bikeData?.meta;
-  
-  const handlePurchaseBike = (id: string, seller:any) => {
+
+  const handlePurchaseBike = async (bike: any) => {
     const toastId = toast.loading("Bike purchase in!");
-    
+
     try {
       const bikePurchaseInfo = {
-        buyerName:  (user as { username?: string })?.username,
+        buyerName: (user as { username?: string })?.username,
         buyerEmail: user?.email,
         phoneNumber: 1234567890,
-        seller: seller._id,
-        bike: id,
+        seller: bike.seller._id,
+        bike: bike.key,
         buyingDate: new Date().toISOString(),
-        isConfirmed: false
+        isConfirmed: false,
       };
-      
+
       //* Purchase bike from database
       purchaseBikes(bikePurchaseInfo);
 
-      toast.success("Bike purchase successfully!", { id: toastId, duration: 2000 });
+      toast.success("Bike purchase successfully!", {
+        id: toastId,
+        duration: 2000,
+      });
+
+      // Generate PDF invoice
+      const invoiceDetails = {
+        buyerName: user?.username,
+        buyerEmail: user?.email,
+        bikeName: bike.productName,
+        bikeModel: bike.model,
+        bikeColor: bike.color,
+        manufacturerCountry: bike.manufacturerCountry,
+        sellerName: bike.seller.username,
+        sellerEmail: bike.seller.email,
+        quantity: 1,
+        price: bike.price,
+        tax: 100,
+        dateOfSale: new Date().toISOString(),
+        totalAmount: bike.price + 100,
+      };
+
+      // Generate PDF blob
+      const pdfBlob = await generatePDF(invoiceDetails);
+
+      // Save PDF as a file
+      saveAs(pdfBlob, "invoice.pdf");
     } catch (error: any) {
       toast.error(error.message, { id: toastId });
     }
   };
+
+  const onSearch: SearchProps["onSearch"] = (value) => setSearchTerm(value);
 
   const tableData = bikeData?.data?.map(
     ({
@@ -98,7 +143,9 @@ const PurchasesBike = () => {
       title: "Product Image",
       dataIndex: "productImage",
       key: "x1",
-      render: (productImage: string) => <img src={productImage} alt="Bike" style={{ width: 50, height: 50 }} />,
+      render: (productImage: string) => (
+        <img src={productImage} alt="Bike" style={{ width: 50, height: 50 }} />
+      ),
     },
     {
       title: "Quantity",
@@ -181,7 +228,7 @@ const PurchasesBike = () => {
         return (
           <div>
             <Button
-              onClick={() => handlePurchaseBike(item.key, item.seller)}
+              onClick={() => handlePurchaseBike(item)}
               type="link"
               size="small"
               style={{ fontSize: "12px", fontWeight: "600" }}
@@ -202,7 +249,7 @@ const PurchasesBike = () => {
   ) => {
     if (extra.action === "filter") {
       const queryParams: TQueryParam[] = [];
-     
+
       filters?.type?.forEach((item) =>
         queryParams.push({ name: "type", value: item })
       );
@@ -215,16 +262,23 @@ const PurchasesBike = () => {
         queryParams.push({ name: "size", value: item })
       );
 
-    //* set params array for filter
-    setParams(queryParams); 
-  }
-  if (isLoading) {
-    return <p>Loading...</p>;
-  }
-}
-  
+      //* set params array for filter
+      setParams(queryParams);
+    }
+    if (isLoading) {
+      return <p>Loading...</p>;
+    }
+  };
+
   return (
     <>
+      <div
+        style={{ display: "flex", justifyContent: "end", marginBottom: "20px" }}
+      >
+        <Row style={{ width: "50%" }}>
+          <Search placeholder="Search Bike" onSearch={onSearch} enterButton />
+        </Row>
+      </div>
       <Table
         loading={isFetching}
         columns={columns}
@@ -240,7 +294,7 @@ const PurchasesBike = () => {
         total={metaData?.total}
       />
     </>
-    );
+  );
 };
 
 export default PurchasesBike;

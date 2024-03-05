@@ -8,10 +8,11 @@ import ReusableDatePiker from "../form/ReusableDatePiker";
 import { useGetBikesQuery } from "@/redux/features/bikeManagement/bikeManagementApi";
 import { toast } from "sonner";
 import { useUpdateCouponMutation } from "@/redux/features/coupon/couponApi";
+import moment from "moment";
 
 type TDefaultValues = {
   name: string;
-  expiry?: string;
+  expiry: moment.Moment;
   discountType: string;
   discountAmount: number;
   applicableBikeIds: string[];
@@ -40,7 +41,7 @@ const UpdateCouponModal = ({ coupon }: any) => {
 
   const defaultValues: TDefaultValues = {
     name: coupon?.name,
-    // expiry: coupon?.expiry,
+    expiry: moment(coupon?.expiry),
     discountType: coupon?.discountType,
     discountAmount: Number(coupon?.discountAmount),
     applicableBikeIds: coupon?.applicableBikeIds,

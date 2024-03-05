@@ -26,8 +26,7 @@ const UpdateServiceReqModal = ({ item }: any) => {
   const confirmedBikes = bikeData?.data?.filter(
     (bike: any) => bike.isConfirmed
   );
-  const [updateService, { data, error }] = useUpdateAServiceMutation();
-  console.log({ data, error });
+  const [updateService] = useUpdateAServiceMutation();
 
   const applicableBikeOptions = confirmedBikes?.map((item) => ({
     value: item.bike._id,
@@ -54,11 +53,11 @@ const UpdateServiceReqModal = ({ item }: any) => {
         id: item?.key,
         service: {
             ...data,
-            bike: item?.bikeId,
-            service: item?.serviceId,
+            bike: data?.bikeId,
+            service: data?.serviceId,
         },
       };
-      console.log(option);
+      
       //* Update service in database
       updateService(option);
 
@@ -80,6 +79,7 @@ const UpdateServiceReqModal = ({ item }: any) => {
   const handleCancel = () => {
     setIsModalOpen(false);
   };
+
   return (
     <>
       <Button

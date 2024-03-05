@@ -1,3 +1,4 @@
+import ServicePaymentModal from "@/components/dialog/ServicePaymentModal";
 import UpdateServiceReqModal from "@/components/dialog/UpdateServiceReqModal";
 import { useDeleteAServiceMutation, useGetAllMyServicesQuery } from "@/redux/features/service/serviceApi";
 import { TService } from "@/types";
@@ -10,9 +11,10 @@ export type TTableData = Pick<
   TService,
   | "lastServicingDate"
   | "nextServicingDate"
-  | "notes"
   | "maintenanceRecords"
   | "serviceBill"
+  | "status"
+  | "notes"
 >;
 
 const ServiceManagement = () => {
@@ -22,9 +24,7 @@ const ServiceManagement = () => {
     isFetching,
     isLoading,
   } = useGetAllMyServicesQuery(undefined);
-  const [deleteService, {data, error}] = useDeleteAServiceMutation();
-  console.log({data, error});
-  
+  const [deleteService] = useDeleteAServiceMutation();
 
   const metaData = serviceData?.meta;
 
@@ -44,6 +44,8 @@ const ServiceManagement = () => {
     }
   };
 
+  console.log(serviceData);
+  
   const tableData = serviceData?.data?.map(
     ({
       _id,
@@ -55,6 +57,8 @@ const ServiceManagement = () => {
       lastServicingDate,
       nextServicingDate,
       notes,
+      status,
+      isPayed
     }) => ({
       key: _id,
       service: service.serviceName,
@@ -66,7 +70,10 @@ const ServiceManagement = () => {
       serviceBill,
       lastServicingDate: moment(lastServicingDate).format("MMM D, YYYY"),
       nextServicingDate: moment(nextServicingDate).format("MMM D, YYYY"),
+      coupon: service?.coupon,
       notes,
+      status,
+      isPayed
     })
   );
 
@@ -88,15 +95,15 @@ const ServiceManagement = () => {
       dataIndex: "maintenanceRecords",
     },
     {
-      title: "serviceBill",
+      title: "Service Bill",
       dataIndex: "serviceBill",
     },
     {
-      title: "lastServicingDate",
+      title: "Last Servicing",
       dataIndex: "lastServicingDate",
     },
     {
-      title: "nextServicingDate",
+      title: "Next Servicing",
       dataIndex: "nextServicingDate",
     },
     {
@@ -109,15 +116,9 @@ const ServiceManagement = () => {
     {
       title: "payment",
       key: "x1",
-      render: () => {
+      render: (item) => {
         return (
-          <Button
-            type="link"
-            size="small"
-            style={{ fontSize: "12px", fontWeight: "600" }}
-          >
-            Pay
-          </Button>
+          <ServicePaymentModal paymentInfo={item}/>
         );
       },
     },
@@ -133,6 +134,7 @@ const ServiceManagement = () => {
               danger
               type="link"
               size="small"
+              disabled={item.status !== 'pending'}
             >
               Delete
             </Button>

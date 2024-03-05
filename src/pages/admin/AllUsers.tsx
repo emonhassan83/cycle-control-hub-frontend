@@ -140,6 +140,7 @@ const AllUsers = () => {
               onClick={() => handleMakeAdmin(item?.key)}
               type="link"
               size="small"
+              disabled={item.role === 'admin'}
             >
               admin
             </Button>
@@ -148,7 +149,7 @@ const AllUsers = () => {
               onClick={() => handleMakeSeller(item?.key)}
               type="link"
               size="small"
-              disabled={item.role === "admin"}
+              disabled={item.role === "admin" || item.role === 'seller'}
             >
               seller
             </Button>
@@ -157,7 +158,7 @@ const AllUsers = () => {
               onClick={() => handleMakeBuyer(item?.key)}
               type="link"
               size="small"
-              disabled={item.role === "admin"}
+              disabled={item.role === "admin" || item.role === 'buyer'}
             >
               buyer
             </Button>

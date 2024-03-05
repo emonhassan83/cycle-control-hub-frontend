@@ -5,6 +5,7 @@ import {
 } from "@/redux/features/coupon/couponApi";
 import { TCoupon } from "@/types";
 import { Button, Pagination, Table, TableColumnsType, TableProps } from "antd";
+import moment from "moment";
 import { useState } from "react";
 import { toast } from "sonner";
 
@@ -51,7 +52,7 @@ const CouponManagement = () => {
     }) => ({
       key: _id,
       name,
-      expiry,
+      expiry: moment(expiry).format("MMM D, YYYY"),
       discountType,
       discountAmount,
       applicableBikeIds,
