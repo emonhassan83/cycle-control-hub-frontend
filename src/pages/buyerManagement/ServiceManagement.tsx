@@ -1,6 +1,10 @@
 import ServicePaymentModal from "@/components/dialog/ServicePaymentModal";
 import UpdateServiceReqModal from "@/components/dialog/UpdateServiceReqModal";
-import { useDeleteAServiceMutation, useGetAllMyServicesQuery } from "@/redux/features/service/serviceApi";
+import {
+  useDeleteAServiceMutation,
+  useGetAllMyServicesQuery,
+  usePaymentBikeServiceMutation,
+} from "@/redux/features/service/serviceApi";
 import { TService } from "@/types";
 import { Button, Pagination, Table, TableColumnsType, TableProps } from "antd";
 import moment from "moment";
@@ -25,8 +29,25 @@ const ServiceManagement = () => {
     isLoading,
   } = useGetAllMyServicesQuery(undefined);
   const [deleteService] = useDeleteAServiceMutation();
+  const [paymentService] = usePaymentBikeServiceMutation();
 
   const metaData = serviceData?.meta;
+
+  const handlePaymentService = (id: string) => {
+    const toastId = toast.loading("Payment service in!");
+    try {
+      toast.success("Payment service successfully!", {
+        id: toastId,
+        duration: 2000,
+      });
+
+      //* Payment service into DB
+      paymentService(id);
+      // console.log(id);
+    } catch (error: any) {
+      toast.error(error?.message, { id: toastId });
+    }
+  };
 
   const handleDeleteService = (id: string) => {
     const toastId = toast.loading("Delete service in!");
@@ -38,14 +59,11 @@ const ServiceManagement = () => {
 
       //* Delete service into DB
       deleteService(id);
-      
     } catch (error: any) {
       toast.error(error?.message, { id: toastId });
     }
   };
 
-  console.log(serviceData);
-  
   const tableData = serviceData?.data?.map(
     ({
       _id,
@@ -58,7 +76,7 @@ const ServiceManagement = () => {
       nextServicingDate,
       notes,
       status,
-      isPayed
+      isPayed,
     }) => ({
       key: _id,
       service: service.serviceName,
@@ -73,7 +91,7 @@ const ServiceManagement = () => {
       coupon: service?.coupon,
       notes,
       status,
-      isPayed
+      isPayed,
     })
   );
 
@@ -114,11 +132,26 @@ const ServiceManagement = () => {
       },
     },
     {
+      title: "Add Coupon in service",
+      key: "x1",
+      render: (item) => {
+        return <ServicePaymentModal paymentInfo={item} />;
+      },
+    },
+    {
       title: "payment",
       key: "x1",
       render: (item) => {
         return (
-          <ServicePaymentModal paymentInfo={item}/>
+          <Button
+            style={{ fontSize: "12px", fontWeight: "600" }}
+            onClick={() => handlePaymentService(item?.key)}
+            type="link"
+            size="small"
+            disabled={item?.isPayed === true}
+          >
+            pay
+          </Button>
         );
       },
     },
@@ -134,7 +167,7 @@ const ServiceManagement = () => {
               danger
               type="link"
               size="small"
-              disabled={item.status !== 'pending'}
+              disabled={item.status !== "pending"}
             >
               Delete
             </Button>

@@ -4,6 +4,8 @@ import { Button, Modal } from "antd";
 import { FieldValues } from "react-hook-form";
 import ReusableInput from "../form/ReusableInput";
 import { useGetAllCouponsQuery } from "@/redux/features/coupon/couponApi";
+import { useApplyCouponInServiceMutation } from "@/redux/features/service/serviceApi";
+import { toast } from "sonner";
 
 type TDefaultValues = {
   bike: string;
@@ -14,18 +16,35 @@ type TDefaultValues = {
 
 const ServicePaymentModal = ({ paymentInfo }: any) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const { data: couponData} = useGetAllCouponsQuery(undefined);
+  const { data: couponData } = useGetAllCouponsQuery(undefined);
+  const [applyCoupon] = useApplyCouponInServiceMutation();
 
-  console.log({paymentInfo});
-  const coupon = couponData?.data?.find(item => item._id === paymentInfo?.coupon)
-  console.log(coupon);
-  
+  const coupon = couponData?.data?.find(
+    (item) => item._id === paymentInfo?.coupon
+  );
 
   const defaultValues: TDefaultValues = {
     bike: paymentInfo?.bike,
     service: paymentInfo?.service,
-    coupon: coupon?  coupon?.name : "Not available coupon",
+    coupon: coupon ? coupon?.name : "Not available coupon",
     price: paymentInfo?.serviceBill,
+  };
+
+  const handleApplyCoupon = (id: string) => {
+    const toastId = toast.loading("Applying coupon in service in!");
+    try {
+      //* Apply coupon in service in Database
+      applyCoupon(id);
+
+      toast.success("Apply coupon in service successfully!", {
+        id: toastId,
+        duration: 2000,
+      });
+      setIsModalOpen(false);
+    } catch (error: any) {
+      toast.error(error.message, { id: toastId });
+      setIsModalOpen(false);
+    }
   };
 
   const handleSubmit = (data: FieldValues) => {
@@ -47,11 +66,12 @@ const ServicePaymentModal = ({ paymentInfo }: any) => {
         type="link"
         size="small"
         style={{ fontSize: "12px", fontWeight: "600" }}
+        disabled ={paymentInfo?.isPayed === true}
       >
-        Pay
+        Add coupon
       </Button>
       <Modal
-        title="Service For Payment"
+        title="Assign coupon to your service"
         open={isModalOpen}
         onCancel={handleCancel}
         footer={null}
@@ -69,25 +89,11 @@ const ServicePaymentModal = ({ paymentInfo }: any) => {
             label="Servicing Bike"
             placeholder="ENTER COUPON NAME"
           />
-          <div
-            style={{
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "space-between",
-            }}
-          >
-            <div style={{ width: "70%" }}>
-              <ReusableInput type="text" name="coupon" label="Coupon" />
-            </div>
-            <div style={{ width: "30%", marginLeft: "10px" }}>
-              <Button size="small" style={{ width: "100%", marginTop: "20px" }}>
-                Apply Coupon
-              </Button>
-            </div>
-          </div>
-          <ReusableInput type="text" name="price" label="Amount" />
-          <Button htmlType="submit" size="small">
-            Pay Service
+
+          <ReusableInput type="text" name="coupon" label="Coupon" />
+
+          <Button onClick={()=> handleApplyCoupon(paymentInfo?.key)} size="small">
+            Apply Coupon
           </Button>
         </ReusableForm>
       </Modal>

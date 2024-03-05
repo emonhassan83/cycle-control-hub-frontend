@@ -103,6 +103,16 @@ const serviceCategoriesApi = baseApi.injectEndpoints({
       invalidatesTags: ["Service"],
     }),
 
+    applyCouponInService: builder.mutation({
+      query: (id) => {
+        return {
+          url: `/service/apply-coupon/${id}`,
+          method: "PATCH",
+        };
+      },
+      invalidatesTags: ["Service"],
+    }),
+
     paymentBikeService: builder.mutation({
       query: (id) => {
         return {
@@ -123,5 +133,6 @@ export const {
   useDeleteAServiceMutation,
   useConfirmBikeServiceMutation,
   useCancelBikeServiceMutation,
+  useApplyCouponInServiceMutation,
   usePaymentBikeServiceMutation,
 } = serviceCategoriesApi;
