@@ -5,11 +5,12 @@ import {
   import { Button, Pagination, Table, TableColumnsType, TableProps } from "antd";
   import BikeUpdateDialog from "@/components/dialog/BikeUpdateDialog";
   import { useNavigate } from "react-router-dom";
-  import { useAppDispatch } from "@/redux/hooks";
+  import { useAppDispatch, useAppSelector } from "@/redux/hooks";
   import { setBike } from "@/redux/features/bikeManagement/bikeSlice";
   import { toast } from "sonner";
   import { TBike, TQueryParam } from "@/types";
   import { useState } from "react";
+import { selectCurrentUser } from "@/redux/features/auth/authSlice";
   
   export type TTableData = Pick<
     TBike,
@@ -30,6 +31,7 @@ import {
   const AllMyBikesManagement = () => {
     const [params, setParams] = useState<TQueryParam[]>([]);
     const [page, setPage] = useState(1);
+    const user = useAppSelector(selectCurrentUser);
     const {
       data: bikeData,
       isFetching,
@@ -44,7 +46,7 @@ import {
     const handleCreateVariant = (bike: TBike) => {
       //* set bike credentials in state
       dispatch(setBike(bike));
-      navigate("/bike-management/add-a-bike");
+      navigate(`/${user?.role}/add-a-bike`);
     };
   
     const handleDeleteBike = (id: string) => {

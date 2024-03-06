@@ -5,8 +5,9 @@ import { FieldValues } from "react-hook-form";
 import { useAppSelector } from "../../redux/hooks";
 import { usePostBikeMutation } from "@/redux/features/bikeManagement/bikeManagementApi";
 import { toast } from "sonner";
-import { useNavigate } from "react-router-dom";
 import ReusableSelect from "@/components/form/ReusableSelect";
+import { selectCurrentUser } from "@/redux/features/auth/authSlice";
+import { useNavigate } from "react-router-dom";
 
 type TDefaultValues = {
   productName?: string;
@@ -73,13 +74,14 @@ const productMaterialOptions = [
 ];
 
 const AddABike = () => {
+  const user = useAppSelector(selectCurrentUser);
   const { bike } = useAppSelector((state) => state.bike) as unknown as {
     bike?: TDefaultValues;
   };
   const [addBike, { data}] = usePostBikeMutation();
-  console.log("data ------>", data);
-
   const navigate = useNavigate();
+
+  console.log("data ------>", data);
 
   const defaultValues: TDefaultValues = {
     productName: bike?.productName,
@@ -120,8 +122,10 @@ const AddABike = () => {
       // * add bike in database
       addBike(bikeData);
       toast.success("Add bike in database successfully!", {id: toastId, duration: 3000 });
+
       //* Navigate to user in view bikes page
-      navigate("/bike-management/view-bikes")
+      navigate(`/${user?.role}/view-bikes`);
+      
     } catch (error: any) {
       toast.error(error.message, { id: toastId });
     }
