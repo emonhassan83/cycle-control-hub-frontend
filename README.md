@@ -30,24 +30,53 @@ export default {
 - Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and add `plugin:react/recommended` & `plugin:react/jsx-runtime` to the `extends` list
 # l2b2-full-stack-a5-client-side-emonhassan83
 
-Cycle Control Hub is a website for a user that allows to user add, update, delete, buy bikes management activities. This project implement a comprehensive Bike Management Dashboard, providing the tools to efficiently manage the bike inventory, track sales, and analyze sales history. It is built with React, MongoDB, Mongoose, NodeJS, Tailwind css, shadcn, Redux, sonner, react-hook-form and etc.
+Cycle Control Hub is a website for three role admin, seller and buyer that allows to various management activities. This project implement a comprehensive Bike Management Dashboard, providing the tools to efficiently manage the bike inventory, track sales, and analyze sales history. It is built with React, MongoDB, Mongoose, NodeJS, Tailwind css, shadcn, Redux, sonner, react-hook-form and etc.
 
 ### Main Features
-- [x] USER can
-  - [x] Add new bike
-  - [x] Purchase the bike
-  - [x] View all bike purchase bike
-  - [x] Purchase cancel the bike
-  - [x] Also Delete, update this bike
-  - [x] Manage Bikes
-  - [x] View users all Bikes
-  - [x] View login user all Bikes
-- [x] View sales history categorized by:
-  - [x] Weekly
-  - [x] Daily
-  - [x] Monthly
-  - [x] Yearly
-- [x] Bike Filtering (Implement on the bike management page)
+- [x] Admin can
+  - [x] Bike Management Functionality:
+    - [x] Add new bike
+    - [x] View all seals bike
+    - [x] Delete, update the bike
+    - [x] View sales history categorized by:
+      - [x] Weekly
+      - [x] Daily
+      - [x] Monthly
+      - [x] Yearly
+  - [x] User Management Functionality:
+    - [x] Change users role and delete users
+  - [x] Coupon Management Functionality:
+    - [x] Create coupon for offering price in service
+    - [x] Coupon Management (update, and delete coupon)
+  - [x] Service Management Functionality:
+    - [x] Create Service Category for bike servicing
+    - [x] In service category assign coupon, delete coupon and delete service category
+    - [x] All service management(confirm and denied service) for bike servicing
+
+- [x] Seller can
+  - [x] Seals Management Functionality where seller can sell bikes
+  - [x] Bike Management Functionality:
+    - [x] Add new bike
+    - [x] View all my bike and manage bike(Delete, update the bike)
+    - [x] Bulk delete bikes where seller can delete his bike
+    - [x] View sales history categorized by:
+      - [x] Weekly
+      - [x] Daily
+      - [x] Monthly
+      - [x] Yearly
+  - [x] Maintenance and Servicing Management Functionality:
+    - [x] Services Management (where seller can confirm or denied a service)
+    - [x] View all his all bikes services history
+
+- [x] Buyer can
+  - [x] View available bikes where buyer can buy and search bikes
+  - [x] Sales Management Functionality:
+    - [x] Confirmed purchased bike where buyer can confirm or cancel purse bike
+    - [x] Purchase history where buyer show his confirmed purchased bikes history
+  - [x] Maintenance and Servicing Management Functionality:
+    - [x] Request For Maintenance where buyer can request for maintenance bikes
+    - [x] Service Management where buyer can update, pay, delete service and add coupon for get offer price service
+    - [x] Service History where buyer can view his all services history
 
 ### Main Issues
 * In this time there have no major issues.

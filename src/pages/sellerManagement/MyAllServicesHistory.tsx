@@ -84,7 +84,7 @@ import {
         title: "Payed status",
         dataIndex: "isPayed",
         render: (_, { isPayed }: any) => {
-          const color = isPayed === true ? 'blue' :  'red' ; 
+          const color = isPayed === "paid" ? 'blue' :  'red' ; 
           return (
             <Tag color={color}>
               {isPayed.toUpperCase()}

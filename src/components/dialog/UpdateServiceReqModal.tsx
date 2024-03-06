@@ -87,6 +87,7 @@ const UpdateServiceReqModal = ({ item }: any) => {
         type="link"
         size="small"
         style={{ fontSize: "12px", fontWeight: "600" }}
+        disabled={item?.isPayed === true}
       >
         Update
       </Button>

@@ -66,7 +66,7 @@ const ServicePaymentModal = ({ paymentInfo }: any) => {
         type="link"
         size="small"
         style={{ fontSize: "12px", fontWeight: "600" }}
-        disabled ={paymentInfo?.isPayed === true}
+        disabled ={paymentInfo?.isPayed === true || paymentInfo?.status === "denied"}
       >
         Add coupon
       </Button>

@@ -6,7 +6,7 @@ import {
   usePaymentBikeServiceMutation,
 } from "@/redux/features/service/serviceApi";
 import { TService } from "@/types";
-import { Button, Pagination, Table, TableColumnsType, TableProps } from "antd";
+import { Button, Pagination, Table, TableColumnsType, TableProps, Tag } from "antd";
 import moment from "moment";
 import { useState } from "react";
 import { toast } from "sonner";
@@ -17,7 +17,6 @@ export type TTableData = Pick<
   | "nextServicingDate"
   | "maintenanceRecords"
   | "serviceBill"
-  | "status"
   | "notes"
 >;
 
@@ -43,7 +42,6 @@ const ServiceManagement = () => {
 
       //* Payment service into DB
       paymentService(id);
-      // console.log(id);
     } catch (error: any) {
       toast.error(error?.message, { id: toastId });
     }
@@ -116,13 +114,18 @@ const ServiceManagement = () => {
       title: "Service Bill",
       dataIndex: "serviceBill",
     },
-    {
-      title: "Last Servicing",
-      dataIndex: "lastServicingDate",
-    },
-    {
-      title: "Next Servicing",
-      dataIndex: "nextServicingDate",
+    { 
+      title: " Service Status",
+      key: "status",
+      dataIndex: "status",
+      render: (_, { status }: any) => {
+        const color = status === 'confirm' ? 'blue' : status === 'denied' ? 'red' : 'geekblue'; 
+        return (
+          <Tag color={color}>
+            {status.toUpperCase()}
+          </Tag>
+        );
+      },
     },
     {
       title: "Update Request",
@@ -148,7 +151,7 @@ const ServiceManagement = () => {
             onClick={() => handlePaymentService(item?.key)}
             type="link"
             size="small"
-            disabled={item?.isPayed === true}
+            disabled={item?.isPayed === true || item.status === "denied"}
           >
             pay
           </Button>
@@ -167,7 +170,7 @@ const ServiceManagement = () => {
               danger
               type="link"
               size="small"
-              disabled={item.status !== "pending"}
+              disabled={item.status !== "pending" && item.status !== "denied"}
             >
               Delete
             </Button>
