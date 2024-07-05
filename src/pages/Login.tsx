@@ -8,6 +8,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { toast } from "sonner";
 import ReusableForm from "../components/form/ReusableForm";
 import ReusableInput from "../components/form/ReusableInput";
+import { verifyToken } from "@/utils/verifyToken";
 
 const Login = () => {
   const defaultValues = {
@@ -15,11 +16,9 @@ const Login = () => {
     password: "user123",
   };
 
-  const [login, { data }] = useLoginMutation();
+  const [login] = useLoginMutation();
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
-  
-  console.log("Login User Data:", data);
 
   const onSubmit = async (data: FieldValues) => {
     const toastId = toast.loading("Login in!");
@@ -32,10 +31,14 @@ const Login = () => {
 
       // * Login user here
       const res = await login(userInfo).unwrap();
-      // * set user credentials in state
-      dispatch(setUser({ user: res?.data?.user, token: res?.data?.token }));
+      console.log("Login User: ",res);
+
+      const user = verifyToken(res.data.accessToken);
       
-      const userRole = res?.data?.user?.role;
+      // * set user credentials in state
+      dispatch(setUser({ user: user, token: res?.data?.accessToken }));
+      
+      const userRole = (user as any)?.role;
       
       //* Navigate user based on user role
       if (userRole === 'admin') {
@@ -69,7 +72,7 @@ const Login = () => {
       <Row
         justify="center"
         align="middle"
-        style={{ height: "100vh", marginTop: "-30vh" }}
+        style={{marginTop: "25px"}}
       >
         <ReusableForm onSubmit={onSubmit} defaultValues={defaultValues}>
           <ReusableInput type="email" name="email" label="Email" />

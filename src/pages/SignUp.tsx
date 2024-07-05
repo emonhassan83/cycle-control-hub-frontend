@@ -8,26 +8,16 @@ import { Link, useNavigate } from "react-router-dom";
 import { toast } from "sonner";
 import ReusableInput from "../components/form/ReusableInput";
 import ReusableForm from "../components/form/ReusableForm";
-import ReusableSelect from "@/components/form/ReusableSelect";
+import { verifyToken } from "@/utils/verifyToken";
 
 const SignUp = () => {
   const defaultValues = {
-    username: "susan_anderson",
+    name: "susan_anderson",
     email: "susan.anderson@example.com",
     password: "user123",
-    role: "seller"
+    contactNumber: "+123-567-382-5678",
+    address: "123 Main St, Anytown, USA"
   };
-
-  const userRoleOptions = [
-    {
-      value: "seller",
-      label: "seller",
-    },
-    {
-      value: "buyer",
-      label: "buyer",
-    },
-  ]
 
   const [saveUser] = useSaveUserMutation();
   const dispatch = useAppDispatch();
@@ -37,31 +27,22 @@ const SignUp = () => {
     const toastId = toast.loading("User sign in!");
 
     try {
-      const saveUserInfo = {
-        username: data.username,
-        email: data.email,
-        password: data.password,
-        role: data.role,
-      };
-
-      const user = {
-        name: data.name,
-        email: data.email,
-        role: data.role,
-      };
-
       //* Save to db and wait for the response
-      const res = await saveUser(saveUserInfo).unwrap();
-      dispatch(setUser({ user: user, token: res.data.token }));
+      const res = await saveUser(data).unwrap();
+      console.log("register user: ", res);
 
-      const userRole = res?.data?.user?.role;
+      const user = verifyToken(res.data.accessToken);
+
+      dispatch(setUser({ user: user, token: res?.data?.accessToken }));
+
+      const userRole = (user as any)?.role;
 
       //* Navigate user based on user role
-      if (userRole === 'seller') {
+      if (userRole === "seller") {
         navigate(`/${userRole}/view-sales-bike`);
       }
 
-      if (userRole === 'buyer') {
+      if (userRole === "buyer") {
         navigate(`/${userRole}/available-bikes`);
       }
 
@@ -82,17 +63,18 @@ const SignUp = () => {
         alignItems: "center",
       }}
     >
-      <h5 style={{ paddingTop: "18vh", fontSize: "20px" }}>SignUp page</h5>
+      <h5 style={{ paddingTop: "6vh", fontSize: "20px" }}>SignUp page</h5>
       <Row
         justify="center"
         align="middle"
-        style={{ height: "100vh", marginTop: "-25vh" }}
+        style={{width: "100%", marginTop: "25px" }}
       >
         <ReusableForm onSubmit={onSubmit} defaultValues={defaultValues}>
-          <ReusableInput type="text" name="username" label="User Name" />
+          <ReusableInput type="text" name="name" label="User Name" />
           <ReusableInput type="email" name="email" label="Email" />
           <ReusableInput type="password" name="password" label="Password" />
-          <ReusableSelect name="role" options={userRoleOptions} label="Choose Role" />
+          <ReusableInput type="text" name="contactNumber" label="Contact Number" />
+          <ReusableInput type="text" name="address" label="Address" />
           <p>
             <small>
               Already have an account? <Link to="/login">Login</Link>

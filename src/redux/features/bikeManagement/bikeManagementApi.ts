@@ -14,7 +14,7 @@ const bikeManagementApi = baseApi.injectEndpoints({
         }
         
         return {
-          url: "/bike-management/all-sales-bike",
+          url: "/bike/all-sales-bike",
           method: "GET",
           params: params,
         };
@@ -38,7 +38,7 @@ const bikeManagementApi = baseApi.injectEndpoints({
           });
         }
         return {
-          url: "/bike-management/all-bike",
+          url: "/bike/all-bike",
           method: "GET",
           params: params,
         };
@@ -62,7 +62,7 @@ const bikeManagementApi = baseApi.injectEndpoints({
           });
         }
         return {
-          url: "/bike-management/all-seller-bike",
+          url: "/bike/all-seller-bike",
           method: "GET",
           params: params,
         };
@@ -79,7 +79,7 @@ const bikeManagementApi = baseApi.injectEndpoints({
     postBike: builder.mutation({
       query: (bikeData) => {
         return {
-          url: "/bike-management/add-bike",
+          url: "/bike/add-bike",
           method: "POST",
           body: bikeData,
         };
@@ -90,7 +90,7 @@ const bikeManagementApi = baseApi.injectEndpoints({
     saleBike: builder.mutation({
       query: (option) => {
         return {
-          url: `/bike-management/sales-bike/${option.id}`,
+          url: `/bike/sales-bike/${option.id}`,
           method: "PUT",
           body: option?.bikeData,
         };
@@ -101,7 +101,7 @@ const bikeManagementApi = baseApi.injectEndpoints({
     updateBike: builder.mutation({
       query: (option) => {
         return {
-          url: `/bike-management/update-bike/${option.id}`,
+          url: `/bike/update-bike/${option.id}`,
           method: "PUT",
           body: option.bikeData,
         };
@@ -112,7 +112,7 @@ const bikeManagementApi = baseApi.injectEndpoints({
     deleteBike: builder.mutation({
       query: (id) => {
         return {
-          url: `/bike-management/delete-bike/${id}`,
+          url: `/bike/delete-bike/${id}`,
           method: "DELETE",
         };
       },
@@ -122,7 +122,7 @@ const bikeManagementApi = baseApi.injectEndpoints({
     bulkDeleteBikes: builder.mutation({
       query: (data) => {
         return {
-          url: `/bike-management/bulk-delete-bikes`,
+          url: `/bike/bulk-delete-bikes`,
           method: "DELETE",
           body: data,
         };
