@@ -3,7 +3,7 @@ import { TPurchaseBike } from "@/types";
 import { Button, Pagination, Table, TableColumnsType, TableProps } from "antd";
 import { useState } from "react";
 
-export type TTableData = Pick<TPurchaseBike, "buyerName">;
+export type TTableData = Pick<TPurchaseBike, "buyingDate">;
 
 const PurchasesHistory= () => {
   const [page, setPage] = useState(1);
@@ -15,18 +15,19 @@ const PurchasesHistory= () => {
   const confirmedBikes = bikeData?.data?.filter(
     (bike: any) => bike.isConfirmed
   );
-
+  // console.log(confirmedBikes);
+  
   const metaData = bikeData?.meta;
 
-  const tableData = confirmedBikes?.map(({ _id, buyerName, seller, bike }) => ({
+  const tableData = confirmedBikes?.map(({ _id, buyer, seller, bike }) => ({
     key: _id,
-    buyerName,
-    sellerName: seller.username,
-    bikeName: bike.productName as string,
-    productImage: bike.productImage as string,
+    buyerName: buyer.name,
+    sellerName: seller.name,
+    bikeName: bike.name as string,
+    image: bike.image as string,
     model: bike.model as string,
     price: bike.price as number,
-    purchaseDate: bike.updatedAt as string,
+    buyingDate: bike.buyingDate as string,
   }));
 
   const columns: TableColumnsType<TTableData> = [
@@ -36,10 +37,10 @@ const PurchasesHistory= () => {
     },
     {
       title: "Product Image",
-      dataIndex: "productImage",
+      dataIndex: "image",
       key: "x1",
-      render: (productImage: string) => (
-        <img src={productImage} alt="Bike" style={{ width: 50, height: 50 }} />
+      render: (image: string) => (
+        <img src={image} alt="Bike" style={{ width: 50, height: 50 }} />
       ),
     },
     {

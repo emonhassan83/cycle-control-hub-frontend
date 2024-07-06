@@ -1,5 +1,5 @@
 import AddABike from "../pages/sellerManagement/AddABike";
-import SalesHistory from "../pages/admin/SalesHistory";
+// import SalesHistory from "../pages/admin/SalesHistory";
 import ViewMyBikes from "../pages/sellerManagement/ViewMyBikes";
 import BulkDeleteBikes from "@/pages/sellerManagement/BulkDeleteBikes";
 import ViewSalesBikes from "@/pages/sellerManagement/ViewSalesBikes";
@@ -30,11 +30,11 @@ export const sellerPaths = [
         path: "bulk-delete-bikes",
         element: <BulkDeleteBikes />,
       },
-      {
-        name: "Sales History",
-        path: "sales-history",
-        element: <SalesHistory />,
-      },
+      // {
+      //   name: "Sales History",
+      //   path: "sales-history",
+      //   element: <SalesHistory />,
+      // },
     ],
   },
   {

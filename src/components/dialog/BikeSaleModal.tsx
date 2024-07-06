@@ -14,7 +14,7 @@ type TDefaultValues = {
 };
 
 const BikeSaleModal = ({ bike }: any) => {
-  console.log(bike);
+  // console.log(bike);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [saleBike] = useSaleBikeMutation();
 
@@ -23,26 +23,27 @@ const BikeSaleModal = ({ bike }: any) => {
     quantity: Number(bike?.quantity),
   };
 
-  const handleSubmit = (data: FieldValues) => {
+  const handleSubmit = async (data: FieldValues) => {
     const toastId = toast.loading("Bike sale in!");
 
     try {
-      const option = {
-        id: bike?._id,
-        bikeData: {
-          seller: bike?.seller._id,
-          quantity: Number(data?.quantity),
-          saleDate: data?.saleDate,
-        },
+      const bikeData = {
+        bikeId: bike?._id,
+        quantity: Number(data?.quantity),
+        saleDate: data?.saleDate,
       };
 
       //* Sale bike functionality
-      saleBike(option),
+      const res = await saleBike(bikeData).unwrap();
+      // console.log(res);
+
+      if (res.success) {
         toast.success("Bike sale in successfully!", {
           id: toastId,
           duration: 2000,
         });
-      setIsModalOpen(false);
+        setIsModalOpen(false);
+      }
     } catch (error: any) {
       toast.error(error.message, { id: toastId });
       setIsModalOpen(false);
@@ -70,11 +71,7 @@ const BikeSaleModal = ({ bike }: any) => {
       >
         <ReusableForm onSubmit={handleSubmit} defaultValues={defaultValues}>
           <ReusableInput type="text" name="seller" label="Seller Name" />
-          <ReusableInput
-            type="text"
-            name="quantity"
-            label="Product Quantity"
-          />
+          <ReusableInput type="text" name="quantity" label="Product Quantity" />
           <ReusableDatePiker name="saleDate" label="Date" />
           <Button htmlType="submit" size="small">
             Sale Bike

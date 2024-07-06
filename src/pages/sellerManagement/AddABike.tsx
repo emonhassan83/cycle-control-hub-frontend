@@ -10,9 +10,9 @@ import { selectCurrentUser } from "@/redux/features/auth/authSlice";
 import { useNavigate } from "react-router-dom";
 
 type TDefaultValues = {
-  productName?: string;
-  productImage?: string;
-  productQuantity?: number;
+  name?: string;
+  image?: string;
+  quantity?: number;
   price?: number;
   brand?: string;
   model?: string;
@@ -22,6 +22,7 @@ type TDefaultValues = {
   frameMaterial?: string;
   suspensionType?: string;
   manufacturerCountry?: string;
+  description?: string;
 };
 
 const productTypeOptions = [
@@ -59,7 +60,7 @@ const productSizeOptions = [
   {
     value: "Small",
     label: "Small",
-  }
+  },
 ];
 
 const productMaterialOptions = [
@@ -70,7 +71,7 @@ const productMaterialOptions = [
   {
     value: "Metal",
     label: "Metal",
-  }
+  },
 ];
 
 const AddABike = () => {
@@ -78,15 +79,16 @@ const AddABike = () => {
   const { bike } = useAppSelector((state) => state.bike) as unknown as {
     bike?: TDefaultValues;
   };
-  const [addBike, { data}] = usePostBikeMutation();
+  const [addBike, { data }] = usePostBikeMutation();
   const navigate = useNavigate();
 
-  console.log("data ------>", data);
+  console.log("Add Bike Data: ", data);
+  // console.log("User Data: ", user);
 
   const defaultValues: TDefaultValues = {
-    productName: bike?.productName,
-    productImage: bike?.productImage,
-    productQuantity: bike?.productQuantity,
+    name: bike?.name,
+    image: bike?.image,
+    quantity: bike?.quantity,
     price: bike?.price,
     brand: bike?.brand,
     model: bike?.model,
@@ -96,6 +98,7 @@ const AddABike = () => {
     frameMaterial: bike?.frameMaterial,
     suspensionType: bike?.suspensionType,
     manufacturerCountry: bike?.manufacturerCountry,
+    description: bike?.description
   };
 
   const onSubmit = async (data: FieldValues) => {
@@ -112,24 +115,30 @@ const AddABike = () => {
 
       const bikeData = {
         ...data,
-        // seller: user?._id,
-        productQuantity: Number(data?.productQuantity),
+        seller: user?._id,
+        quantity: Number(data?.quantity),
         price: Number(data?.price),
         releaseDate,
-        isSale: false,
       };
-  
-      // * add bike in database
-      addBike(bikeData);
-      toast.success("Add bike in database successfully!", {id: toastId, duration: 3000 });
 
-      //* Navigate to user in view bikes page
-      navigate(`/${user?.role}/view-bikes`);
+      // * add bike in database
+      const res = await addBike(bikeData).unwrap();
+      // console.log(res);
       
+      if (res?.success) {
+        toast.success("Add bike in database successfully!", {
+          id: toastId,
+          duration: 3000,
+        });
+  
+        //* Navigate to user in view bikes page
+        navigate(`/${user?.role}/view-bikes`);
+      }
     } catch (error: any) {
       toast.error(error.message, { id: toastId });
     }
   };
+
   return (
     <div
       style={{
@@ -153,19 +162,11 @@ const AddABike = () => {
               justifyContent: "space-between",
             }}
           >
+            <ReusableInput type="text" name="name" label="Product Name" />
+            <ReusableInput type="text" name="image" label="Product Image" />
             <ReusableInput
               type="text"
-              name="productName"
-              label="Product Name"
-            />
-            <ReusableInput
-              type="text"
-              name="productImage"
-              label="Product Image"
-            />
-            <ReusableInput
-              type="text"
-              name="productQuantity"
+              name="quantity"
               label="Product Quantity"
             />
           </div>
@@ -190,17 +191,17 @@ const AddABike = () => {
           >
             <div>
               <ReusableSelect
-            label="Product Type"
-            name="type"
-            options={productTypeOptions}
-          />
+                label="Product Type"
+                name="type"
+                options={productTypeOptions}
+              />
             </div>
             <div>
               <ReusableSelect
-            label="Size"
-            name="size"
-            options={productSizeOptions}
-          />
+                label="Size"
+                name="size"
+                options={productSizeOptions}
+              />
             </div>
             <ReusableInput type="text" name="color" label="Color" />
           </div>
@@ -213,10 +214,10 @@ const AddABike = () => {
           >
             <div>
               <ReusableSelect
-            label="Frame Material"
-            name="frameMaterial"
-            options={productMaterialOptions}
-          />
+                label="Frame Material"
+                name="frameMaterial"
+                options={productMaterialOptions}
+              />
             </div>
             <ReusableInput
               type="text"
@@ -229,6 +230,11 @@ const AddABike = () => {
               label="Manufacturer Country"
             />
           </div>
+          <ReusableInput
+            type="text"
+            name="description"
+            label="Product description"
+          />
           <Button style={{}} htmlType="submit">
             Add
           </Button>

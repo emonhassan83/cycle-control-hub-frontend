@@ -1,5 +1,5 @@
 import { selectCurrentUser } from "@/redux/features/auth/authSlice";
-import { useGetBikesQuery } from "@/redux/features/bikeManagement/bikeManagementApi";
+import { useGetSalesBikesQuery } from "@/redux/features/bikeManagement/bikeManagementApi";
 import { usePurchaseBikesMutation } from "@/redux/features/salesManagement/salesManagementApi";
 import { Input, Row } from "antd";
 import { SearchProps } from "antd/es/input";
@@ -14,9 +14,9 @@ import { generatePDF } from "@/components/PDF/generatePDF";
 
 export type TTableData = Pick<
   TBike,
-  | "productName"
-  | "productImage"
-  | "productQuantity"
+  | "name"
+  | "image"
+  | "quantity"
   | "price"
   | "brand"
   | "model"
@@ -37,7 +37,7 @@ const PurchasesBike = () => {
     data: bikeData,
     isFetching,
     isLoading,
-  } = useGetBikesQuery([
+  } = useGetSalesBikesQuery([
     { name: "page", value: page },
     {
       name: "searchTerm",
@@ -46,6 +46,7 @@ const PurchasesBike = () => {
     ...params,
   ]);
   const [purchaseBikes] = usePurchaseBikesMutation();
+  // console.log(bikeData);
 
   const metaData = bikeData?.meta;
 
@@ -54,9 +55,7 @@ const PurchasesBike = () => {
 
     try {
       const bikePurchaseInfo = {
-        buyerName: (user as { username?: string })?.username,
-        buyerEmail: user?.email,
-        phoneNumber: 1234567890,
+        buyer: user?._id,
         seller: bike.seller._id,
         bike: bike.key,
         buyingDate: new Date().toISOString(),
@@ -64,22 +63,24 @@ const PurchasesBike = () => {
       };
 
       //* Purchase bike from database
-      purchaseBikes(bikePurchaseInfo);
+      const res = await purchaseBikes(bikePurchaseInfo).unwrap();
+      // console.log(res);
 
+      if (res.success) {
       toast.success("Bike purchase successfully!", {
         id: toastId,
         duration: 2000,
       });
 
-      // Generate PDF invoice
+      //* Generate PDF invoice
       const invoiceDetails = {
-        buyerName: user?.username,
+        buyerName: user?.name,
         buyerEmail: user?.email,
-        bikeName: bike.productName,
+        bikeName: bike.name,
         bikeModel: bike.model,
         bikeColor: bike.color,
         manufacturerCountry: bike.manufacturerCountry,
-        sellerName: bike.seller.username,
+        sellerName: bike.seller.name,
         sellerEmail: bike.seller.email,
         quantity: 1,
         price: bike.price,
@@ -88,11 +89,12 @@ const PurchasesBike = () => {
         totalAmount: bike.price + 100,
       };
 
-      // Generate PDF blob
+      //* Generate PDF blob
       const pdfBlob = await generatePDF(invoiceDetails);
 
-      // Save PDF as a file
-      saveAs(pdfBlob, "invoice.pdf");
+      //* Save PDF as a file
+      saveAs(pdfBlob, "bike_invoice.pdf");
+      }
     } catch (error: any) {
       toast.error(error.message, { id: toastId });
     }
@@ -103,9 +105,9 @@ const PurchasesBike = () => {
   const tableData = bikeData?.data?.map(
     ({
       _id,
-      productName,
-      productImage,
-      productQuantity,
+      name,
+      image,
+      quantity,
       price,
       brand,
       model,
@@ -118,9 +120,9 @@ const PurchasesBike = () => {
       manufacturerCountry,
     }) => ({
       key: _id,
-      productName,
-      productImage,
-      productQuantity,
+      name,
+      image,
+      quantity,
       price,
       brand,
       model,
@@ -137,11 +139,11 @@ const PurchasesBike = () => {
   const columns: TableColumnsType<TTableData> = [
     {
       title: "Product",
-      dataIndex: "productName",
+      dataIndex: "name",
     },
     {
       title: "Product Image",
-      dataIndex: "productImage",
+      dataIndex: "image",
       key: "x1",
       render: (productImage: string) => (
         <img src={productImage} alt="Bike" style={{ width: 50, height: 50 }} />
@@ -149,7 +151,7 @@ const PurchasesBike = () => {
     },
     {
       title: "Quantity",
-      dataIndex: "productQuantity",
+      dataIndex: "quantity",
     },
     {
       title: "Price",

@@ -8,9 +8,9 @@ import { toast } from "sonner";
 import ReusableSelect from "../form/ReusableSelect";
 
 type TDefaultValues = {
-  productName?: string;
-  productImage?: string;
-  productQuantity?: number;
+  name?: string;
+  image?: string;
+  quantity?: number;
   price?: number;
   type?: string;
 };
@@ -41,12 +41,14 @@ const productTypeOptions = [
 const BikeUpdateDialog = ({ bike }: any) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [updateBike, { data }] = useUpdateBikeMutation();
-  console.log("data----->", data);
+  console.log("Update Bike Data: ", data);
+  console.log({bike});
+  
   
   const defaultValues: TDefaultValues = {
-    productName: bike?.productName,
-    productImage: bike?.productImage,
-    productQuantity: Number(bike?.productQuantity),
+    name: bike?.name,
+    image: bike?.image,
+    quantity: Number(bike?.quantity),
     price: bike?.price,
     type: bike?.type,
   };
@@ -58,9 +60,9 @@ const BikeUpdateDialog = ({ bike }: any) => {
       const option = {
         id: bike?.key,
         bikeData: {
-          productName: data.productName,
+          name: data.name,
           productImage: data.productImage,
-          productQuantity: Number(data?.productQuantity),
+          quantity: Number(data?.quantity),
           price: Number(data.price),
         },
       };
@@ -104,15 +106,15 @@ const BikeUpdateDialog = ({ bike }: any) => {
         footer={null}
       >
         <ReusableForm onSubmit={handleSubmit} defaultValues={defaultValues}>
-          <ReusableInput type="text" name="productName" label="Product Name" />
+          <ReusableInput type="text" name="name" label="Product Name" />
           <ReusableInput
             type="text"
-            name="productImage"
+            name="image"
             label="Product Image"
           />
           <ReusableInput
             type="text"
-            name="productQuantity"
+            name="quantity"
             label="Product Quantity"
           />
           <ReusableInput type="text" name="price" label="Product Price" />

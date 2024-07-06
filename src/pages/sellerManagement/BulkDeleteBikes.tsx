@@ -12,23 +12,26 @@ import { toast } from "sonner";
 const BulkDeleteBikes = () => {
   const { data: bikeData } = useGetSellerBikesQuery(undefined);
   const [deleteBike, { data }] = useBulkDeleteBikesMutation();
-  console.log("Bulk delete Bikes------>", data);
-  
+  console.log("Bulk delete Bikes: ", data);
+
   const bikeOptions = bikeData?.data?.map((item: any) => ({
     value: item._id,
-    label: item.productName,
+    label: item.name,
   }));
 
-  const handleSubmit = (data: FieldValues) => {
+  const handleSubmit = async (data: FieldValues) => {
     const toastId = toast.loading("Bikes Delate in!");
-  
+
     try {
       //* Delete bikes from the database
-      deleteBike(data)
-      toast.success("Bikes Delate in successfully!", {
-        id: toastId,
-        duration: 2000,
-      });
+      const res = await deleteBike(data).unwrap();
+
+      if (res.success) {
+        toast.success("Bikes Delate in successfully!", {
+          id: toastId,
+          duration: 2000,
+        });
+      }
     } catch (error: any) {
       toast.error(error?.message);
     }

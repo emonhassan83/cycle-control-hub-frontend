@@ -21,42 +21,52 @@ const ConfirmPurchase = () => {
   const [cancelPurchaseBikes] = useCancelPurchaseBikesMutation();
 
   const metaData = bikeData?.meta;
-  
+  // console.log(bikeData);
+
   const tableData = bikeData?.data?.map(({ seller, bike, isConfirmed }) => ({
     key: bike?._id,
-    sellerName: seller?.username,
-    bikeName: bike?.productName as string,
-    productImage: bike?.productImage as string,
-    quantity: bike?.productQuantity as number,
+    sellerName: seller?.name,
+    name: bike?.name as string,
+    image: bike?.image as string,
+    quantity: bike?.quantity as number,
     price: bike?.price as number,
     isConfirmed,
   }));
 
-  const handleConfirmPurchaseBike = (id: string) => {
+  const handleConfirmPurchaseBike = async (id: string) => {
     const toastId = toast.loading("Trying to confirm purchase bike!");
 
     //* Confirm status to sent to server
     try {
-      conformPurchaseBikes(id);
-      toast.success("Confirm purchase bike successfully!", {
-        id: toastId,
-        duration: 2000,
-      });
+      const res = await conformPurchaseBikes(id).unwrap();
+      console.log("Confirm res: ", res);
+
+      if ((res as any)?.success) {
+        toast.success("Confirm purchase bike successfully!", {
+          id: toastId,
+          duration: 2000,
+        });
+      }
     } catch (error: any) {
       toast.error(error.message, { id: toastId });
+      console.error(error.message);
     }
   };
 
-  const handleCancelPurchaseBike = (id: string) => {
+  const handleCancelPurchaseBike = async (id: string) => {
     const toastId = toast.loading("Trying to cancel purchase bike!");
 
     //* Confirm status to sent to server
     try {
-      cancelPurchaseBikes(id);
-      toast.success("Cancel purchase bike successfully!", {
-        id: toastId,
-        duration: 2000,
-      });
+      const res = await cancelPurchaseBikes(id);
+      console.log("Cancel res: ", res);
+
+      if ((res as any).success) {
+        toast.success("Cancel purchase bike successfully!", {
+          id: toastId,
+          duration: 2000,
+        });
+      }
     } catch (error: any) {
       toast.error(error.message, { id: toastId });
     }
@@ -65,13 +75,15 @@ const ConfirmPurchase = () => {
   const columns: TableColumnsType<TTableData> = [
     {
       title: "Bike name",
-      dataIndex: "bikeName",
+      dataIndex: "name",
     },
     {
       title: "Product Image",
-      dataIndex: "productImage",
+      dataIndex: "image",
       key: "x1",
-      render: (productImage: string) => <img src={productImage} alt="Bike" style={{ width: 50, height: 50 }} />,
+      render: (image: string) => (
+        <img src={image} alt="Bike" style={{ width: 50, height: 50 }} />
+      ),
     },
     {
       title: "Seller",

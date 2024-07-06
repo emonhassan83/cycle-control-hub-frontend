@@ -14,9 +14,9 @@ import { selectCurrentUser } from "@/redux/features/auth/authSlice";
 
 export type TTableData = Pick<
   TBike,
-  | "productName"
-  | "productImage"
-  | "productQuantity"
+  | "name"
+  | "image"
+  | "quantity"
   | "price"
   | "brand"
   | "model"
@@ -26,6 +26,7 @@ export type TTableData = Pick<
   | "frameMaterial"
   | "suspensionType"
   | "manufacturerCountry"
+  | "description"
 >;
 
 const ViewMyBikes = () => {
@@ -67,9 +68,9 @@ const ViewMyBikes = () => {
   const tableData = bikeData?.data?.map(
     ({
       _id,
-      productName,
-      productImage,
-      productQuantity,
+      name,
+      image,
+      quantity,
       price,
       brand,
       model,
@@ -80,11 +81,12 @@ const ViewMyBikes = () => {
       frameMaterial,
       suspensionType,
       manufacturerCountry,
+      description
     }) => ({
       key: _id,
-      productName,
-      productImage,
-      productQuantity,
+      name,
+      image,
+      quantity,
       price,
       brand,
       model,
@@ -95,17 +97,18 @@ const ViewMyBikes = () => {
       frameMaterial,
       suspensionType,
       manufacturerCountry,
+      description
     })
   );
 
   const columns: TableColumnsType<TTableData> = [
     {
       title: "Product",
-      dataIndex: "productName",
+      dataIndex: "name",
     },
     {
       title: "Quantity",
-      dataIndex: "productQuantity",
+      dataIndex: "quantity",
     },
     {
       title: "Price",

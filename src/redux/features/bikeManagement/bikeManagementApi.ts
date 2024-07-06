@@ -88,11 +88,13 @@ const bikeManagementApi = baseApi.injectEndpoints({
     }),
 
     saleBike: builder.mutation({
-      query: (option) => {
+      query: (bikeData) => {
+        console.log(bikeData);
+        
         return {
-          url: `/bike/sales-bike/${option.id}`,
-          method: "PUT",
-          body: option?.bikeData,
+          url: `/bike/create-sale-bike`,
+          method: "POST",
+          body: bikeData,
         };
       },
       invalidatesTags: ["Bike"],

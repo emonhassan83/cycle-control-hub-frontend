@@ -14,6 +14,7 @@ type TSeller = {
     name: string;
     image: string;
     seller: TSeller;
+    description: string;
     quantity: number;
     price: number;
     releaseDate: string;

@@ -31,29 +31,33 @@ const Login = () => {
 
       // * Login user here
       const res = await login(userInfo).unwrap();
-      console.log("Login User: ",res);
+      console.log("Login User: ", res);
 
       const user = verifyToken(res.data.accessToken);
-      
-      // * set user credentials in state
-      dispatch(setUser({ user: user, token: res?.data?.accessToken }));
-      
       const userRole = (user as any)?.role;
-      
-      //* Navigate user based on user role
-      if (userRole === 'admin') {
-        navigate(`/${userRole}/admin-dashboard`);
-      }
 
-      if (userRole === 'seller') {
-        navigate(`/${userRole}/view-sales-bike`);
-      }
+      if (res.success) {
+        // * set user credentials in state
+        dispatch(setUser({ user: user, token: res?.data?.accessToken }));
 
-      if (userRole === 'buyer') {
-        navigate(`/${userRole}/available-bikes`);
-      }
+        //* Navigate user based on user role
+        if (userRole === "admin") {
+          navigate(`/${userRole}/admin-dashboard`);
+        }
 
-      toast.success("Login in successfully!", { id: toastId, duration: 2000 });
+        if (userRole === "seller") {
+          navigate(`/${userRole}/view-sales-bike`);
+        }
+
+        if (userRole === "buyer") {
+          navigate(`/${userRole}/available-bikes`);
+        }
+
+        toast.success("Login in successfully!", {
+          id: toastId,
+          duration: 2000,
+        });
+      }
     } catch (error: any) {
       toast.error(error.message, { id: toastId });
     }
@@ -69,11 +73,7 @@ const Login = () => {
       }}
     >
       <h5 style={{ paddingTop: "18vh", fontSize: "20px" }}>Login Here</h5>
-      <Row
-        justify="center"
-        align="middle"
-        style={{marginTop: "25px"}}
-      >
+      <Row justify="center" align="middle" style={{ marginTop: "25px" }}>
         <ReusableForm onSubmit={onSubmit} defaultValues={defaultValues}>
           <ReusableInput type="email" name="email" label="Email" />
 
@@ -83,7 +83,9 @@ const Login = () => {
               Don't have an account? <Link to="/sign-up">Register</Link>
             </small>
           </p>
-          <Button style={{ marginTop: "20px" }} htmlType="submit">Login</Button>
+          <Button style={{ marginTop: "20px" }} htmlType="submit">
+            Login
+          </Button>
         </ReusableForm>
       </Row>
     </div>

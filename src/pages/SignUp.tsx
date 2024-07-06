@@ -16,7 +16,7 @@ const SignUp = () => {
     email: "susan.anderson@example.com",
     password: "user123",
     contactNumber: "+123-567-382-5678",
-    address: "123 Main St, Anytown, USA"
+    address: "123 Main St, Anytown, USA",
   };
 
   const [saveUser] = useSaveUserMutation();
@@ -32,26 +32,28 @@ const SignUp = () => {
       console.log("register user: ", res);
 
       const user = verifyToken(res.data.accessToken);
-
-      dispatch(setUser({ user: user, token: res?.data?.accessToken }));
-
       const userRole = (user as any)?.role;
 
-      //* Navigate user based on user role
-      if (userRole === "seller") {
-        navigate(`/${userRole}/view-sales-bike`);
-      }
+      if (res.success) {
+        dispatch(setUser({ user: user, token: res?.data?.accessToken }));
 
-      if (userRole === "buyer") {
-        navigate(`/${userRole}/available-bikes`);
-      }
+        //* Navigate user based on user role
+        if (userRole === "seller") {
+          navigate(`/${userRole}/view-sales-bike`);
+        }
 
-      toast.success("User sign up successfully!", {
-        id: toastId,
-        duration: 2000,
-      });
+        if (userRole === "buyer") {
+          navigate(`/${userRole}/available-bikes`);
+        }
+
+        toast.success("User sign up successfully!", {
+          id: toastId,
+          duration: 2000,
+        });
+      }
     } catch (error: any) {
       toast.error(error.message, { id: toastId });
+      console.error(error.message);
     }
   };
   return (
@@ -67,13 +69,17 @@ const SignUp = () => {
       <Row
         justify="center"
         align="middle"
-        style={{width: "100%", marginTop: "25px" }}
+        style={{ width: "100%", marginTop: "25px" }}
       >
         <ReusableForm onSubmit={onSubmit} defaultValues={defaultValues}>
           <ReusableInput type="text" name="name" label="User Name" />
           <ReusableInput type="email" name="email" label="Email" />
           <ReusableInput type="password" name="password" label="Password" />
-          <ReusableInput type="text" name="contactNumber" label="Contact Number" />
+          <ReusableInput
+            type="text"
+            name="contactNumber"
+            label="Contact Number"
+          />
           <ReusableInput type="text" name="address" label="Address" />
           <p>
             <small>
