@@ -10,7 +10,7 @@ import { RootState } from "../store";
 import { toast } from "sonner";
 
 // const baseUrl = "https://cycle-control-hub-server.vercel.app/api";
-const baseUrl = "http://localhost:5000/api";
+const baseUrl = "http://localhost:5000/api/v1";
 const baseQuery = fetchBaseQuery({
   baseUrl: baseUrl,
   prepareHeaders: (headers, { getState }) => {

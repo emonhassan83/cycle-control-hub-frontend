@@ -11,10 +11,10 @@ type TSeller = {
   
  export type TBike = {
     _id: string;
-    productName: string;
-    productImage: string;
+    name: string;
+    image: string;
     seller: TSeller;
-    productQuantity: number;
+    quantity: number;
     price: number;
     releaseDate: string;
     brand: string;

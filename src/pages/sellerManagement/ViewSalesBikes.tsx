@@ -1,5 +1,5 @@
 import BikeCard from "@/components/card/BikeCard";
-import { useGetSalesBikesQuery } from "@/redux/features/bikeManagement/bikeManagementApi";
+import { useGetBikesQuery } from "@/redux/features/bikeManagement/bikeManagementApi";
 import { Pagination, Row } from "antd";
 import { Input } from 'antd';
 import { SearchProps } from "antd/es/input";
@@ -10,7 +10,7 @@ const ViewSalesBikes = () => {
   const [page, setPage] = useState(1);
   const [searchTerm, setSearchTerm] = useState("");
   
-  const { data: bikeData, isLoading } = useGetSalesBikesQuery([
+  const { data: bikeData, isLoading } = useGetBikesQuery([
     {
     name: "page",
     value: page,

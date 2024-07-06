@@ -4,25 +4,23 @@ import ReusableInput from "../form/ReusableInput";
 import ReusableForm from "../form/ReusableForm";
 import { FieldValues } from "react-hook-form";
 import { toast } from "sonner";
-import { useAppSelector } from "@/redux/hooks";
-import { selectCurrentUser } from "@/redux/features/auth/authSlice";
 import ReusableDatePiker from "../form/ReusableDatePiker";
 import { useSaleBikeMutation } from "@/redux/features/bikeManagement/bikeManagementApi";
 
 type TDefaultValues = {
-  buyer?: string;
-  productQuantity: number;
+  seller?: string;
+  quantity: number;
   date?: string;
 };
 
 const BikeSaleModal = ({ bike }: any) => {
-  const user = useAppSelector(selectCurrentUser);
+  console.log(bike);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [saleBike] = useSaleBikeMutation();
 
   const defaultValues: TDefaultValues = {
-    buyer: user?.username,
-    productQuantity: Number(bike?.productQuantity),
+    seller: bike?.seller.name,
+    quantity: Number(bike?.quantity),
   };
 
   const handleSubmit = (data: FieldValues) => {
@@ -32,10 +30,9 @@ const BikeSaleModal = ({ bike }: any) => {
       const option = {
         id: bike?._id,
         bikeData: {
-          sellerName: user?._id,
-          productQuantity: Number(data?.productQuantity),
+          seller: bike?.seller._id,
+          quantity: Number(data?.quantity),
           saleDate: data?.saleDate,
-          isSale: true,
         },
       };
 
@@ -72,10 +69,10 @@ const BikeSaleModal = ({ bike }: any) => {
         footer={null}
       >
         <ReusableForm onSubmit={handleSubmit} defaultValues={defaultValues}>
-          <ReusableInput type="text" name="buyer" label="Buyer Name" />
+          <ReusableInput type="text" name="seller" label="Seller Name" />
           <ReusableInput
             type="text"
-            name="productQuantity"
+            name="quantity"
             label="Product Quantity"
           />
           <ReusableDatePiker name="saleDate" label="Date" />

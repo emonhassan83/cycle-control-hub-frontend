@@ -3,19 +3,18 @@ const { Meta } = Card;
 import BikeSaleModal from "../dialog/BikeSaleModal";
 
 const BikeCard = ({ bike }: any) => {
-  const { productImage, productName, productQuantity } =
-    bike;
+  const { image, name, quantity } = bike;
 
   return (
     <div className="my-4">
       <Card
         hoverable
         style={{ width: 280 }}
-        cover={<img alt="Bike Image" src={productImage} />}
+        cover={<img alt="Bike Image" src={image} />}
       >
         <Meta
-          title={productName}
-          description={`Quantity: ${productQuantity}`}
+          title={name}
+          description={`Quantity: ${quantity}`}
         />
         <BikeSaleModal bike={bike} />
       </Card>

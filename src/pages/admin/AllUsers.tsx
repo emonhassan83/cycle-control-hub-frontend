@@ -8,15 +8,11 @@ import { Button, Pagination, Table, TableColumnsType, TableProps } from "antd";
 import { useState } from "react";
 import { toast } from "sonner";
 
-export type TTableData = Pick<TUser, "username" | "email" | "role">;
+export type TTableData = Pick<TUser, "name" | "email" | "role">;
 
 const AllUsers = () => {
   const [page, setPage] = useState(1);
-  const {
-    data: users,
-    isFetching,
-    isLoading,
-  } = useGetUsersQuery([
+  const userQuery = [
     {
       name: "page",
       value: page,
@@ -25,7 +21,9 @@ const AllUsers = () => {
       name: "sort",
       value: "role",
     },
-  ]);
+  ];
+
+  const { data: users, isFetching, isLoading } = useGetUsersQuery(userQuery); //* new to set testing
   const [changeRole] = useChangeUserRoleMutation();
   const [deleteUser] = useDeleteUserMutation();
 
@@ -95,7 +93,7 @@ const AllUsers = () => {
         id: toastId,
         duration: 2000,
       });
-      
+
       //* Delete user into DB
       deleteUser(userId);
     } catch (error: any) {
@@ -103,9 +101,9 @@ const AllUsers = () => {
     }
   };
 
-  const tableData = users?.data?.map(({ _id, username, email, role }) => ({
+  const tableData = users?.data?.map(({ _id, name, email, role }) => ({
     key: _id,
-    username,
+    name,
     email,
     role,
   }));
@@ -113,7 +111,7 @@ const AllUsers = () => {
   const columns: TableColumnsType<TTableData> = [
     {
       title: "user",
-      dataIndex: "username",
+      dataIndex: "name",
     },
     {
       title: "Email",
@@ -140,7 +138,7 @@ const AllUsers = () => {
               onClick={() => handleMakeAdmin(item?.key)}
               type="link"
               size="small"
-              disabled={item.role === 'admin'}
+              disabled={item.role === "admin"}
             >
               admin
             </Button>
@@ -149,7 +147,7 @@ const AllUsers = () => {
               onClick={() => handleMakeSeller(item?.key)}
               type="link"
               size="small"
-              disabled={item.role === "admin" || item.role === 'seller'}
+              disabled={item.role === "admin" || item.role === "seller"}
             >
               seller
             </Button>
@@ -158,7 +156,7 @@ const AllUsers = () => {
               onClick={() => handleMakeBuyer(item?.key)}
               type="link"
               size="small"
-              disabled={item.role === "admin" || item.role === 'buyer'}
+              disabled={item.role === "admin" || item.role === "buyer"}
             >
               buyer
             </Button>
