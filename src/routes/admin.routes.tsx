@@ -4,7 +4,6 @@ import CouponManagement from "@/pages/admin/CouponManagement";
 import CreateCoupon from "@/pages/admin/CreateCoupon";
 import ServiceCategories from "@/pages/admin/ServiceCategories";
 import SalesHistory from "@/pages/admin/SalesHistory";
-import ViewSalesBikes from "@/pages/sellerManagement/ViewSalesBikes";
 import CreateServiceCategory from "@/pages/admin/CreateServiceCategory";
 import AllServicesManagement from "@/pages/admin/AllServicesManagement";
 import AllBikesManagement from "@/pages/admin/AllBikesManagement";
@@ -23,16 +22,6 @@ export const adminPaths = [
   {
     name: "Bike Management",
     children: [
-      // {
-      //   name: "Add a bike",
-      //   path: "add-a-bike",
-      //   element: <AddABike />,
-      // },
-      {
-        name: "View sales bikes",
-        path: "view-sales-bike",
-        element: <ViewSalesBikes />,
-      },
       {
         name: "All Bikes Management",
         path: "all-bikes-management",

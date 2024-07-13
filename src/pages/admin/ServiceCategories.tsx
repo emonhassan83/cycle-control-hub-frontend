@@ -21,6 +21,7 @@ const ServiceCategories = () => {
     isFetching,
     isLoading,
   } = useGetAllServiceCategoriesQuery(undefined);
+  
   const [removeCoupon] = useRemoveCouponInServiceMutation();
   const [deleteService] = useDeleteAServiceCategoryMutation();
 
@@ -64,7 +65,7 @@ const ServiceCategories = () => {
       serviceName,
       price,
       serviceDetails,
-      serviceProvider: serviceProvider.username,
+      serviceProvider: serviceProvider?.name,
       couponName: coupon ? coupon?.name : "Not Available coupon",
     })
   );

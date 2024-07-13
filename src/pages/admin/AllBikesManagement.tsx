@@ -35,7 +35,6 @@ const AllMyBikesManagement = () => {
     isFetching,
     isLoading,
   } = useGetBikesQuery([{ name: "page", value: page }, ...params]);
-  console.log(bikeData);
   
   const [deleteBike] = useDeleteBikeMutation();
   const dispatch = useAppDispatch();

@@ -34,7 +34,7 @@ const ConfirmPurchase = () => {
   }));
 
   const handleConfirmPurchaseBike = async (id: string) => {
-    const toastId = toast.loading("Trying to confirm purchase bike!");
+    // const toastId = toast.loading("Trying to confirm purchase bike!");
 
     //* Confirm status to sent to server
     try {
@@ -43,12 +43,11 @@ const ConfirmPurchase = () => {
 
       if ((res as any)?.success) {
         toast.success("Confirm purchase bike successfully!", {
-          id: toastId,
           duration: 2000,
         });
       }
     } catch (error: any) {
-      toast.error(error.message, { id: toastId });
+      toast.error(error.message, {duration: 2000, });
       console.error(error.message);
     }
   };

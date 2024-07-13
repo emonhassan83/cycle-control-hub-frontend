@@ -25,7 +25,7 @@ const CreateCoupon = () => {
   
   const applicableBikeOptions = bikeData?.data?.map((item) => ({
     value: item._id,
-    label: `${item.productName}`,
+    label: `${item.name}`,
   }));
 
   const onSubmit = async (data: FieldValues) => {

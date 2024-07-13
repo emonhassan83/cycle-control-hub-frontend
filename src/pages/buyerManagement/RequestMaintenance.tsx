@@ -20,7 +20,7 @@ const RequestMaintenance = () => {
 
   const applicableBikeOptions = confirmedBikes?.map((item) => ({
     value: item.bike._id,
-    label: `${item.bike.productName}`,
+    label: `${item.bike.name}`,
   }));
 
   const applicableServiceOptions = serviceData?.data?.map((item) => ({
