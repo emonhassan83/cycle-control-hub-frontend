@@ -19,19 +19,13 @@ const persistConfig = {
   storage,
 };
 
-const persistConfig2 = {
-  key: "bike",
-  storage,
-};
-
 const persistedAuthReducer = persistReducer(persistConfig, authReducer);
-const persistedBikeReducer = persistReducer(persistConfig2, bikeReducer);
 
 export const store = configureStore({
   reducer: {
     [baseApi.reducerPath]: baseApi.reducer,
     auth: persistedAuthReducer,
-    bike: persistedBikeReducer,
+    bike: bikeReducer,
   },
   middleware: (getDefaultMiddlewares) =>
     getDefaultMiddlewares({

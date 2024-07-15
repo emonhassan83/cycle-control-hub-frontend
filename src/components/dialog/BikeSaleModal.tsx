@@ -14,12 +14,13 @@ type TDefaultValues = {
 };
 
 const BikeSaleModal = ({ bike }: any) => {
-  // console.log(bike);
+  console.log(bike);
+  
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [saleBike] = useSaleBikeMutation();
 
   const defaultValues: TDefaultValues = {
-    seller: bike?.seller.name,
+    seller: bike?.seller?.name,
     quantity: Number(bike?.quantity),
   };
 
@@ -28,7 +29,7 @@ const BikeSaleModal = ({ bike }: any) => {
 
     try {
       const bikeData = {
-        bikeId: bike?._id,
+        bikeId: bike?.key,
         quantity: Number(data?.quantity),
         saleDate: data?.saleDate,
       };

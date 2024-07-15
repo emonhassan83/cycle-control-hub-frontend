@@ -93,9 +93,13 @@ const AllUsers = () => {
         id: toastId,
         duration: 2000,
       });
-
+      
+      const userInfo = {
+        userId,
+        isDeleted: true,
+      }
       //* Delete user into DB
-      deleteUser(userId);
+      deleteUser(userInfo);
     } catch (error: any) {
       toast.error(error?.message, { id: toastId });
     }

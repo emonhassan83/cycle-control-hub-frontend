@@ -43,9 +43,11 @@ const AllMyBikesManagement = () => {
   const metaData = bikeData?.meta;
 
   const handleCreateVariant = (bike: TBike) => {
+    console.log(bike);
+    
     //* set bike credentials in state
     dispatch(setBike(bike));
-    navigate(`/${bike?.seller?.role}/add-a-bike`);
+    navigate(`/admin/add-a-bike`);
   };
 
   const handleDeleteBike = (id: string) => {
@@ -79,6 +81,7 @@ const AllMyBikesManagement = () => {
       frameMaterial,
       suspensionType,
       manufacturerCountry,
+      description
     }) => ({
       key: _id,
       name,
@@ -94,6 +97,7 @@ const AllMyBikesManagement = () => {
       frameMaterial,
       suspensionType,
       manufacturerCountry,
+      description
     })
   );
 

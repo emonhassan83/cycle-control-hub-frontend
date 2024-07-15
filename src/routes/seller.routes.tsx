@@ -1,16 +1,10 @@
 import AddABike from "../pages/sellerManagement/AddABike";
 import ViewMyBikes from "../pages/sellerManagement/ViewMyBikes";
 import BulkDeleteBikes from "@/pages/sellerManagement/BulkDeleteBikes";
-import ViewSalesBikes from "@/pages/sellerManagement/ViewSalesBikes";
 import ServicesManagement from "@/pages/sellerManagement/ServicesManagement";
 import MyAllServicesHistory from "@/pages/sellerManagement/MyAllServicesHistory";
 
 export const sellerPaths = [
-  {
-    name: "View sales bikes",
-    path: "view-sales-bike",
-    element: <ViewSalesBikes />,
-  },
   {
     name: "Bike Management",
     children: [

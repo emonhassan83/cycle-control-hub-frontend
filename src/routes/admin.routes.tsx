@@ -7,6 +7,7 @@ import SalesHistory from "@/pages/admin/SalesHistory";
 import CreateServiceCategory from "@/pages/admin/CreateServiceCategory";
 import AllServicesManagement from "@/pages/admin/AllServicesManagement";
 import AllBikesManagement from "@/pages/admin/AllBikesManagement";
+import AddABike from "@/pages/sellerManagement/AddABike";
 
 export const adminPaths = [
   {
@@ -22,6 +23,11 @@ export const adminPaths = [
   {
     name: "Bike Management",
     children: [
+      {
+        name: "Add a bike",
+        path: "add-a-bike",
+        element: <AddABike />,
+      },
       {
         name: "All Bikes Management",
         path: "all-bikes-management",

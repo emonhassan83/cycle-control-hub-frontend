@@ -83,7 +83,7 @@ const AddABike = () => {
   const navigate = useNavigate();
 
   console.log("Add Bike Data: ", data);
-  // console.log("User Data: ", user);
+  console.log("Bike Data: ", bike);
 
   const defaultValues: TDefaultValues = {
     name: bike?.name,

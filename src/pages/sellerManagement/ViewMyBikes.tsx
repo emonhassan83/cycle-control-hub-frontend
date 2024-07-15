@@ -1,16 +1,8 @@
-import {
-  useDeleteBikeMutation,
-  useGetSellerBikesQuery,
-} from "../../redux/features/bikeManagement/bikeManagementApi";
-import { Button, Pagination, Table, TableColumnsType, TableProps } from "antd";
-import BikeUpdateDialog from "@/components/dialog/BikeUpdateDialog";
-import { useNavigate } from "react-router-dom";
-import { useAppDispatch, useAppSelector } from "@/redux/hooks";
-import { setBike } from "@/redux/features/bikeManagement/bikeSlice";
-import { toast } from "sonner";
+import { useGetSellerBikesQuery } from "../../redux/features/bikeManagement/bikeManagementApi";
+import { Pagination, Table, TableColumnsType, TableProps } from "antd";
 import { TBike, TQueryParam } from "@/types";
 import { useState } from "react";
-import { selectCurrentUser } from "@/redux/features/auth/authSlice";
+import BikeSaleModal from "@/components/dialog/BikeSaleModal";
 
 export type TTableData = Pick<
   TBike,
@@ -32,38 +24,13 @@ export type TTableData = Pick<
 const ViewMyBikes = () => {
   const [params, setParams] = useState<TQueryParam[]>([]);
   const [page, setPage] = useState(1);
-  const user = useAppSelector(selectCurrentUser);
   const {
     data: bikeData,
     isFetching,
     isLoading,
   } = useGetSellerBikesQuery([{ name: "page", value: page }, ...params]);
-  const [deleteBike] = useDeleteBikeMutation();
-  const dispatch = useAppDispatch();
-  const navigate = useNavigate();
 
   const metaData = bikeData?.meta;
-
-  const handleCreateVariant = (bike: TBike) => {
-    //* set bike credentials in state and navigate page
-    dispatch(setBike(bike));
-    navigate(`/${user?.role}/add-a-bike`);
-  };
-
-  const handleDeleteBike = (id: string) => {
-    const toastId = toast.loading("Try to delete bike in database!");
-    try {
-      // * delete bike into database
-      deleteBike(id);
-
-      toast.success("Delete bike in database successfully!", {
-        id: toastId,
-        duration: 3000,
-      });
-    } catch (error: any) {
-      toast.error(error.message, { id: toastId });
-    }
-  };
 
   const tableData = bikeData?.data?.map(
     ({
@@ -81,7 +48,7 @@ const ViewMyBikes = () => {
       frameMaterial,
       suspensionType,
       manufacturerCountry,
-      description
+      description,
     }) => ({
       key: _id,
       name,
@@ -93,11 +60,11 @@ const ViewMyBikes = () => {
       type,
       size,
       color,
-      seller: seller.username as string,
+      seller: seller,
       frameMaterial,
       suspensionType,
       manufacturerCountry,
-      description
+      description,
     })
   );
 
@@ -182,43 +149,11 @@ const ViewMyBikes = () => {
     },
     {
       title: "Action",
-      key: "x1",
-      render: (item) => {
-        return (
-          <div>
-            <Button onClick={() => handleCreateVariant(item)} size="small">
-              Create Variant
-            </Button>
-          </div>
-        );
-      },
-    },
-    {
-      title: "Action",
       key: "x2",
       render: (item) => {
         return (
           <div>
-            <BikeUpdateDialog bike={item} />
-          </div>
-        );
-      },
-    },
-    {
-      title: "Action",
-      key: "x3",
-      render: (item) => {
-        return (
-          <div>
-            <Button
-              danger
-              onClick={() => handleDeleteBike(item.key)}
-              type="link"
-              size="small"
-              style={{ fontSize: "12px", fontWeight: "600" }}
-            >
-              Delete
-            </Button>
+            <BikeSaleModal bike={item} />
           </div>
         );
       },
@@ -256,7 +191,10 @@ const ViewMyBikes = () => {
 
   return (
     <>
-    <h1 className="text-xs font-semibold text-red-500 text-center mb-6">*Warning: You can only update, delete and create-variant your bike where you can't not modify other bikes in Database*</h1>
+      <h1 className="text-xs font-semibold text-red-500 text-center mb-6">
+        *Warning: You can only update, delete and create-variant your bike where
+        you can't not modify other bikes in Database*
+      </h1>
       <Table
         loading={isFetching}
         columns={columns}
