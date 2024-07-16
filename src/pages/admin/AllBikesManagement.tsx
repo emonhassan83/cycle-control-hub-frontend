@@ -31,16 +31,18 @@ const AllMyBikesManagement = () => {
   const [params, setParams] = useState<TQueryParam[]>([]);
   const [page, setPage] = useState(1);
   const {
-    data: bikeData,
+    data,
     isFetching,
     isLoading,
   } = useGetBikesQuery([{ name: "page", value: page }, ...params]);
+  const bikeData = (data?.data)?.filter((bike) => !bike.isDeleted);
+  // console.log(users);
   
   const [deleteBike] = useDeleteBikeMutation();
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
 
-  const metaData = bikeData?.meta;
+  const metaData = (bikeData as any)?.meta;
 
   const handleCreateVariant = (bike: TBike) => {
     console.log(bike);
@@ -65,7 +67,7 @@ const AllMyBikesManagement = () => {
     }
   };
 
-  const tableData = bikeData?.data?.map(
+  const tableData = bikeData?.map(
     ({
       _id,
       name,

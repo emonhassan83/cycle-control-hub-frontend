@@ -17,14 +17,14 @@ export type TTableData = Pick<
 const CouponManagement = () => {
   const [page, setPage] = useState(1);
   const {
-    data: couponData,
+    data,
     isFetching,
     isLoading,
   } = useGetAllCouponsQuery(undefined);
   const [deleteCoupon] = useDeleteCouponMutation();
-  
+  const couponData = (data?.data)?.filter((coupon) => !coupon.isDeleted);
 
-  const metaData = couponData?.meta;
+  const metaData = data?.meta;
 
   const handleDeleteCoupon = (id: string) => {
     const toastId = toast.loading("Delete coupon in!");
@@ -41,7 +41,7 @@ const CouponManagement = () => {
     }
   };
 
-  const tableData = couponData?.data?.map(
+  const tableData = couponData?.map(
     ({
       _id,
       name,

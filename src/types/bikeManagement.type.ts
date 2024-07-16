@@ -26,6 +26,7 @@ type TSeller = {
     frameMaterial: string;
     suspensionType: string;
     manufacturerCountry: string;
+    isDeleted?: boolean;
     createdAt: string;
     updatedAt: string;
   }

@@ -42,11 +42,11 @@ const Login = () => {
 
         //* Navigate user based on user role
         if (userRole === "admin") {
-          navigate(`/${userRole}/admin-dashboard`);
+          navigate(`/${userRole}/all-users`);
         }
 
         if (userRole === "seller") {
-          navigate(`/${userRole}/view-sales-bike`);
+          navigate(`/${userRole}/view-bikes`);
         }
 
         if (userRole === "buyer") {

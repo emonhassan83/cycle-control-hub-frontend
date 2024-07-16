@@ -23,10 +23,13 @@ const AllUsers = () => {
     },
   ];
 
-  const { data: users, isFetching, isLoading } = useGetUsersQuery(userQuery); //* new to set testing
+  const { data, isFetching, isLoading } = useGetUsersQuery(userQuery); //* new to set testing
   const [changeRole] = useChangeUserRoleMutation();
   const [deleteUser] = useDeleteUserMutation();
-
+  
+  const users = (data?.data as any)?.filter((user: any) => !user.isDeleted);
+  // console.log(users);
+  
   const metaData = users?.meta;
 
   const handleMakeAdmin = (userId: string) => {
@@ -105,7 +108,7 @@ const AllUsers = () => {
     }
   };
 
-  const tableData = users?.data?.map(({ _id, name, email, role }) => ({
+  const tableData = users?.map(({ _id, name, email, role }: TUser) => ({
     key: _id,
     name,
     email,

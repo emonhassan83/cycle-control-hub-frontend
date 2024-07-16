@@ -7,6 +7,7 @@ export type TServiceCategory = {
     price: number
     serviceDetails: string
     serviceProvider: TUser
+    isDeleted?: boolean
     createdAt: string
     updatedAt: string
     __v: number

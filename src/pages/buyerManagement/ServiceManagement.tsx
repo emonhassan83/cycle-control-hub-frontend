@@ -81,7 +81,7 @@ const ServiceManagement = () => {
       serviceId: service._id,
       bike: bike.name,
       bikeId: bike._id,
-      serviceProvider: serviceProvider.name,
+      serviceProvider: serviceProvider?.name || "UnKnown",
       maintenanceRecords,
       serviceBill,
       lastServicingDate: moment(lastServicingDate).format("MMM D, YYYY"),
@@ -151,7 +151,7 @@ const ServiceManagement = () => {
             onClick={() => handlePaymentService(item?.key)}
             type="link"
             size="small"
-            disabled={item?.isPayed === true || item.status === "denied"}
+            disabled={item?.isPayed === true || item.status === "denied" || item.status === "PENDING"}
           >
             pay
           </Button>
@@ -170,7 +170,7 @@ const ServiceManagement = () => {
               danger
               type="link"
               size="small"
-              disabled={item.status !== "pending" && item.status !== "denied"}
+              disabled={item.status !== "pending" && item.status !== "denied" || item.isPayed}
             >
               Delete
             </Button>

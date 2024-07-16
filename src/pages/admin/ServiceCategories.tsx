@@ -17,7 +17,7 @@ export type TTableData = Pick<
 const ServiceCategories = () => {
   const [page, setPage] = useState(1);
   const {
-    data: serviceData,
+    data,
     isFetching,
     isLoading,
   } = useGetAllServiceCategoriesQuery(undefined);
@@ -25,7 +25,8 @@ const ServiceCategories = () => {
   const [removeCoupon] = useRemoveCouponInServiceMutation();
   const [deleteService] = useDeleteAServiceCategoryMutation();
 
-  const metaData = serviceData?.meta;
+  const serviceData = (data?.data)?.filter((service) => !service.isDeleted);
+  const metaData = data?.meta;
 
   const handleDeleteCoupon = (id: string) => {
     const toastId = toast.loading("Remove to assign coupon in!");
@@ -59,7 +60,7 @@ const ServiceCategories = () => {
     }
   };
 
-  const tableData = serviceData?.data?.map(
+  const tableData = serviceData?.map(
     ({ _id, serviceName, price, serviceDetails, serviceProvider, coupon }) => ({
       key: _id,
       serviceName,

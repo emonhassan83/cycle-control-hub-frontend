@@ -1,4 +1,3 @@
-import AdminDashboard from "@/pages/admin/AdminDashboard";
 import AllUsers from "@/pages/admin/AllUsers";
 import CouponManagement from "@/pages/admin/CouponManagement";
 import CreateCoupon from "@/pages/admin/CreateCoupon";
@@ -10,11 +9,11 @@ import AllBikesManagement from "@/pages/admin/AllBikesManagement";
 import AddABike from "@/pages/sellerManagement/AddABike";
 
 export const adminPaths = [
-  {
-    name: "Dashboard",
-    path: "admin-dashboard",
-    element: <AdminDashboard />,
-  },
+  // {
+  //   name: "Dashboard",
+  //   path: "admin-dashboard",
+  //   element: <AdminDashboard />,
+  // },
   {
     name: "User Management",
     path: "all-users",

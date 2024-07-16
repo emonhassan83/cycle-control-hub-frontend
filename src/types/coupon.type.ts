@@ -5,6 +5,7 @@ export type TCoupon = {
     discountType: string
     discountAmount: number
     applicableBikeIds: string[]
+    isDeleted?: boolean
     createdAt: string
     updatedAt: string
   }
