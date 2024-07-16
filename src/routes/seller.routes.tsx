@@ -1,6 +1,6 @@
 import AddABike from "../pages/sellerManagement/AddABike";
 import ViewMyBikes from "../pages/sellerManagement/ViewMyBikes";
-import BulkDeleteBikes from "@/pages/sellerManagement/BulkDeleteBikes";
+// import BulkDeleteBikes from "@/pages/sellerManagement/BulkDeleteBikes";
 import ServicesManagement from "@/pages/sellerManagement/ServicesManagement";
 import MyAllServicesHistory from "@/pages/sellerManagement/MyAllServicesHistory";
 
@@ -18,11 +18,11 @@ export const sellerPaths = [
         path: "view-bikes",
         element: <ViewMyBikes />,
       },
-      {
-        name: "Bulk delete bikes",
-        path: "bulk-delete-bikes",
-        element: <BulkDeleteBikes />,
-      },
+      // {
+      //   name: "Bulk delete bikes",
+      //   path: "bulk-delete-bikes",
+      //   element: <BulkDeleteBikes />,
+      // },
     ],
   },
   {

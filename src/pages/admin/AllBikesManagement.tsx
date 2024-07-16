@@ -10,6 +10,7 @@ import { setBike } from "@/redux/features/bikeManagement/bikeSlice";
 import { toast } from "sonner";
 import { TBike, TQueryParam } from "@/types";
 import { useState } from "react";
+import BikeSaleModal from "@/components/dialog/BikeSaleModal";
 
 export type TTableData = Pick<
   TBike,
@@ -42,8 +43,8 @@ const AllMyBikesManagement = () => {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
 
-  const metaData = (bikeData as any)?.meta;
-
+  const metaData = data?.meta;
+  
   const handleCreateVariant = (bike: TBike) => {
     console.log(bike);
     
@@ -95,7 +96,7 @@ const AllMyBikesManagement = () => {
       type,
       size,
       color,
-      seller: seller._id,
+      seller: seller,
       frameMaterial,
       suspensionType,
       manufacturerCountry,
@@ -183,7 +184,18 @@ const AllMyBikesManagement = () => {
       ],
     },
     {
-      title: "Action",
+      title: "Sale",
+      key: "x2",
+      render: (item) => {
+        return (
+          <div className="-mt-3">
+            <BikeSaleModal bike={item} />
+          </div>
+        );
+      },
+    },
+    {
+      title: "Add New",
       key: "x1",
       render: (item) => {
         return (

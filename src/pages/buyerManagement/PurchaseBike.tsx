@@ -93,7 +93,7 @@ const PurchasesBike = () => {
       const pdfBlob = await generatePDF(invoiceDetails);
 
       //* Save PDF as a file
-      saveAs(pdfBlob, "bike_invoice.pdf");
+      saveAs(pdfBlob, `${bike.name}-bike-invoice.pdf`);
       }
     } catch (error: any) {
       toast.error(error.message, { id: toastId });

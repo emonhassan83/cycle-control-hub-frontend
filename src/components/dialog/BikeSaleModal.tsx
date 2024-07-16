@@ -10,18 +10,18 @@ import { useSaleBikeMutation } from "@/redux/features/bikeManagement/bikeManagem
 type TDefaultValues = {
   seller?: string;
   quantity: number;
-  date?: string;
+  // saleDate?: Date;
 };
 
 const BikeSaleModal = ({ bike }: any) => {
-  console.log(bike);
+  // console.log(bike);
   
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [saleBike] = useSaleBikeMutation();
 
   const defaultValues: TDefaultValues = {
     seller: bike?.seller?.name,
-    quantity: Number(bike?.quantity),
+    quantity: 10,
   };
 
   const handleSubmit = async (data: FieldValues) => {
@@ -61,7 +61,7 @@ const BikeSaleModal = ({ bike }: any) => {
 
   return (
     <>
-      <Button onClick={showModal} size="middle" style={{ marginTop: "16px" }}>
+      <Button onClick={showModal} size="small" style={{ marginTop: "16px" }}>
         Sale Bike
       </Button>
       <Modal

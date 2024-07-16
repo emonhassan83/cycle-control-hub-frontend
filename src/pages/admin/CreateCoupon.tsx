@@ -39,12 +39,14 @@ const CreateCoupon = () => {
       };
 
       //* Coupon create from database
-      createCoupon(couponData);
+      const res = await createCoupon(couponData).unwrap();
 
-      toast.success("Coupon create successfully!", {
-        id: toastId,
-        duration: 2000,
-      });
+      if (res?.success) {
+        toast.success("Coupon create successfully!", {
+          id: toastId,
+          duration: 2000,
+        });
+      }
     } catch (error: any) {
       toast.error(error?.message, { id: toastId });
     }
