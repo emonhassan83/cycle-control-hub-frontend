@@ -4,17 +4,22 @@ import { Controller } from "react-hook-form";
 type TDatePikerProps = {
   name: string;
   label?: string;
+  width?: string;
 };
 
-const ReusableDatePiker = ({ name, label }: TDatePikerProps) => {
+const ReusableDatePiker = ({
+  name,
+  label,
+  width = "100%",
+}: TDatePikerProps) => {
   return (
     <div style={{ marginBottom: "5px" }}>
       <Controller
         name={name}
         render={({ field }) => (
-        <Form.Item label={label}>
-        <DatePicker {...field} size="middle" style={{width: "100%"}} />
-        </Form.Item>
+          <Form.Item label={label}>
+            <DatePicker {...field} size="middle" style={{ width }} />
+          </Form.Item>
         )}
       />
     </div>

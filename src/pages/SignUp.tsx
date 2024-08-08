@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { Button, Row } from "antd";
+import { Button, Col, Row } from "antd";
 import { FieldValues } from "react-hook-form";
 import { useAppDispatch } from "../redux/hooks";
 import { setUser } from "../redux/features/auth/authSlice";
@@ -9,6 +9,7 @@ import { toast } from "sonner";
 import ReusableInput from "../components/form/ReusableInput";
 import ReusableForm from "../components/form/ReusableForm";
 import { verifyToken } from "@/utils/verifyToken";
+import ReusableToggleInput from "@/components/form/ReusableToggleInput";
 
 const SignUp = () => {
   const defaultValues = {
@@ -63,34 +64,84 @@ const SignUp = () => {
         flexDirection: "column",
         justifyContent: "center",
         alignItems: "center",
+        height: "100vh",
       }}
     >
-      <h5 style={{ paddingTop: "6vh", fontSize: "20px" }}>SignUp page</h5>
-      <Row
-        justify="center"
-        align="middle"
-        style={{ width: "100%", marginTop: "25px" }}
+      <div
+        style={{
+          border: "1px solid #5e5e5e",
+          borderRadius: "8px",
+          padding: "40px",
+          boxShadow: "0 4px 8px rgba(0, 0, 0, 0.1)",
+        }}
       >
-        <ReusableForm onSubmit={onSubmit} defaultValues={defaultValues}>
-          <ReusableInput type="text" name="name" label="User Name" />
-          <ReusableInput type="email" name="email" label="Email" />
-          <ReusableInput type="password" name="password" label="Password" />
-          <ReusableInput
-            type="text"
-            name="contactNumber"
-            label="Contact Number"
-          />
-          <ReusableInput type="text" name="address" label="Address" />
-          <p>
-            <small>
-              Already have an account? <Link to="/login">Login</Link>
-            </small>
-          </p>
-          <Button style={{ marginTop: "20px" }} htmlType="submit">
-            Register
-          </Button>
-        </ReusableForm>
-      </Row>
+        <h5 style={{ fontSize: "20px", textAlign: "center" }}>Sign Up</h5>
+        <Row justify="center" align="middle" style={{ marginTop: "25px" }}>
+          <ReusableForm onSubmit={onSubmit} defaultValues={defaultValues}>
+            <ReusableInput
+              type="text"
+              name="name"
+              label="User Name"
+              width="400px"
+            />
+            <ReusableInput
+              type="email"
+              name="email"
+              label="Email"
+              width="400px"
+            />
+            <ReusableToggleInput
+              type="password"
+              name="password"
+              label="Password"
+              width="400px"
+            />
+            <Row gutter={16} style={{ marginTop: "20px" }}>
+              <Col span={12}>
+                <ReusableInput
+                  type="text"
+                  name="contactNumber"
+                  label="Contact Number"
+                  width="100%"
+                />
+              </Col>
+              <Col span={12}>
+                <ReusableInput
+                  type="text"
+                  name="address"
+                  label="Address"
+                  width="100%"
+                />
+              </Col>
+            </Row>
+            <Button
+              style={{
+                marginTop: "20px",
+                width: "100%",
+                borderRadius: "4px",
+                backgroundColor: "#1890ff",
+                color: "#fff",
+              }}
+              htmlType="submit"
+            >
+              Register
+            </Button>
+            <p
+              style={{
+                fontSize: "12px",
+                textAlign: "center",
+                marginTop: "10px",
+                fontWeight: "bold",
+              }}
+            >
+              Already have an account?{" "}
+              <Link to="/login" style={{ textDecoration: "underline" }}>
+                Login
+              </Link>
+            </p>
+          </ReusableForm>
+        </Row>
+      </div>
     </div>
   );
 };

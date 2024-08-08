@@ -10,6 +10,7 @@ import ReusableForm from "../components/form/ReusableForm";
 import ReusableInput from "../components/form/ReusableInput";
 import { verifyToken } from "@/utils/verifyToken";
 import ShowCredentialButton from "@/components/buttons/ShowCredentialsButton";
+import ReusableToggleInput from "@/components/form/ReusableToggleInput";
 
 const Login = () => {
   const defaultValues = {
@@ -91,7 +92,11 @@ const Login = () => {
               name="email"
               label="Email"
             />
-            <ReusableInput type="password" name="password" label="Password" />
+            <ReusableToggleInput
+              type="password"
+              name="password"
+              label="Password"
+            />
             <Button
               style={{
                 marginTop: "20px",
@@ -105,10 +110,20 @@ const Login = () => {
               Login
             </Button>
             <Divider style={{ borderColor: "#5e5e5e" }}>OR</Divider>
-            
+
             <ShowCredentialButton />
-            <p style={{fontSize: '12px', textAlign: 'center', marginTop: '10px'}}>
-              Don't have an account? <Link to="/sign-up">Register</Link>
+            <p
+              style={{
+                fontSize: "12px",
+                textAlign: "center",
+                marginTop: "10px",
+                fontWeight: "bold"
+              }}
+            >
+              Don't have an account?{" "}
+              <Link to="/sign-up" style={{ textDecoration: "underline" }}>
+                Register
+              </Link>
             </p>
           </ReusableForm>
         </Row>

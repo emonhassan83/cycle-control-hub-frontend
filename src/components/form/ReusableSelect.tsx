@@ -7,6 +7,7 @@ type TPHSelectProps = {
   options: { value: string; label: string; disabled?: boolean }[] | undefined;
   disabled?: boolean;
   mode?: "multiple" | undefined;
+  width?: string;
 };
 
 const ReusableSelect = ({
@@ -15,6 +16,7 @@ const ReusableSelect = ({
   options,
   disabled,
   mode,
+  width = "100%",
 }: TPHSelectProps) => {
   return (
     <Controller
@@ -23,7 +25,7 @@ const ReusableSelect = ({
         <Form.Item label={label}>
           <Select
             mode={mode}
-            style={{ width: "100%" }}
+            style={{ width }}
             {...field}
             options={options}
             size="middle"
