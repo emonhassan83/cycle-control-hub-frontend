@@ -12,7 +12,6 @@ const authApi = baseApi.injectEndpoints({
         };
       },
     }),
-
     login: builder.mutation({
       query: (userInfo) => ({
         url: "/auth/login",
@@ -20,8 +19,42 @@ const authApi = baseApi.injectEndpoints({
         body: userInfo,
       }),
     }),
+    changePassword: builder.mutation({
+      query: (data) => ({
+        url: "/auth/change-password",
+        method: "POST",
+        body: data,
+      }),
+    }),
+    refreshToken: builder.mutation({
+      query: (token) => ({
+        url: "/auth/refresh-token",
+        method: "POST",
+        body: token,
+      }),
+    }),
+    forgotPassword: builder.mutation({
+      query: (userInfo) => ({
+        url: "/auth/forget-password",
+        method: "POST",
+        body: userInfo,
+      }),
+    }),
+    resetPassword: builder.mutation({
+      query: (userInfo) => ({
+        url: "/auth/reset-password",
+        method: "POST",
+        body: userInfo,
+      }),
+    }),
   }),
 });
 
-export const { useSaveUserMutation, useLoginMutation } =
-  authApi;
+export const {
+  useSaveUserMutation,
+  useLoginMutation,
+  useChangePasswordMutation,
+  useRefreshTokenMutation,
+  useResetPasswordMutation,
+  useForgotPasswordMutation,
+} = authApi;
