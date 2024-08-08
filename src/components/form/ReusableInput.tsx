@@ -6,16 +6,17 @@ type TInputProps = {
     name: string;
     label?: string;
     placeholder?: string;
-    style?: React.CSSProperties; 
+    style?: React.CSSProperties;
+    width?: string;
   };
 
-const ReusableInput = ({ type, name, label, placeholder, style }: TInputProps) => {
+const ReusableInput = ({ type, name, label, placeholder, style, width = "100%" }: TInputProps) => {
   return (
     <div style={{ marginBottom: "7px", ...style}}>
       <p style={{ marginBottom: "5px" }}>{label ? label : null}</p>
       <Controller
         name={name}
-        render={({ field }) => <Input style={{width: "100%"}} type={type} id={name} placeholder={placeholder} {...field} />}
+        render={({ field }) => <Input style={{width}} type={type} id={name} placeholder={placeholder} {...field} />}
       />
     </div>
   );
