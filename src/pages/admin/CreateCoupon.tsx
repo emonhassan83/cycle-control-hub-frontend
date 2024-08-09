@@ -91,7 +91,12 @@ const CreateCoupon = () => {
             name="applicableBikeIds"
             label="Applicable Bike"
           />
-          <Button style={{ marginTop: "-5px" }} htmlType="submit">
+          <Button  style={{
+            width: "100%",
+            borderRadius: "4px",
+            backgroundColor: "#1890ff",
+            color: "#fff",
+          }} htmlType="submit">
             Create
           </Button>
         </ReusableForm>

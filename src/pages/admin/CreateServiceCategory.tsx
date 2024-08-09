@@ -21,11 +21,16 @@ const CreateServiceCategory = () => {
         price: Number(data.price),
         serviceProvider: user?._id,
       };
-      
-    //* Save the service category into DB
-    createServiceCategory(serviceCategory);
 
-    toast.success("Service category creating successfully!", { id: toastId, duration: 2000 });
+      //* Save the service category into DB
+      const res = await createServiceCategory(serviceCategory).unwrap();
+
+      if (res?.success) {
+      toast.success("Service category creating successfully!", {
+        id: toastId,
+        duration: 2000,
+      });
+    }
     } catch (error: any) {
       toast.error(error.message, { id: toastId });
     }
@@ -64,7 +69,16 @@ const CreateServiceCategory = () => {
             label="Service Details"
             placeholder="Provide service details"
           />
-          <Button style={{ marginTop: "-5px" }} htmlType="submit">
+          <Button
+            style={{
+              marginTop: "20px",
+              width: "100%",
+              borderRadius: "4px",
+              backgroundColor: "#1890ff",
+              color: "#fff",
+            }}
+            htmlType="submit"
+          >
             Create
           </Button>
         </ReusableForm>

@@ -83,7 +83,7 @@ const Login = () => {
       >
         <div
           style={{
-            border: "1px solid #5e5e5e",
+            border: "1px solid rgb(194, 192, 192)",
             borderRadius: "8px",
             padding: "40px",
             boxShadow: "0 4px 8px rgba(0, 0, 0, 0.1)",

@@ -13,11 +13,11 @@ import ReusableToggleInput from "@/components/form/ReusableToggleInput";
 
 const SignUp = () => {
   const defaultValues = {
-    name: "susan_anderson",
-    email: "susan.anderson@example.com",
-    password: "user123",
-    contactNumber: "+123-567-382-5678",
-    address: "123 Main St, Anytown, USA",
+    name: "",
+    email: "",
+    password: "",
+    contactNumber: "",
+    address: "",
   };
 
   const [saveUser] = useSaveUserMutation();
@@ -69,7 +69,7 @@ const SignUp = () => {
     >
       <div
         style={{
-          border: "1px solid #5e5e5e",
+          border: "1px solid rgb(194, 192, 192)",
           borderRadius: "8px",
           padding: "40px",
           boxShadow: "0 4px 8px rgba(0, 0, 0, 0.1)",

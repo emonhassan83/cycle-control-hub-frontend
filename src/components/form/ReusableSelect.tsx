@@ -22,7 +22,7 @@ const ReusableSelect = ({
     <Controller
       name={name}
       render={({ field, fieldState: { error } }) => (
-        <Form.Item label={label}>
+        <Form.Item style={{ width: "100%" }} label={label}>
           <Select
             mode={mode}
             style={{ width }}

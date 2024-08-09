@@ -36,7 +36,7 @@ const UpdateCouponModal = ({ coupon }: any) => {
 
   const applicableBikeOptions = bikeData?.data?.map((item) => ({
     value: item._id,
-    label: `${item.productName}`,
+    label: `${item.name}`,
   }));
 
   const defaultValues: TDefaultValues = {

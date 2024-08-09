@@ -32,77 +32,85 @@ const AllUsers = () => {
   
   const metaData = users?.meta;
 
-  const handleMakeAdmin = (userId: string) => {
+  const handleMakeAdmin = async(userId: string) => {
     const toastId = toast.loading("User role change in!");
     try {
       const userInfo = {
         userId: userId,
         role: "admin",
       };
-      toast.success("User role change to admin successfully!", {
-        id: toastId,
-        duration: 2000,
-      });
-
       //* Change user role into DB
-      changeRole(userInfo);
+      const res = await changeRole(userInfo).unwrap();
+      
+      if (res.success) {
+        toast.success("User role change to admin successfully!", {
+          id: toastId,
+          duration: 2000,
+        });
+      }
     } catch (error: any) {
       toast.error(error?.message, { id: toastId });
     }
   };
 
-  const handleMakeSeller = (userId: string) => {
+  const handleMakeSeller = async(userId: string) => {
     const toastId = toast.loading("User role change in!");
     try {
       const userInfo = {
         userId: userId,
         role: "seller",
       };
-      toast.success("User role change to seller successfully!", {
-        id: toastId,
-        duration: 2000,
-      });
-
       //* Change user role into DB
-      changeRole(userInfo);
+      const res = await changeRole(userInfo).unwrap();
+
+      if (res.success){
+        toast.success("User role change to seller successfully!", {
+          id: toastId,
+          duration: 2000,
+        });
+      }
     } catch (error: any) {
       toast.error(error?.message, { id: toastId });
     }
   };
 
-  const handleMakeBuyer = (userId: string) => {
+  const handleMakeBuyer = async(userId: string) => {
     const toastId = toast.loading("User role change in!");
     try {
       const userInfo = {
         userId: userId,
         role: "buyer",
       };
-      toast.success("User role change to seller successfully!", {
-        id: toastId,
-        duration: 2000,
-      });
-
       //* Change user role into DB
-      changeRole(userInfo);
+      const res = await changeRole(userInfo).unwrap();
+
+      if (res.success) {
+        toast.success("User role change to seller successfully!", {
+          id: toastId,
+          duration: 2000,
+        });
+      }
     } catch (error: any) {
       toast.error(error?.message, { id: toastId });
     }
   };
 
-  const handleDeleteUser = (userId: string) => {
+  const handleDeleteUser = async(userId: string) => {
     const toastId = toast.loading("User delete in!");
     try {
-      toast.success("User delete successfully!", {
-        id: toastId,
-        duration: 2000,
-      });
-      
       const userInfo = {
         userId,
         isDeleted: true,
       }
       //* Delete user into DB
-      deleteUser(userInfo);
+      const res = await deleteUser(userInfo).unwrap();
+
+      if (res.success) {
+        toast.success("User delete successfully!", {
+          id: toastId,
+          duration: 2000,
+        });
+      }
     } catch (error: any) {
       toast.error(error?.message, { id: toastId });
     }
@@ -129,7 +137,7 @@ const AllUsers = () => {
       dataIndex: "role",
     },
     {
-      title: "Action",
+      title: "Change Role",
       key: "x1",
       render: (item) => {
         return (

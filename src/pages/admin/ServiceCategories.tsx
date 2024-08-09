@@ -16,45 +16,46 @@ export type TTableData = Pick<
 
 const ServiceCategories = () => {
   const [page, setPage] = useState(1);
-  const {
-    data,
-    isFetching,
-    isLoading,
-  } = useGetAllServiceCategoriesQuery(undefined);
-  
+  const { data, isFetching, isLoading } =
+    useGetAllServiceCategoriesQuery(undefined);
+
   const [removeCoupon] = useRemoveCouponInServiceMutation();
   const [deleteService] = useDeleteAServiceCategoryMutation();
 
-  const serviceData = (data?.data)?.filter((service) => !service.isDeleted);
+  const serviceData = data?.data?.filter((service) => !service.isDeleted);
   const metaData = data?.meta;
 
-  const handleDeleteCoupon = (id: string) => {
+  const handleDeleteCoupon = async (id: string) => {
     const toastId = toast.loading("Remove to assign coupon in!");
 
     try {
       //* Remove coupon from service
-      removeCoupon(id);
+      const res = await removeCoupon(id).unwrap();
 
-      toast.success("Remove coupon from service successfully!", {
-        id: toastId,
-        duration: 2000,
-      });
+      if (res?.success) {
+        toast.success("Remove coupon from service successfully!", {
+          id: toastId,
+          duration: 2000,
+        });
+      }
     } catch (error: any) {
       toast.error(error.message, { id: toastId });
     }
   };
 
-  const handleDeleteService = (id: string) => {
+  const handleDeleteService = async (id: string) => {
     const toastId = toast.loading("Delete bike service in!");
 
     try {
       //* Remove coupon from service
-      deleteService(id);
+      const res = await deleteService(id).unwrap();
 
-      toast.success("Delete bike service successfully!", {
-        id: toastId,
-        duration: 2000,
-      });
+      if (res?.success) {
+        toast.success("Delete bike service successfully!", {
+          id: toastId,
+          duration: 2000,
+        });
+      }
     } catch (error: any) {
       toast.error(error.message, { id: toastId });
     }

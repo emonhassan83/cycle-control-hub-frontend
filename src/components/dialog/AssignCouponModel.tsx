@@ -17,7 +17,7 @@ const AssignCouponModel = ({ item }: any) => {
     label: `${item.name}`,
   }));
 
-  const handleSubmit = (data: FieldValues) => {
+  const handleSubmit = async(data: FieldValues) => {
     const toastId = toast.loading("Assigning coupon to service in!");
     try {
       const option = {
@@ -26,12 +26,14 @@ const AssignCouponModel = ({ item }: any) => {
       };
 
       //* Assign coupon functionality
-      assignCoupon(option),
+      const res = await assignCoupon(option).unwrap();
 
+      if (res?.success) {
       toast.success("Assigning coupon to service successfully!", {
         id: toastId,
         duration: 2000,
       });
+    }
       setIsModalOpen(false);
     } catch (error: any) {
       toast.error(error.message, { id: toastId });
