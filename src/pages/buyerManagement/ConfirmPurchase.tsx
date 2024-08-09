@@ -35,13 +35,11 @@ const ConfirmPurchase = () => {
 
   const handleConfirmPurchaseBike = async (id: string) => {
     // const toastId = toast.loading("Trying to confirm purchase bike!");
-
     //* Confirm status to sent to server
     try {
       const res = await conformPurchaseBikes(id).unwrap();
-      console.log("Confirm res: ", res);
 
-      if ((res as any)?.success) {
+      if (res?.success) {
         toast.success("Confirm purchase bike successfully!", {
           duration: 2000,
         });
@@ -58,7 +56,6 @@ const ConfirmPurchase = () => {
     //* Confirm status to sent to server
     try {
       const res = await cancelPurchaseBikes(id);
-      console.log("Cancel res: ", res);
 
       if ((res as any).success) {
         toast.success("Cancel purchase bike successfully!", {

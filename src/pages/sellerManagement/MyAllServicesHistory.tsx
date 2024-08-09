@@ -40,8 +40,8 @@ import {
       }) => ({
         key: _id,
         service: service.serviceName,
-        bike: bike.productName,
-        serviceReceiver: serviceReceiver.username,
+        bike: bike.name,
+        serviceReceiver: serviceReceiver.name,
         maintenanceRecords,
         serviceBill,
         lastServicingDate: moment(lastServicingDate).format("MMM D, YYYY"),

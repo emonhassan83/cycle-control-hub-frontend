@@ -47,7 +47,7 @@ const UpdateCouponModal = ({ coupon }: any) => {
     applicableBikeIds: coupon?.applicableBikeIds,
   };
 
-  const handleSubmit = (data: FieldValues) => {
+  const handleSubmit = async (data: FieldValues) => {
     const toastId = toast.loading("Bike coupon updating!");
     try {
       const option = {
@@ -61,13 +61,15 @@ const UpdateCouponModal = ({ coupon }: any) => {
         },
       };
       //* Update coupon in database
-      updateCoupon(option);
+      const res = await updateCoupon(option).unwrap();
 
-      toast.success("Bike coupon update successfully!", {
-        id: toastId,
-        duration: 2000,
-      });
-      setIsModalOpen(false);
+      if (res.success) {
+        toast.success("Bike coupon update successfully!", {
+          id: toastId,
+          duration: 2000,
+        });
+        setIsModalOpen(false);
+      }
     } catch (error: any) {
       toast.error(error.message, { id: toastId });
       setIsModalOpen(false);

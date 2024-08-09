@@ -6,7 +6,14 @@ import {
   usePaymentBikeServiceMutation,
 } from "@/redux/features/service/serviceApi";
 import { TService } from "@/types";
-import { Button, Pagination, Table, TableColumnsType, TableProps, Tag } from "antd";
+import {
+  Button,
+  Pagination,
+  Table,
+  TableColumnsType,
+  TableProps,
+  Tag,
+} from "antd";
 import moment from "moment";
 import { useState } from "react";
 import { toast } from "sonner";
@@ -32,31 +39,35 @@ const ServiceManagement = () => {
 
   const metaData = serviceData?.meta;
 
-  const handlePaymentService = (id: string) => {
+  const handlePaymentService = async (id: string) => {
     const toastId = toast.loading("Payment service in!");
     try {
-      toast.success("Payment service successfully!", {
-        id: toastId,
-        duration: 2000,
-      });
-
       //* Payment service into DB
-      paymentService(id);
+      const res = await paymentService(id).unwrap();
+
+      if (res.success) {
+        toast.success("Payment service successfully!", {
+          id: toastId,
+          duration: 2000,
+        });
+      }
     } catch (error: any) {
       toast.error(error?.message, { id: toastId });
     }
   };
 
-  const handleDeleteService = (id: string) => {
+  const handleDeleteService = async (id: string) => {
     const toastId = toast.loading("Delete service in!");
     try {
-      toast.success("Delete service successfully!", {
-        id: toastId,
-        duration: 2000,
-      });
-
       //* Delete service into DB
-      deleteService(id);
+      const res = await deleteService(id).unwrap();
+
+      if (res.success) {
+        toast.success("Delete service successfully!", {
+          id: toastId,
+          duration: 2000,
+        });
+      }
     } catch (error: any) {
       toast.error(error?.message, { id: toastId });
     }
@@ -114,17 +125,18 @@ const ServiceManagement = () => {
       title: "Service Bill",
       dataIndex: "serviceBill",
     },
-    { 
+    {
       title: " Service Status",
       key: "status",
       dataIndex: "status",
       render: (_, { status }: any) => {
-        const color = status === 'confirm' ? 'blue' : status === 'denied' ? 'red' : 'geekblue'; 
-        return (
-          <Tag color={color}>
-            {status.toUpperCase()}
-          </Tag>
-        );
+        const color =
+          status === "confirm"
+            ? "blue"
+            : status === "denied"
+            ? "red"
+            : "geekblue";
+        return <Tag color={color}>{status.toUpperCase()}</Tag>;
       },
     },
     {
@@ -151,7 +163,11 @@ const ServiceManagement = () => {
             onClick={() => handlePaymentService(item?.key)}
             type="link"
             size="small"
-            disabled={item?.isPayed === true || item.status === "denied" || item.status === "PENDING"}
+            disabled={
+              item?.isPayed === true ||
+              item.status === "denied" ||
+              item.status === "PENDING"
+            }
           >
             pay
           </Button>
@@ -170,7 +186,10 @@ const ServiceManagement = () => {
               danger
               type="link"
               size="small"
-              disabled={item.status !== "pending" && item.status !== "denied" || item.isPayed}
+              disabled={
+                (item.status !== "pending" && item.status !== "denied") ||
+                item.isPayed
+              }
             >
               Delete
             </Button>

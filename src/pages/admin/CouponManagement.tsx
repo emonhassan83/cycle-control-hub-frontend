@@ -26,16 +26,18 @@ const CouponManagement = () => {
 
   const metaData = data?.meta;
 
-  const handleDeleteCoupon = (id: string) => {
+  const handleDeleteCoupon = async(id: string) => {
     const toastId = toast.loading("Delete coupon in!");
     try {
-      toast.success("Delete coupon successfully!", {
-        id: toastId,
-        duration: 2000,
-      });
-
       //* Change user role into DB
-      deleteCoupon(id);
+      const res = await deleteCoupon(id).unwrap();
+
+      if (res.success) {
+        toast.success("Delete coupon successfully!", {
+          id: toastId,
+          duration: 2000,
+        });
+      }
     } catch (error: any) {
       toast.error(error?.message, { id: toastId });
     }

@@ -33,8 +33,8 @@ const AssignCouponModel = ({ item }: any) => {
         id: toastId,
         duration: 2000,
       });
-    }
       setIsModalOpen(false);
+    }
     } catch (error: any) {
       toast.error(error.message, { id: toastId });
       setIsModalOpen(false);

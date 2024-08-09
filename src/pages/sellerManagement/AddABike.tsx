@@ -124,7 +124,6 @@ const AddABike = () => {
 
       // * add bike in database
       const res = await addBike(bikeData).unwrap();
-      // console.log(res);
 
       if (res?.success) {
         toast.success("Add bike in database successfully!", {

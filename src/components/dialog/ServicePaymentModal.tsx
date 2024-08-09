@@ -30,17 +30,19 @@ const ServicePaymentModal = ({ paymentInfo }: any) => {
     price: paymentInfo?.serviceBill,
   };
 
-  const handleApplyCoupon = (id: string) => {
+  const handleApplyCoupon = async (id: string) => {
     const toastId = toast.loading("Applying coupon in service in!");
     try {
       //* Apply coupon in service in Database
-      applyCoupon(id);
+      const res = await applyCoupon(id).unwrap();
 
-      toast.success("Apply coupon in service successfully!", {
-        id: toastId,
-        duration: 2000,
-      });
-      setIsModalOpen(false);
+      if (res.success) {
+        toast.success("Apply coupon in service successfully!", {
+          id: toastId,
+          duration: 2000,
+        });
+        setIsModalOpen(false);
+      }
     } catch (error: any) {
       toast.error(error.message, { id: toastId });
       setIsModalOpen(false);
@@ -66,7 +68,9 @@ const ServicePaymentModal = ({ paymentInfo }: any) => {
         type="link"
         size="small"
         style={{ fontSize: "12px", fontWeight: "600" }}
-        disabled ={paymentInfo?.isPayed === true || paymentInfo?.status === "denied"}
+        disabled={
+          paymentInfo?.isPayed === true || paymentInfo?.status === "denied"
+        }
       >
         Add coupon
       </Button>
@@ -92,7 +96,10 @@ const ServicePaymentModal = ({ paymentInfo }: any) => {
 
           <ReusableInput type="text" name="coupon" label="Coupon" />
 
-          <Button onClick={()=> handleApplyCoupon(paymentInfo?.key)} size="small">
+          <Button
+            onClick={() => handleApplyCoupon(paymentInfo?.key)}
+            size="small"
+          >
             Apply Coupon
           </Button>
         </ReusableForm>

@@ -31,38 +31,37 @@ export type TTableData = Pick<
 const AllMyBikesManagement = () => {
   const [params, setParams] = useState<TQueryParam[]>([]);
   const [page, setPage] = useState(1);
-  const {
-    data,
-    isFetching,
-    isLoading,
-  } = useGetBikesQuery([{ name: "page", value: page }, ...params]);
-  const bikeData = (data?.data)?.filter((bike) => !bike.isDeleted);
+  const { data, isFetching, isLoading } = useGetBikesQuery([
+    { name: "page", value: page },
+    ...params,
+  ]);
+  const bikeData = data?.data?.filter((bike) => !bike.isDeleted);
   // console.log(users);
-  
+
   const [deleteBike] = useDeleteBikeMutation();
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
 
   const metaData = data?.meta;
-  
+
   const handleCreateVariant = (bike: TBike) => {
-    console.log(bike);
-    
     //* set bike credentials in state
     dispatch(setBike(bike));
     navigate(`/admin/add-a-bike`);
   };
 
-  const handleDeleteBike = (id: string) => {
+  const handleDeleteBike = async (id: string) => {
     const toastId = toast.loading("Try to delete bike in database!");
     try {
       // * delete bike into database
-      deleteBike(id);
+      const res = await deleteBike(id).unwrap();
 
-      toast.success("Delete bike in database successfully!", {
-        id: toastId,
-        duration: 3000,
-      });
+      if (res.success) {
+        toast.success("Delete bike in database successfully!", {
+          id: toastId,
+          duration: 3000,
+        });
+      }
     } catch (error: any) {
       toast.error(error.message, { id: toastId });
     }
@@ -84,7 +83,7 @@ const AllMyBikesManagement = () => {
       frameMaterial,
       suspensionType,
       manufacturerCountry,
-      description
+      description,
     }) => ({
       key: _id,
       name,
@@ -100,7 +99,7 @@ const AllMyBikesManagement = () => {
       frameMaterial,
       suspensionType,
       manufacturerCountry,
-      description
+      description,
     })
   );
 

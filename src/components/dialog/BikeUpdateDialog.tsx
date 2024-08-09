@@ -41,10 +41,9 @@ const productTypeOptions = [
 const BikeUpdateDialog = ({ bike }: any) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [updateBike, { data }] = useUpdateBikeMutation();
-  console.log("Update Bike Data: ", data);
-  console.log({bike});
-  
-  
+
+  console.log("Update Bike Response Data: ", data);
+
   const defaultValues: TDefaultValues = {
     name: bike?.name,
     image: bike?.image,
@@ -53,7 +52,7 @@ const BikeUpdateDialog = ({ bike }: any) => {
     type: bike?.type,
   };
 
-  const handleSubmit = (data: FieldValues) => {
+  const handleSubmit = async (data: FieldValues) => {
     const toastId = toast.loading("Bike updating in!");
 
     try {
@@ -66,15 +65,16 @@ const BikeUpdateDialog = ({ bike }: any) => {
           price: Number(data.price),
         },
       };
-
-      console.log(option);
-      
-
       //* Update bike into Database
-      updateBike(option);
+      const res = await updateBike(option).unwrap();
 
-      toast.success("Bike updating in successfully!", { id: toastId, duration: 2000 });
-      setIsModalOpen(false);
+      if (res.success) {
+        toast.success("Bike updating in successfully!", {
+          id: toastId,
+          duration: 2000,
+        });
+        setIsModalOpen(false);
+      }
     } catch (error: any) {
       toast.error(error.message, { id: toastId });
       setIsModalOpen(false);
@@ -107,16 +107,8 @@ const BikeUpdateDialog = ({ bike }: any) => {
       >
         <ReusableForm onSubmit={handleSubmit} defaultValues={defaultValues}>
           <ReusableInput type="text" name="name" label="Product Name" />
-          <ReusableInput
-            type="text"
-            name="image"
-            label="Product Image"
-          />
-          <ReusableInput
-            type="text"
-            name="quantity"
-            label="Product Quantity"
-          />
+          <ReusableInput type="text" name="image" label="Product Image" />
+          <ReusableInput type="text" name="quantity" label="Product Quantity" />
           <ReusableInput type="text" name="price" label="Product Price" />
           <ReusableSelect
             label="Product Type"

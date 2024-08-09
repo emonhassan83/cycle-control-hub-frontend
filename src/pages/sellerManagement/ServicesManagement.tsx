@@ -30,33 +30,35 @@ const ServiceManagement = () => {
 
   const metaData = serviceData?.meta;
 
-  const handleConfirmedService = (id: string) => {
+  const handleConfirmedService = async(id: string) => {
     const toastId = toast.loading("Confirm bike service in!");
     try {
-      toast.success("Confirm bike service successfully!", {
-        id: toastId,
-        duration: 2000,
-      });
-
       //* Confirm bike service into DB
-      confirmService(id);
-      
+      const res = await confirmService(id).unwrap();
+
+      if (res.success) {
+        toast.success("Confirm bike service successfully!", {
+          id: toastId,
+          duration: 2000,
+        });
+      }
     } catch (error: any) {
       toast.error(error?.message, { id: toastId });
     }
   };
 
-  const handleDeniedService = (id: string) => {
+  const handleDeniedService = async(id: string) => {
     const toastId = toast.loading("Deny bike service in!");
     try {
-      toast.success("Deny bike service successfully!", {
-        id: toastId,
-        duration: 2000,
-      });
-
       //* Deny bike service into DB
-      cancelService(id);
-      
+      const res = await cancelService(id).unwrap();
+
+      if (res.success) {
+        toast.success("Deny bike service successfully!", {
+          id: toastId,
+          duration: 2000,
+        });
+      }
     } catch (error: any) {
       toast.error(error?.message, { id: toastId });
     }
@@ -76,8 +78,8 @@ const ServiceManagement = () => {
     }) => ({
       key: _id,
       service: service.serviceName,
-      bike: bike.productName,
-      serviceReceiver: serviceReceiver.username,
+      bike: bike.name,
+      serviceReceiver: serviceReceiver.name,
       maintenanceRecords,
       serviceBill,
       lastServicingDate: moment(lastServicingDate).format("MMM D, YYYY"),

@@ -1,7 +1,7 @@
 import ReusableDatePiker from "@/components/form/ReusableDatePiker";
 import ReusableForm from "@/components/form/ReusableForm";
-import ReusableInput from "@/components/form/ReusableInput";
 import ReusableSelect from "@/components/form/ReusableSelect";
+import ReusableTextArea from "@/components/form/ReusableTextArea";
 import { useGetSellerPurchaseBikesQuery } from "@/redux/features/salesManagement/salesManagementApi";
 import { useRequestServiceMutation } from "@/redux/features/service/serviceApi";
 import { useGetAllServiceCategoriesQuery } from "@/redux/features/serviceCategory/serviceCategoryApi";
@@ -15,7 +15,7 @@ const RequestMaintenance = () => {
   const confirmedBikes = bikeData?.data?.filter(
     (bike: any) => bike.isConfirmed
   );
-  
+
   const [requestService] = useRequestServiceMutation();
 
   const applicableBikeOptions = confirmedBikes?.map((item) => ({
@@ -37,12 +37,14 @@ const RequestMaintenance = () => {
         maintenanceRecords: 1,
       };
       //* Request service from database
-      requestService(service);
+      const res = await requestService(service).unwrap();
 
-      toast.success("Request service successfully!", {
-        id: toastId,
-        duration: 2000,
-      });
+      if (res.success) {
+        toast.success("Request service successfully!", {
+          id: toastId,
+          duration: 2000,
+        });
+      }
     } catch (error: any) {
       toast.error(error?.message, { id: toastId });
     }
@@ -81,14 +83,22 @@ const RequestMaintenance = () => {
             name="nextServicingDate"
             label="Next Servicing Date"
           />
-          <div style={{ marginTop: "-10px", marginBottom: "-10px" }}></div>
-          <ReusableInput
-            type="text"
+          <ReusableTextArea
             name="notes"
             label="notes"
             placeholder="Service notes.."
+            rows={3}
           />
-          <Button style={{ marginTop: "-5px" }} htmlType="submit">
+          <Button
+            style={{
+              marginTop: "10px",
+              width: "100%",
+              borderRadius: "4px",
+              backgroundColor: "#1890ff",
+              color: "#fff",
+            }}
+            htmlType="submit"
+          >
             Create
           </Button>
         </ReusableForm>

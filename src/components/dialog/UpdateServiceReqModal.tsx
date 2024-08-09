@@ -30,7 +30,7 @@ const UpdateServiceReqModal = ({ item }: any) => {
 
   const applicableBikeOptions = confirmedBikes?.map((item) => ({
     value: item.bike._id,
-    label: `${item.bike.productName}`,
+    label: `${item.bike.name}`,
   }));
 
   const applicableServiceOptions = serviceData?.data?.map((item) => ({
@@ -46,7 +46,7 @@ const UpdateServiceReqModal = ({ item }: any) => {
     notes: item?.notes,
   };
 
-  const handleSubmit = (data: FieldValues) => {
+  const handleSubmit = async(data: FieldValues) => {
     const toastId = toast.loading("Service updating..!");
     try {
       const option = {
@@ -57,15 +57,16 @@ const UpdateServiceReqModal = ({ item }: any) => {
             service: data?.serviceId,
         },
       };
-      
       //* Update service in database
-      updateService(option);
+      const res = await updateService(option).unwrap();
 
-      toast.success("Bike coupon update successfully!", {
-        id: toastId,
-        duration: 2000,
-      });
-      setIsModalOpen(false);
+      if (res.success) {
+        toast.success("Bike coupon update successfully!", {
+          id: toastId,
+          duration: 2000,
+        }); 
+        setIsModalOpen(false);
+      }
     } catch (error: any) {
       toast.error(error.message, { id: toastId });
       setIsModalOpen(false);

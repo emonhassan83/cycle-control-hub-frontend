@@ -30,12 +30,12 @@ interface SalesData {
 
 const SalesHistory = () => {
   const [selectedFilter, setSelectedFilter] = useState("");
-
   const {
     data: salesData,
     isLoading,
     isError,
   } = useSalesReport(selectedFilter);
+
   const data: any[] | undefined = (salesData as SalesData)?.data?.sales;
 
   return (
@@ -89,7 +89,9 @@ const SalesHistory = () => {
         {data && (
           <div className="text-blue-600 text-sm font-medium">
             <p>Total Product Count: {(salesData as SalesData)?.data?.count}</p>
-            <p>Total Product sales: ${(salesData as SalesData)?.data?.totalSales}</p>
+            <p>
+              Total Product sales: ${(salesData as SalesData)?.data?.totalSales}
+            </p>
           </div>
         )}
       </div>
