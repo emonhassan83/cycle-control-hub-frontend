@@ -9,9 +9,9 @@ import { toast } from "sonner";
 
 export type TTableData = Pick<
   TBike,
-  | "productName"
-  | "productImage"
-  | "productQuantity"
+  | "name"
+  | "image"
+  | "quantity"
   | "price"
   | "brand"
   | "model"
@@ -67,9 +67,9 @@ const ViewAllBikes = () => {
   const tableData = saleBikes?.map(
     ({
       _id,
-      productName,
-      productImage,
-      productQuantity,
+      name,
+      image,
+      quantity,
       price,
       brand,
       model,
@@ -82,9 +82,9 @@ const ViewAllBikes = () => {
       manufacturerCountry,
     }) => ({
       key: _id,
-      productName,
-      productImage,
-      productQuantity,
+      name,
+      image,
+      quantity,
       price,
       brand,
       model,

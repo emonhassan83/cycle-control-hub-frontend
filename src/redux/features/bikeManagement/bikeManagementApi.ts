@@ -76,6 +76,16 @@ const bikeManagementApi = baseApi.injectEndpoints({
       providesTags: ["Bike"],
     }),
 
+    getASaleBike: builder.query({
+      query: (id) => {
+        return {
+          url: `/bike/sale-bike/${id}/`,
+          method: "GET"
+        };
+      },
+      providesTags: ["Bike"],
+    }),
+
     postBike: builder.mutation({
       query: (bikeData) => {
         return {
@@ -89,7 +99,7 @@ const bikeManagementApi = baseApi.injectEndpoints({
 
     saleBike: builder.mutation({
       query: (bikeData) => {
-        console.log(bikeData);
+        // console.log(bikeData);
         
         return {
           url: `/bike/create-sale-bike`,
@@ -138,6 +148,7 @@ export const {
   useGetSalesBikesQuery,
   useGetBikesQuery,
   useGetSellerBikesQuery,
+  useGetASaleBikeQuery,
   useSaleBikeMutation,
   usePostBikeMutation,
   useUpdateBikeMutation,

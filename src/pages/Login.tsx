@@ -18,8 +18,8 @@ const Login = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   const defaultValues = {
-    email: "john.doe@example.com",
-    password: "user123",
+    email: "",
+    password: "",
   };
 
   const [login] = useLoginMutation();
