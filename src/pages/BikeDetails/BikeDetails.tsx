@@ -1,22 +1,29 @@
 import { useParams } from "react-router-dom";
-import { useGetASaleBikeQuery } from "@/redux/features/bikeManagement/bikeManagementApi";
-import { Button, Row, Col, Typography, Divider } from "antd";
-import { toast } from "sonner";
+import {
+  useGetASaleBikeQuery,
+  useGetSalesBikesQuery,
+} from "@/redux/features/bikeManagement/bikeManagementApi";
 import { usePurchaseBikesMutation } from "@/redux/features/salesManagement/salesManagementApi";
 import { selectCurrentUser } from "@/redux/features/auth/authSlice";
 import { useAppSelector } from "@/redux/hooks";
+import { toast } from "sonner";
 import { generatePDF } from "@/components/PDF/generatePDF";
 import { saveAs } from "file-saver";
-
-const { Title, Text } = Typography;
+import BikeDetailsHeroSection from "./components/BikeDetailsHeroSection";
+import BikeDetailsSection from "./components/BikeDetailsSection";
+import RelatedBikes from "./components/RelatedBikeProduct";
+import FullPageLoading from "@/components/Loader/FullPageLoader";
 
 const BikeDetails = () => {
   const { id } = useParams();
   const { data, isLoading } = useGetASaleBikeQuery(id);
+  const { data: bikes } = useGetSalesBikesQuery([]);
   const user = useAppSelector(selectCurrentUser);
   const [purchaseBikes] = usePurchaseBikesMutation();
 
+  const bikeData = bikes?.data?.filter((bike) => bike._id !== id);
   const bike = data?.data;
+  // console.log(bikeData);
 
   const handleBuyNow = async () => {
     const toastId = toast.loading("Processing your purchase...");
@@ -31,12 +38,10 @@ const BikeDetails = () => {
       };
 
       const res = await purchaseBikes(bikePurchaseInfo).unwrap();
-      console.log(res);
 
       if (res.success) {
         toast.success("Bike purchased successfully!", { id: toastId });
 
-        //* Generate PDF invoice
         const invoiceDetails = {
           buyerName: user?.name,
           buyerEmail: user?.email,
@@ -53,10 +58,8 @@ const BikeDetails = () => {
           totalAmount: bike.price + 100,
         };
 
-        //* Generate PDF blob
         const pdfBlob = await generatePDF(invoiceDetails);
 
-        //* Save PDF as a file
         saveAs(pdfBlob, `${bike.name}-bike-invoice.pdf`);
       }
     } catch (error) {
@@ -66,52 +69,22 @@ const BikeDetails = () => {
     }
   };
 
-  if (isLoading) return <p>Loading...</p>;
+  if (isLoading) return <FullPageLoading />;
 
   return (
-    <div style={{ maxWidth: "800px", margin: "0 auto", padding: "20px" }}>
-      <img
-        src={bike.image}
-        alt={bike.name}
-        style={{ width: "100%", borderRadius: "10px", marginBottom: "20px" }}
-      />
-      <Title level={2}>{bike.name}</Title>
-      <Text strong>Price: ${bike.price}</Text>
-      <Divider />
-      <Row gutter={16}>
-        <Col span={12}>
-          <Text strong>Brand:</Text> <Text>{bike.brand}</Text>
-        </Col>
-        <Col span={12}>
-          <Text strong>Model:</Text> <Text>{bike.model}</Text>
-        </Col>
-        <Col span={12}>
-          <Text strong>Type:</Text> <Text>{bike.type}</Text>
-        </Col>
-        <Col span={12}>
-          <Text strong>Color:</Text> <Text>{bike.color}</Text>
-        </Col>
-        <Col span={12}>
-          <Text strong>Size:</Text> <Text>{bike.size}</Text>
-        </Col>
-        <Col span={12}>
-          <Text strong>Frame Material:</Text> <Text>{bike.frameMaterial}</Text>
-        </Col>
-        <Col span={12}>
-          <Text strong>Suspension Type:</Text>{" "}
-          <Text>{bike.suspensionType}</Text>
-        </Col>
-        <Col span={12}>
-          <Text strong>Manufacturer Country:</Text>{" "}
-          <Text>{bike.manufacturerCountry}</Text>
-        </Col>
-      </Row>
-      <Divider />
-      <Text>{bike.description}</Text>
-      <Divider />
-      <Button type="primary" size="large" onClick={handleBuyNow}>
-        Buy Now
-      </Button>
+    <div
+      style={{
+        maxWidth: "1000px",
+        margin: "0 auto",
+        padding: "20px",
+        backgroundColor: "#f5f5f5",
+        borderRadius: "10px",
+        boxShadow: "0 4px 8px rgba(0,0,0,0.1)",
+      }}
+    >
+      <BikeDetailsHeroSection bike={bike} handleBuyNow={handleBuyNow} />
+      <BikeDetailsSection bike={bike} />
+      {bikeData && <RelatedBikes relatedBikes={bikeData} />}
     </div>
   );
 };

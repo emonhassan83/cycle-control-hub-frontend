@@ -1,3 +1,4 @@
+import FullPageLoading from "@/components/Loader/FullPageLoader";
 import { useGetSalesBikesQuery } from "@/redux/features/bikeManagement/bikeManagementApi";
 import { Input, Row, Col, Card, Button, Pagination } from "antd";
 import { useState } from "react";
@@ -9,12 +10,11 @@ const PurchasesBike = () => {
   const [page, setPage] = useState(1);
   const [searchTerm, setSearchTerm] = useState("");
   const navigate = useNavigate();
-  const { data: bikeData } = useGetSalesBikesQuery([
+  const { data: bikeData, isLoading } = useGetSalesBikesQuery([
     { name: "page", value: page },
     { name: "searchTerm", value: searchTerm },
   ]);
   // console.log(bikeData);
-  
 
   const metaData = bikeData?.meta;
   const bikes = bikeData?.data || [];
@@ -25,9 +25,13 @@ const PurchasesBike = () => {
     navigate(`/bike-details/${id}`);
   };
 
+  if (isLoading) return <FullPageLoading />;
+
   return (
     <>
-      <div style={{ display: "flex", justifyContent: "end", marginBottom: "20px" }}>
+      <div
+        style={{ display: "flex", justifyContent: "end", marginBottom: "20px" }}
+      >
         <Row style={{ width: "50%" }}>
           <Search placeholder="Search Bike" onSearch={onSearch} enterButton />
         </Row>
@@ -37,9 +41,19 @@ const PurchasesBike = () => {
           <Col xs={24} sm={12} md={8} lg={6} key={bike._id}>
             <Card
               hoverable
-              cover={<img alt={bike.name} src={bike.image} style={{ height: 200, objectFit: "cover" }} />}
+              cover={
+                <img
+                  alt={bike.name}
+                  src={bike.image}
+                  style={{ height: 200, objectFit: "cover" }}
+                />
+              }
               actions={[
-                <Button type="primary" onClick={() => handleViewDetails(bike._id)}>
+                <Button
+                  type="primary"
+                  className="bg-blue-500"
+                  onClick={() => handleViewDetails(bike._id)}
+                >
                   View Details
                 </Button>,
               ]}
@@ -48,7 +62,9 @@ const PurchasesBike = () => {
                 title={bike.name}
                 description={`${bike.description.substring(0, 100)}...`}
               />
-              <div style={{ marginTop: 10, fontWeight: "bold" }}>${bike.price}</div>
+              <div style={{ marginTop: 10, fontWeight: "bold" }}>
+                ${bike.price}
+              </div>
             </Card>
           </Col>
         ))}

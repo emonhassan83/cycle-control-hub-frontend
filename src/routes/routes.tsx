@@ -7,7 +7,7 @@ import { sellerPaths } from "./seller.routes";
 import { buyerPaths } from "./buyer.routes";
 import ProtectedRoute from "@/components/layout/ProtectedRoute";
 import { adminPaths } from "./admin.routes";
-import BikeDetails from "@/pages/BikeDetails/bikeDetails";
+import BikeDetails from "@/pages/BikeDetails/BikeDetails";
 
 const router = createBrowserRouter([
   {
