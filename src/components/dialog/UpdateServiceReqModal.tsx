@@ -1,6 +1,5 @@
 import { Button, Modal } from "antd";
 import ReusableForm from "../form/ReusableForm";
-import ReusableInput from "../form/ReusableInput";
 import { useState } from "react";
 import { FieldValues } from "react-hook-form";
 import ReusableSelect from "../form/ReusableSelect";
@@ -10,6 +9,7 @@ import { useGetAllServiceCategoriesQuery } from "@/redux/features/serviceCategor
 import moment from "moment";
 import { useUpdateAServiceMutation } from "@/redux/features/service/serviceApi";
 import { toast } from "sonner";
+import ReusableTextArea from "../form/ReusableTextArea";
 
 type TDefaultValues = {
   bike: string;
@@ -46,15 +46,15 @@ const UpdateServiceReqModal = ({ item }: any) => {
     notes: item?.notes,
   };
 
-  const handleSubmit = async(data: FieldValues) => {
+  const handleSubmit = async (data: FieldValues) => {
     const toastId = toast.loading("Service updating..!");
     try {
       const option = {
         id: item?.key,
         service: {
-            ...data,
-            bike: data?.bikeId,
-            service: data?.serviceId,
+          ...data,
+          bike: data?.bikeId,
+          service: data?.serviceId,
         },
       };
       //* Update service in database
@@ -64,7 +64,7 @@ const UpdateServiceReqModal = ({ item }: any) => {
         toast.success("Bike coupon update successfully!", {
           id: toastId,
           duration: 2000,
-        }); 
+        });
         setIsModalOpen(false);
       }
     } catch (error: any) {
@@ -85,7 +85,6 @@ const UpdateServiceReqModal = ({ item }: any) => {
     <>
       <Button
         onClick={showModal}
-        type="link"
         size="small"
         style={{ fontSize: "12px", fontWeight: "600" }}
         disabled={item?.isPayed === true}
@@ -97,35 +96,40 @@ const UpdateServiceReqModal = ({ item }: any) => {
         open={isModalOpen}
         onCancel={handleCancel}
         footer={null}
+        width={800}
       >
         <ReusableForm onSubmit={handleSubmit} defaultValues={defaultValues}>
-          <ReusableSelect
-            options={applicableBikeOptions}
-            name="bike"
-            label="Select Bike"
-          />
-          <ReusableSelect
-            options={applicableServiceOptions}
-            name="service"
-            label="Select Service"
-          />
-          <ReusableDatePiker
-            name="lastServicingDate"
-            label="Last Servicing Date"
-          />
-          <ReusableDatePiker
-            name="nextServicingDate"
-            label="Next Servicing Date"
-          />
+          <div className="md:flex gap-4">
+            <ReusableSelect
+              options={applicableBikeOptions}
+              name="bike"
+              label="Select Bike"
+            />
+            <ReusableSelect
+              options={applicableServiceOptions}
+              name="service"
+              label="Select Service"
+            />
+          </div>
+          <div className="md:flex gap-4 mb-4">
+            <ReusableDatePiker
+              name="lastServicingDate"
+              label="Last Servicing Date"
+            />
+            <ReusableDatePiker
+              name="nextServicingDate"
+              label="Next Servicing Date"
+            />
+          </div>
           <div style={{ marginTop: "-10px", marginBottom: "-10px" }}></div>
-          <ReusableInput
-            type="text"
+          <ReusableTextArea
+            // type="text"
             name="notes"
-            label="notes"
+            label="Notes"
             placeholder="Service notes.."
           />
-          <Button htmlType="submit" size="small">
-            Update request details
+          <Button  style={{ backgroundColor: "#4361ee", borderColor: "#4361ee", color: "#fff"}} htmlType="submit" size="small">
+            Update request
           </Button>
         </ReusableForm>
       </Modal>

@@ -1,5 +1,6 @@
 import ServicePaymentModal from "@/components/dialog/ServicePaymentModal";
 import UpdateServiceReqModal from "@/components/dialog/UpdateServiceReqModal";
+import FullPageLoading from "@/components/Loader/FullPageLoader";
 import {
   useDeleteAServiceMutation,
   useGetAllMyServicesQuery,
@@ -118,10 +119,6 @@ const ServiceManagement = () => {
       dataIndex: "serviceProvider",
     },
     {
-      title: "Maintenance Records",
-      dataIndex: "maintenanceRecords",
-    },
-    {
       title: "Service Bill",
       dataIndex: "serviceBill",
     },
@@ -161,7 +158,6 @@ const ServiceManagement = () => {
           <Button
             style={{ fontSize: "12px", fontWeight: "600" }}
             onClick={() => handlePaymentService(item?.key)}
-            type="link"
             size="small"
             disabled={
               item?.isPayed === true ||
@@ -184,7 +180,6 @@ const ServiceManagement = () => {
               style={{ fontSize: "12px", fontWeight: "600" }}
               onClick={() => handleDeleteService(item?.key)}
               danger
-              type="link"
               size="small"
               disabled={
                 (item.status !== "pending" && item.status !== "denied") ||
@@ -208,7 +203,7 @@ const ServiceManagement = () => {
     console.log(_pagination, filters, _sorter, extra);
 
     if (isLoading) {
-      return <p>Loading...</p>;
+      return <FullPageLoading/>;
     }
   };
 

@@ -60,11 +60,12 @@ const RequestMaintenance = () => {
         alignItems: "center",
       }}
     >
-      <h5 style={{ fontSize: "20px", marginBottom: "20px" }}>
+      <h5 style={{ fontSize: "20px", marginBottom: "30px" }}>
         Request For Maintenance
       </h5>
-      <div className="w-[50%] mx-auto">
+      <div className="w-[70%] mx-auto">
         <ReusableForm onSubmit={onSubmit}>
+          <div className="md:flex gap-4">
           <ReusableSelect
             options={applicableBikeOptions}
             name="bike"
@@ -75,6 +76,8 @@ const RequestMaintenance = () => {
             name="service"
             label="Select Service"
           />
+          </div>
+          <div className="md:flex gap-4">
           <ReusableDatePiker
             name="lastServicingDate"
             label="Last Servicing Date"
@@ -83,6 +86,7 @@ const RequestMaintenance = () => {
             name="nextServicingDate"
             label="Next Servicing Date"
           />
+          </div>
           <ReusableTextArea
             name="notes"
             label="notes"
@@ -99,7 +103,7 @@ const RequestMaintenance = () => {
             }}
             htmlType="submit"
           >
-            Create
+            Request Maintain
           </Button>
         </ReusableForm>
       </div>

@@ -9,20 +9,17 @@ type TDatePikerProps = {
 
 const ReusableDatePiker = ({
   name,
-  label,
-  width = "100%",
+  label
 }: TDatePikerProps) => {
   return (
-    <div style={{ marginBottom: "5px" }}>
-      <Controller
-        name={name}
-        render={({ field }) => (
-          <Form.Item label={label}>
-            <DatePicker {...field} size="middle" style={{ width }} />
-          </Form.Item>
-        )}
-      />
-    </div>
+    <Controller
+      name={name}
+      render={({ field }) => (
+        <Form.Item label={label} style={{ width: "100%", marginBottom: "5px" }}>
+          <DatePicker {...field} size="middle" style={{ width: "100%" }} />
+        </Form.Item>
+      )}
+    />
   );
 };
 

@@ -21,6 +21,7 @@ type TBuyer = {
 };
 
 type TBike = {
+  transactionId?: string;
   _id: string;
   name: string;
   image: string;

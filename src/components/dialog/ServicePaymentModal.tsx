@@ -65,7 +65,6 @@ const ServicePaymentModal = ({ paymentInfo }: any) => {
     <>
       <Button
         onClick={showModal}
-        type="link"
         size="small"
         style={{ fontSize: "12px", fontWeight: "600" }}
         disabled={
@@ -84,7 +83,7 @@ const ServicePaymentModal = ({ paymentInfo }: any) => {
           <ReusableInput
             type="text"
             name="service"
-            label="Your Service"
+            label="Service Name"
             placeholder="ENTER COUPON NAME"
           />
           <ReusableInput
@@ -93,10 +92,10 @@ const ServicePaymentModal = ({ paymentInfo }: any) => {
             label="Servicing Bike"
             placeholder="ENTER COUPON NAME"
           />
-
           <ReusableInput type="text" name="coupon" label="Coupon" />
 
           <Button
+          style={{ backgroundColor: "#4361ee", borderColor: "#4361ee", color: "#fff"}}
             onClick={() => handleApplyCoupon(paymentInfo?.key)}
             size="small"
           >
