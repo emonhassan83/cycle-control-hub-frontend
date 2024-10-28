@@ -17,7 +17,9 @@ export type TTableData = {
 const PurchasesHistory = () => {
   const [page, setPage] = useState(1);
   const { data: bikeData, isLoading, isFetching } = useGetSellerPurchaseBikesQuery([{ name: "page", value: page }]);
-  const confirmedBikes = bikeData?.data?.filter((bike: any) => bike.isConfirmed);
+  const confirmedBikes = bikeData?.data?.filter((bike: any) => bike.isConfirmed || bike.status === "PAID");
+  // console.log(bikeData);
+  
 
   const metaData = bikeData?.meta;
 

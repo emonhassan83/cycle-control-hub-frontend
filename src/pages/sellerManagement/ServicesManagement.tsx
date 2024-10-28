@@ -139,7 +139,6 @@ const ServiceManagement = () => {
             }}
           >
             <Button
-              type="link"
               size="small"
               style={{ fontSize: "12px", fontWeight: "600" }}
               onClick={() => handleConfirmedService(item?.key)}
@@ -152,7 +151,6 @@ const ServiceManagement = () => {
               style={{ fontSize: "12px", fontWeight: "600" }}
               onClick={() => handleDeniedService(item?.key)}
               danger
-              type="link"
               size="small"
               disabled={item.status === "denied"}
             >

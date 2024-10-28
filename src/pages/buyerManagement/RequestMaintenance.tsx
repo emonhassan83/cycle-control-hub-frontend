@@ -13,7 +13,7 @@ const RequestMaintenance = () => {
   const { data: bikeData } = useGetSellerPurchaseBikesQuery(undefined);
   const { data: serviceData } = useGetAllServiceCategoriesQuery(undefined);
   const confirmedBikes = bikeData?.data?.filter(
-    (bike: any) => bike.isConfirmed
+    (bike: any) => bike.isConfirmed || bike.status === "PAID"
   );
 
   const [requestService] = useRequestServiceMutation();

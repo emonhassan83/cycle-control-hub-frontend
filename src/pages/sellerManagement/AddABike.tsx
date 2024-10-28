@@ -80,10 +80,10 @@ const AddABike = () => {
   const { bike } = useAppSelector((state) => state.bike) as unknown as {
     bike?: TDefaultValues;
   };
-  const [addBike, { data }] = usePostBikeMutation();
+  const [addBike] = usePostBikeMutation();
   const navigate = useNavigate();
 
-  console.log("Add Bike Response Data: ", data);
+  // console.log("Add Bike Response Data: ", data);
   // console.log("Bike Data: ", bike);
 
   const defaultValues: TDefaultValues = {
@@ -140,127 +140,104 @@ const AddABike = () => {
   };
 
   return (
-    <div
-    style={{
-      display: "flex",
-      flexDirection: "column",
-      justifyContent: "center",
-      alignItems: "center",
-    }}
-  >
-    <h5 style={{ fontSize: "20px", marginBottom: "20px" }}>Add a Bike</h5>
-    <Row
-      justify="center"
-      align="middle"
-    >
-      <ReusableForm onSubmit={onSubmit} defaultValues={defaultValues}>
-        <div
-          style={{
-            display: "flex",
-            gap: "10px",
-            justifyContent: "space-between",
-            width: "100%",
-          }}
-        >
-          <ReusableInput type="text" name="name" label="Product Name" />
-          <ReusableInput type="text" name="image" label="Product Image" />
-          <ReusableInput
-            type="text"
-            name="quantity"
-            label="Product Quantity"
-          />
-        </div>
-        <div
-          style={{
-            display: "flex",
-            gap: "10px",
-            justifyContent: "space-between",
-            width: "100%",
-          }}
-        >
-          <ReusableInput type="text" name="price" label="Price" />
-          <ReusableInput type="text" name="brand" label="Brand" />
-          <ReusableInput type="text" name="model" label="Model" />
-        </div>
-
-        <div
-          style={{
-            display: "flex",
-            gap: "10px",
-            justifyContent: "space-between",
-            width: "100%",
-          }}
-        >
-          <Col span={8}>
-            <ReusableSelect
-              label="Product Type"
-              name="type"
-              options={productTypeOptions}
-            />
-          </Col>
-          <Col span={8}>
-            <ReusableSelect
-              label="Size"
-              name="size"
-              options={productSizeOptions}
-            />
-          </Col>
-          <Col span={8}>
-            <ReusableInput type="text" name="color" label="Color" />
-          </Col>
-        </div>
-        <div
-          style={{
-            display: "flex",
-            gap: "10px",
-            justifyContent: "space-between",
-            width: "100%",
-          }}
-        >
-          <Col span={8}>
-            <ReusableSelect
-              label="Frame Material"
-              name="frameMaterial"
-              options={productMaterialOptions}
-            />
-          </Col>
-          <Col span={8}>
-            <ReusableInput
-              type="text"
-              name="suspensionType"
-              label="Suspension Type"
-            />
-          </Col>
-          <Col span={8}>
-            <ReusableInput
-              type="text"
-              name="manufacturerCountry"
-              label="Manufacturer Country"
-            />
-          </Col>
-        </div>
-        <ReusableTextArea
-          name="description"
-          label="Product description"
-          rows={3}
-          style={{ width: "100%" }}
-        />
-        <Button
-          style={{
-            marginTop: "20px",
-            width: "100%",
-            borderRadius: "4px",
-            backgroundColor: "#1890ff",
-            color: "#fff",
-          }}
-          htmlType="submit"
-        >
-          Add
-        </Button>
-      </ReusableForm>
-    </Row>
-  </div>
-);
+    <div style={{ width: "100%", padding: "20px" }}>
+      <h5
+        style={{ fontSize: "20px", marginBottom: "20px", textAlign: "center" }}
+      >
+        Add a Bike
+      </h5>
+      <Row justify="center">
+        <Col xs={24} sm={24} md={20} lg={18} xl={16}>
+          <ReusableForm onSubmit={onSubmit} defaultValues={defaultValues}>
+            <Row gutter={[16, 16]}>
+              <Col xs={24} sm={12} md={8}>
+                <ReusableInput type="text" name="name" label="Product Name" />
+              </Col>
+              <Col xs={24} sm={12} md={8}>
+                <ReusableInput type="text" name="image" label="Product Image" />
+              </Col>
+              <Col xs={24} sm={12} md={8}>
+                <ReusableInput
+                  type="text"
+                  name="quantity"
+                  label="Product Quantity"
+                />
+              </Col>
+              <Col xs={24} sm={12} md={8}>
+                <ReusableInput type="text" name="price" label="Price" />
+              </Col>
+              <Col xs={24} sm={12} md={8}>
+                <ReusableInput type="text" name="brand" label="Brand" />
+              </Col>
+              <Col xs={24} sm={12} md={8}>
+                <ReusableInput type="text" name="model" label="Model" />
+              </Col>
+              <Col xs={24} sm={12} md={8}>
+                <ReusableSelect
+                  label="Product Type"
+                  name="type"
+                  options={productTypeOptions}
+                />
+              </Col>
+              <Col xs={24} sm={12} md={8}>
+                <ReusableSelect
+                  label="Size"
+                  name="size"
+                  options={productSizeOptions}
+                />
+              </Col>
+              <Col xs={24} sm={12} md={8}>
+                <ReusableInput type="text" name="color" label="Color" />
+              </Col>
+              <Col xs={24} sm={12} md={8}>
+                <ReusableSelect
+                  label="Frame Material"
+                  name="frameMaterial"
+                  options={productMaterialOptions}
+                />
+              </Col>
+              <Col xs={24} sm={12} md={8}>
+                <ReusableInput
+                  type="text"
+                  name="suspensionType"
+                  label="Suspension Type"
+                />
+              </Col>
+              <Col xs={24} sm={12} md={8}>
+                <ReusableInput
+                  type="text"
+                  name="manufacturerCountry"
+                  label="Manufacturer Country"
+                />
+              </Col>
+              <Col span={24}>
+                <ReusableTextArea
+                  name="description"
+                  label="Product Description"
+                  rows={3}
+                  style={{ width: "100%" }}
+                />
+              </Col>
+              <Col span={24}>
+                <Button
+                  style={{
+                    marginTop: "20px",
+                    width: "100%",
+                    borderRadius: "4px",
+                    backgroundColor: "#1890ff",
+                    color: "#fff",
+                  }}
+                  htmlType="submit"
+                >
+                  Add Bike
+                </Button>
+              </Col>
+            </Row>
+          </ReusableForm>
+        </Col>
+      </Row>
+    </div>
+  );
 };
 
 export default AddABike;

@@ -3,6 +3,7 @@ import { Pagination, Table, TableColumnsType, TableProps } from "antd";
 import { TBike, TQueryParam } from "@/types";
 import { useState } from "react";
 import BikeSaleModal from "@/components/dialog/BikeSaleModal";
+import FullPageLoading from "@/components/Loader/FullPageLoader";
 
 export type TTableData = Pick<
   TBike,
@@ -72,6 +73,14 @@ const ViewMyBikes = () => {
     {
       title: "Product",
       dataIndex: "name",
+    },
+    {
+      title: "Product Image",
+      dataIndex: "image",
+      key: "x1",
+      render: (image: string) => (
+        <img src={image} alt="Bike" style={{ width: 50, height: 50, borderRadius: "2px" }} />
+      ),
     },
     {
       title: "Quantity",
@@ -185,7 +194,7 @@ const ViewMyBikes = () => {
       setParams(queryParams);
     }
     if (isLoading) {
-      return <p>Loading...</p>;
+      return <FullPageLoading/>;
     }
   };
 

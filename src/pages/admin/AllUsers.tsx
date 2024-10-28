@@ -1,3 +1,4 @@
+import FullPageLoading from "@/components/Loader/FullPageLoader";
 import { TUser } from "@/redux/features/auth/authSlice";
 import {
   useChangeUserRoleMutation,
@@ -151,7 +152,6 @@ const AllUsers = () => {
             <Button
               style={{ fontSize: "12px", fontWeight: "600" }}
               onClick={() => handleMakeAdmin(item?.key)}
-              type="link"
               size="small"
               disabled={item.role === "admin"}
             >
@@ -160,7 +160,6 @@ const AllUsers = () => {
             <Button
               style={{ fontSize: "12px", fontWeight: "600" }}
               onClick={() => handleMakeSeller(item?.key)}
-              type="link"
               size="small"
               disabled={item.role === "admin" || item.role === "seller"}
             >
@@ -169,7 +168,6 @@ const AllUsers = () => {
             <Button
               style={{ fontSize: "12px", fontWeight: "600" }}
               onClick={() => handleMakeBuyer(item?.key)}
-              type="link"
               size="small"
               disabled={item.role === "admin" || item.role === "buyer"}
             >
@@ -189,7 +187,6 @@ const AllUsers = () => {
               style={{ fontSize: "12px", fontWeight: "600" }}
               onClick={() => handleDeleteUser(item?.key)}
               danger
-              type="link"
               size="small"
               disabled={item.role === "admin"}
             >
@@ -210,7 +207,7 @@ const AllUsers = () => {
     console.log(_pagination, filters, _sorter, extra);
 
     if (isLoading) {
-      return <p>Loading...</p>;
+      return <FullPageLoading/>;
     }
   };
 

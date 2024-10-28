@@ -15,7 +15,7 @@ type TDefaultValues = {
 
 const BikeSaleModal = ({ bike }: any) => {
   // console.log(bike);
-  
+
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [saleBike] = useSaleBikeMutation();
 
@@ -69,12 +69,33 @@ const BikeSaleModal = ({ bike }: any) => {
         open={isModalOpen}
         onCancel={handleCancel}
         footer={null}
+        width={600}
       >
         <ReusableForm onSubmit={handleSubmit} defaultValues={defaultValues}>
-          <ReusableInput type="text" name="seller" label="Seller Name" />
-          <ReusableInput type="text" name="quantity" label="Product Quantity" />
+          <div className="flex gap-4" style={{ width: "100%" }}>
+            <div style={{ width: "100%" }}>
+              <ReusableInput type="text" name="seller" label="Seller Name" />
+            </div>
+            <div style={{ width: "100%" }}>
+              <ReusableInput
+                type="text"
+                name="quantity"
+                label="Product Quantity"
+              />
+            </div>
+          </div>
           <ReusableDatePiker name="saleDate" label="Date" />
-          <Button htmlType="submit" size="small">
+
+          <Button
+            style={{
+              backgroundColor: "#4361ee",
+              borderColor: "#4361ee",
+              color: "#fff",
+              marginTop: "10px",
+            }}
+            htmlType="submit"
+            size="small"
+          >
             Sale Bike
           </Button>
         </ReusableForm>
