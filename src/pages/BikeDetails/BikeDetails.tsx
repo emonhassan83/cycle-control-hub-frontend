@@ -7,8 +7,6 @@ import { usePurchaseBikesMutation } from "@/redux/features/salesManagement/sales
 import { selectCurrentUser } from "@/redux/features/auth/authSlice";
 import { useAppSelector } from "@/redux/hooks";
 import { toast } from "sonner";
-import { generatePDF } from "@/components/PDF/generatePDF";
-import { saveAs } from "file-saver";
 import BikeDetailsHeroSection from "./components/BikeDetailsHeroSection";
 import BikeDetailsSection from "./components/BikeDetailsSection";
 import RelatedBikes from "./components/RelatedBikeProduct";
@@ -40,27 +38,27 @@ const BikeDetails = () => {
       const res = await purchaseBikes(bikePurchaseInfo).unwrap();
 
       if (res.success) {
-        toast.success("Bike purchased successfully!", { id: toastId });
+        toast.success("Bike add to cart successfully!", { id: toastId });
 
-        const invoiceDetails = {
-          buyerName: user?.name,
-          buyerEmail: user?.email,
-          bikeName: bike.name,
-          bikeModel: bike.model,
-          bikeColor: bike.color,
-          manufacturerCountry: bike.manufacturerCountry,
-          sellerName: bike.seller.name,
-          sellerEmail: bike.seller.email,
-          quantity: 1,
-          price: bike.price,
-          tax: 100,
-          dateOfSale: new Date().toISOString(),
-          totalAmount: bike.price + 100,
-        };
+        // const invoiceDetails = {
+        //   buyerName: user?.name,
+        //   buyerEmail: user?.email,
+        //   bikeName: bike.name,
+        //   bikeModel: bike.model,
+        //   bikeColor: bike.color,
+        //   manufacturerCountry: bike.manufacturerCountry,
+        //   sellerName: bike.seller.name,
+        //   sellerEmail: bike.seller.email,
+        //   quantity: 1,
+        //   price: bike.price,
+        //   tax: 100,
+        //   dateOfSale: new Date().toISOString(),
+        //   totalAmount: bike.price + 100,
+        // };
 
-        const pdfBlob = await generatePDF(invoiceDetails);
+        // const pdfBlob = await generatePDF(invoiceDetails);
 
-        saveAs(pdfBlob, `${bike.name}-bike-invoice.pdf`);
+        // saveAs(pdfBlob, `${bike.name}-bike-invoice.pdf`);
       }
     } catch (error) {
       toast.error("Failed to purchase the bike. Please try again.", {

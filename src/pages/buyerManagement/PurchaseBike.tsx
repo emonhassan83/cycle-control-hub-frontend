@@ -33,7 +33,17 @@ const PurchasesBike = () => {
         style={{ display: "flex", justifyContent: "end", marginBottom: "20px" }}
       >
         <Row style={{ width: "50%" }}>
-          <Search placeholder="Search Bike" onSearch={onSearch} enterButton />
+          <Search
+            placeholder="Search Bike"
+            onSearch={onSearch}
+            enterButton={
+              <Button
+                style={{ backgroundColor: "#ffffff", borderColor: "#969696" }}
+              >
+                Search
+              </Button>
+            }
+          />
         </Row>
       </div>
       <Row gutter={[16, 16]}>

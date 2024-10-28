@@ -1,3 +1,4 @@
+import { generatePDF } from "@/components/PDF/generatePDF";
 import {
   useCancelPurchaseBikesMutation,
   useConformPurchaseBikesMutation,
@@ -7,6 +8,10 @@ import { TPurchaseBike } from "@/types";
 import { Button, Pagination, Table, TableColumnsType, TableProps } from "antd";
 import { useState } from "react";
 import { toast } from "sonner";
+import { saveAs } from "file-saver";
+import { useAppSelector } from "@/redux/hooks";
+import { selectCurrentUser } from "@/redux/features/auth/authSlice";
+import FullPageLoading from "@/components/Loader/FullPageLoader";
 
 export type TTableData = Pick<TPurchaseBike, "isConfirmed">;
 
@@ -17,6 +22,7 @@ const ConfirmPurchase = () => {
     isFetching,
     isLoading,
   } = useGetSellerPurchaseBikesQuery([{ name: "page", value: page }]);
+  const user = useAppSelector(selectCurrentUser);
   const [conformPurchaseBikes] = useConformPurchaseBikesMutation();
   const [cancelPurchaseBikes] = useCancelPurchaseBikesMutation();
 
@@ -35,6 +41,9 @@ const ConfirmPurchase = () => {
 
   const handleConfirmPurchaseBike = async (id: string) => {
     // const toastId = toast.loading("Trying to confirm purchase bike!");
+
+    const bike = bikeData?.data?.find((item: any) => item?.bike?._id === id);
+
     //* Confirm status to sent to server
     try {
       const res = await conformPurchaseBikes(id).unwrap();
@@ -44,8 +53,28 @@ const ConfirmPurchase = () => {
           duration: 2000,
         });
       }
+
+      const invoiceDetails = {
+        buyerName: user?.name,
+        buyerEmail: user?.email,
+        bikeName: bike?.bike?.name,
+        bikeModel: bike?.bike?.model,
+        bikeColor: bike?.bike?.color,
+        manufacturerCountry: bike?.bike?.manufacturerCountry,
+        sellerName: bike?.seller?.name,
+        sellerEmail: bike?.seller?.email,
+        quantity: 1,
+        price: bike?.bike?.price,
+        tax: 100,
+        dateOfSale: new Date().toISOString(),
+        totalAmount: bike && bike?.bike?.price + 100,
+      };
+
+      const pdfBlob = await generatePDF(invoiceDetails);
+
+      saveAs(pdfBlob, `${bike?.bike?.name}-bike-invoice.pdf`);
     } catch (error: any) {
-      toast.error(error.message, {duration: 2000, });
+      toast.error(error.message, { duration: 2000 });
       console.error(error.message);
     }
   };
@@ -78,7 +107,7 @@ const ConfirmPurchase = () => {
       dataIndex: "image",
       key: "x1",
       render: (image: string) => (
-        <img src={image} alt="Bike" style={{ width: 50, height: 50 }} />
+        <img src={image} alt="Bike" style={{ width: 50, height: 50, borderRadius: "2px" }} />
       ),
     },
     {
@@ -100,7 +129,6 @@ const ConfirmPurchase = () => {
         return (
           <div>
             <Button
-              type="link"
               onClick={() => handleConfirmPurchaseBike(item.key)}
               size="small"
               style={{ fontSize: "12px", fontWeight: "600" }}
@@ -120,7 +148,6 @@ const ConfirmPurchase = () => {
           <div>
             <Button
               danger
-              type="link"
               size="small"
               onClick={() => handleCancelPurchaseBike(item.key)}
               style={{ fontSize: "12px", fontWeight: "600" }}
@@ -143,7 +170,7 @@ const ConfirmPurchase = () => {
     console.log(filters, _sorter, extra);
 
     if (isLoading) {
-      return <p>Loading...</p>;
+      return <FullPageLoading/>;
     }
   };
 

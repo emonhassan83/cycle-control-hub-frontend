@@ -18,7 +18,7 @@ const demoCredentials = [
   },
   {
     role: 'Buyer',
-    email: 'mike.taylor@example.com',
+    email: 'emma.jones@example.com',
     password: 'user123',
   },
 ];

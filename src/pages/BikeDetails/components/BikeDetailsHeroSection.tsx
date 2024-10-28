@@ -30,10 +30,10 @@ const BikeDetailsHeroSection = ({ bike, handleBuyNow }: any) => {
         <Button
           type="primary"
           size="large"
-          style={{ borderRadius: "5px", backgroundColor: "#e53935", borderColor: "#e53935" }}
+          style={{ borderRadius: "5px", backgroundColor: "#4361ee", borderColor: "#4361ee" }}
           onClick={handleBuyNow}
         >
-          Buy Now
+          Add to Cart
         </Button>
       </Col>
     </Row>
