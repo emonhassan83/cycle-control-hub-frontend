@@ -1,4 +1,5 @@
 import UpdateCouponModal from "@/components/dialog/UpdateCouponModal";
+import FullPageLoading from "@/components/Loader/FullPageLoader";
 import {
   useDeleteCouponMutation,
   useGetAllCouponsQuery,
@@ -95,7 +96,6 @@ const CouponManagement = () => {
               style={{ fontSize: "12px", fontWeight: "600" }}
               onClick={() => handleDeleteCoupon(item?.key)}
               danger
-              type="link"
               size="small"
               disabled={item.role === "admin"}
             >
@@ -116,7 +116,7 @@ const CouponManagement = () => {
     console.log(_pagination, filters, _sorter, extra);
 
     if (isLoading) {
-      return <p>Loading...</p>;
+      return <FullPageLoading/>;
     }
   };
 

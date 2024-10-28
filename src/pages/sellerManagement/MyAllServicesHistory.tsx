@@ -1,3 +1,4 @@
+import FullPageLoading from "@/components/Loader/FullPageLoader";
 import {
     useGetAllMyServicesQuery,
   } from "@/redux/features/service/serviceApi";
@@ -116,7 +117,7 @@ import {
       console.log(_pagination, filters, _sorter, extra);
   
       if (isLoading) {
-        return <p>Loading...</p>;
+        return <FullPageLoading/>;
       }
     };
   

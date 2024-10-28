@@ -40,9 +40,9 @@ const productTypeOptions = [
 
 const BikeUpdateDialog = ({ bike }: any) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [updateBike, { data }] = useUpdateBikeMutation();
+  const [updateBike] = useUpdateBikeMutation();
 
-  console.log("Update Bike Response Data: ", data);
+  // console.log("Update Bike Response Data: ", data);
 
   const defaultValues: TDefaultValues = {
     name: bike?.name,
@@ -94,7 +94,6 @@ const BikeUpdateDialog = ({ bike }: any) => {
       <Button
         onClick={showModal}
         size="small"
-        type="link"
         style={{ fontSize: "12px", fontWeight: "600" }}
       >
         Update
@@ -104,19 +103,69 @@ const BikeUpdateDialog = ({ bike }: any) => {
         open={isModalOpen}
         onCancel={handleCancel}
         footer={null}
+        width={800}
       >
         <ReusableForm onSubmit={handleSubmit} defaultValues={defaultValues}>
-          <ReusableInput type="text" name="name" label="Product Name" />
-          <ReusableInput type="text" name="image" label="Product Image" />
-          <ReusableInput type="text" name="quantity" label="Product Quantity" />
-          <ReusableInput type="text" name="price" label="Product Price" />
-          <ReusableSelect
-            label="Product Type"
-            name="type"
-            options={productTypeOptions}
-          />
-          <Button htmlType="submit" size="small">
-            Update
+          <div
+            style={{
+              width: "100%",
+              display: "flex",
+              gap: "10px",
+              marginBottom: "8px",
+            }}
+          >
+            <ReusableInput
+              type="text"
+              name="name"
+              label="Product Name"
+              style={{ width: "100%" }}
+            />
+            <ReusableInput
+              type="text"
+              name="price"
+              label="Product Price"
+              style={{ width: "100%" }}
+            />
+          </div>
+          <div
+            style={{
+              width: "100%",
+              display: "flex",
+              gap: "10px",
+              marginBottom: "8px",
+            }}
+          >
+            <ReusableInput
+              type="text"
+              name="quantity"
+              label="Product Quantity"
+              style={{ width: "100%" }}
+            />
+            <ReusableSelect
+              label="Product Type"
+              name="type"
+              options={productTypeOptions}
+            />
+          </div>
+          <div style={{ width: "100%", marginBottom: "8px", marginTop: "-20px" }}>
+            <ReusableInput
+              type="text"
+              name="image"
+              label="Product Image"
+              style={{ width: "100%" }}
+            />
+          </div>
+          <Button
+            style={{
+              backgroundColor: "#1890ff",
+              color: "#fff",
+              width: "100%",
+              marginTop: "10px",
+            }}
+            htmlType="submit"
+            size="small"
+          >
+            Update Bike
           </Button>
         </ReusableForm>
       </Modal>

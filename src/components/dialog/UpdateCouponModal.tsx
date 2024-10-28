@@ -88,7 +88,6 @@ const UpdateCouponModal = ({ coupon }: any) => {
     <>
       <Button
         onClick={showModal}
-        type="link"
         size="small"
         style={{ fontSize: "12px", fontWeight: "600" }}
       >
@@ -99,36 +98,67 @@ const UpdateCouponModal = ({ coupon }: any) => {
         open={isModalOpen}
         onCancel={handleCancel}
         footer={null}
+        width={800}
       >
         <ReusableForm onSubmit={handleSubmit} defaultValues={defaultValues}>
-          <ReusableInput
-            type="text"
-            name="name"
-            label="Coupon Name"
-            placeholder="ENTER COUPON NAME"
-          />
-          <ReusableDatePiker name="expiry" label="Coupon Expiry" />
-          <div style={{ marginTop: "-10px", marginBottom: "-10px" }}>
+          <div style={{
+              width: "100%",
+              display: "flex",
+              gap: "10px",
+              marginTop: "8px",
+            }}>
+          <div style={{ width: "100%", marginBottom: "8px" }}>
+            <ReusableInput
+              type="text"
+              name="name"
+              label="Coupon Name"
+              placeholder="ENTER COUPON NAME"
+              style={{ width: "100%" }}
+            />
+          </div>
+          <div style={{ width: "100%", marginBottom: "8px" }}>
+            <ReusableDatePiker name="expiry" label="Coupon Expiry" />
+          </div>
+          </div>
+          <div
+            style={{
+              width: "100%",
+              display: "flex",
+              gap: "10px"
+            }}
+          >
             <ReusableSelect
               options={discountTypeOptions}
               name="discountType"
               label="Discount Type"
             />
+            <ReusableInput
+              type="text"
+              name="discountAmount"
+              label="Discount Amount"
+              placeholder="Discount Amount"
+              style={{ width: "100%" }}
+            />
           </div>
-          <ReusableInput
-            type="text"
-            name="discountAmount"
-            label="Discount Amount"
-            placeholder="Discount Amount"
-          />
-          <ReusableSelect
-            mode={"multiple"}
-            options={applicableBikeOptions}
-            name="applicableBikeIds"
-            label="Applicable Bike"
-          />
-          <Button htmlType="submit" size="small">
-            Update coupon
+          <div style={{ width: "100%", marginBottom: "8px" }}>
+            <ReusableSelect
+              mode="multiple"
+              options={applicableBikeOptions}
+              name="applicableBikeIds"
+              label="Applicable Bike"
+            />
+          </div>
+          <Button
+            htmlType="submit"
+            size="small"
+            style={{
+              backgroundColor: "#1890ff",
+              color: "#fff",
+              width: "100%",
+              marginTop: "10px",
+            }}
+          >
+            Update Coupon
           </Button>
         </ReusableForm>
       </Modal>

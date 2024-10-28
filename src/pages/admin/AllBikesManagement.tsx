@@ -109,6 +109,14 @@ const AllMyBikesManagement = () => {
       dataIndex: "name",
     },
     {
+      title: "Product Image",
+      dataIndex: "image",
+      key: "x1",
+      render: (image: string) => (
+        <img src={image} alt="Bike" style={{ width: 50, height: 50, borderRadius: "2px" }} />
+      ),
+    },
+    {
       title: "Quantity",
       dataIndex: "quantity",
     },
@@ -226,7 +234,6 @@ const AllMyBikesManagement = () => {
             <Button
               danger
               onClick={() => handleDeleteBike(item.key)}
-              type="link"
               size="small"
               style={{ fontSize: "12px", fontWeight: "600" }}
             >

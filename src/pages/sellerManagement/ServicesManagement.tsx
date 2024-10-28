@@ -1,3 +1,4 @@
+import FullPageLoading from "@/components/Loader/FullPageLoader";
 import {
   useCancelBikeServiceMutation,
   useConfirmBikeServiceMutation,
@@ -171,7 +172,7 @@ const ServiceManagement = () => {
     console.log(_pagination, filters, _sorter, extra);
 
     if (isLoading) {
-      return <p>Loading...</p>;
+      return <FullPageLoading/>;
     }
   };
 

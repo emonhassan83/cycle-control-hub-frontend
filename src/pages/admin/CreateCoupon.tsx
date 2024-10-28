@@ -72,7 +72,7 @@ const CreateCoupon = () => {
             placeholder="ENTER COUPON NAME"
           />
           <ReusableDatePiker name="expiry" label="Coupon Expiry" />
-          <div style={{ marginTop: "-10px", marginBottom: "-10px" }}>
+          <div style={{ marginTop: "15px", marginBottom: "-10px" }}>
             <ReusableSelect
               options={discountTypeOptions}
               name="discountType"
