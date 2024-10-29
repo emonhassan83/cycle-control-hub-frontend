@@ -62,7 +62,7 @@ const Sidebar = () => {
           alignItems: "center",
         }}
       >
-        <h1>CYCLE CONTROL HUB</h1>
+        <h1 className="ml-2">CYCLE CONTROL HUB</h1>
       </div>
       <Menu
         theme="dark"

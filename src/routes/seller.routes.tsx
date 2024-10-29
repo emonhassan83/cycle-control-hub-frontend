@@ -4,40 +4,44 @@ import ViewMyBikes from "../pages/sellerManagement/ViewMyBikes";
 import ServicesManagement from "@/pages/sellerManagement/ServicesManagement";
 import MyAllServicesHistory from "@/pages/sellerManagement/MyAllServicesHistory";
 
+import {
+  PlusCircleOutlined,
+  EyeOutlined,
+  ToolOutlined,
+  HistoryOutlined,
+} from "@ant-design/icons";
+
 export const sellerPaths = [
   {
-    name: "Bike Management",
-    children: [
-      {
-        name: "Add a bike",
-        path: "add-a-bike",
-        element: <AddABike />,
-      },
-      {
-        name: "View my bikes",
-        path: "view-bikes",
-        element: <ViewMyBikes />,
-      },
-      // {
-      //   name: "Bulk delete bikes",
-      //   path: "bulk-delete-bikes",
-      //   element: <BulkDeleteBikes />,
-      // },
-    ],
+    name: "Add a Bike",
+    path: "add-a-bike",
+    icon: <PlusCircleOutlined />,
+    element: <AddABike />,
   },
   {
-    name: "Maintenance and Servicing",
-    children: [
-      {
-        name: "Services Management",
-        path: "services-management",
-        element: <ServicesManagement />,
-      },
-      {
-        name: "Bike services History",
-        path: "bike-services-history",
-        element: <MyAllServicesHistory/>,
-      }
-    ],
+    name: "View My Bikes",
+    path: "view-bikes",
+    icon: <EyeOutlined />,
+    element: <ViewMyBikes />,
+  },
+  // Uncomment if BulkDeleteBikes is added back
+  // {
+  //   name: "Bulk Delete Bikes",
+  //   path: "bulk-delete-bikes",
+  //   icon: <DeleteOutlined />,
+  //   element: <BulkDeleteBikes />,
+  // },
+  //* service management
+  {
+    name: "Services Management",
+    path: "services-management",
+    icon: <ToolOutlined />,
+    element: <ServicesManagement />,
+  },
+  {
+    name: "Bike Services History",
+    path: "bike-services-history",
+    icon: <HistoryOutlined />,
+    element: <MyAllServicesHistory />,
   },
 ];
