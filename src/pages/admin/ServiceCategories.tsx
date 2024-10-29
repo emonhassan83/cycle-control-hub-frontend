@@ -1,4 +1,5 @@
 import AssignCouponModel from "@/components/dialog/AssignCouponModel";
+import FullPageLoading from "@/components/Loader/FullPageLoader";
 import {
   useDeleteAServiceCategoryMutation,
   useGetAllServiceCategoriesQuery,
@@ -112,7 +113,6 @@ const ServiceCategories = () => {
               danger
               style={{ fontSize: "12px", fontWeight: "600" }}
               onClick={() => handleDeleteCoupon(item.key)}
-              type="link"
               size="small"
               disabled={item.couponName === "Not Available coupon"}
             >
@@ -132,7 +132,6 @@ const ServiceCategories = () => {
               style={{ fontSize: "12px", fontWeight: "600" }}
               onClick={() => handleDeleteService(item.key)}
               danger
-              type="link"
               size="small"
               disabled={item.role === "admin"}
             >
@@ -153,7 +152,7 @@ const ServiceCategories = () => {
     console.log(filters, _sorter, extra);
 
     if (isLoading) {
-      return <p>Loading...</p>;
+      return <FullPageLoading/>;
     }
   };
 
