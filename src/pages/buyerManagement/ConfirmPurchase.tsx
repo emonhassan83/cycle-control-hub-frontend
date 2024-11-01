@@ -12,8 +12,9 @@ import { saveAs } from "file-saver";
 import { useAppSelector } from "@/redux/hooks";
 import { selectCurrentUser } from "@/redux/features/auth/authSlice";
 import FullPageLoading from "@/components/Loader/FullPageLoader";
+import { useInitialPaymentMutation } from "@/redux/features/payment/paymentApi";
 
-export type TTableData = Pick<TPurchaseBike, "isConfirmed">;
+export type TTableData = Pick<TPurchaseBike, "isConfirmed"|"transactionId">;
 
 const ConfirmPurchase = () => {
   const [page, setPage] = useState(1);
@@ -23,36 +24,46 @@ const ConfirmPurchase = () => {
     isLoading,
   } = useGetSellerPurchaseBikesQuery([{ name: "page", value: page }]);
   const user = useAppSelector(selectCurrentUser);
+  const [initialPayment] = useInitialPaymentMutation();
   const [conformPurchaseBikes] = useConformPurchaseBikesMutation();
   const [cancelPurchaseBikes] = useCancelPurchaseBikesMutation();
 
   const metaData = bikeData?.meta;
-  // console.log(bikeData);
+  console.log(bikeData);
 
-  const tableData = bikeData?.data?.map(({ seller, bike, isConfirmed }) => ({
-    key: bike?._id,
+  const tableData = bikeData?.data?.map(({ _id, seller, bike, isConfirmed, transactionId, status }) => ({
+    key: _id,
+    bikeId: bike._id,
     sellerName: seller?.name,
     name: bike?.name as string,
     image: bike?.image as string,
     quantity: bike?.quantity as number,
     price: bike?.price as number,
+    transactionId,
+    status,
     isConfirmed,
   }));
 
-  const handleConfirmPurchaseBike = async (id: string) => {
+  const handleConfirmPurchaseBike = async (bikeConfirmData: any) => {
     // const toastId = toast.loading("Trying to confirm purchase bike!");
-
-    const bike = bikeData?.data?.find((item: any) => item?.bike?._id === id);
+    
+    const bike = bikeData?.data?.find((item: any) => item?.bike?._id === bikeConfirmData._id);
 
     //* Confirm status to sent to server
     try {
-      const res = await conformPurchaseBikes(id).unwrap();
+      const res = await conformPurchaseBikes(bikeConfirmData.bikeId).unwrap();
 
       if (res?.success) {
-        toast.success("Confirm purchase bike successfully!", {
-          duration: 2000,
-        });
+        const response = await initialPayment(bikeConfirmData?.key).unwrap();
+        if (response?.data?.paymentUrl) {
+          window.location.href = response.data.paymentUrl;
+        }
+
+        // toast.success("Confirm purchase bike successfully!", {
+        //   duration: 2000,
+        // });
       }
+
 
       const invoiceDetails = {
         buyerName: user?.name,
@@ -126,13 +137,15 @@ const ConfirmPurchase = () => {
       title: "Action",
       key: "x1",
       render: (item) => {
+        console.log(item);
+        
         return (
           <div>
             <Button
-              onClick={() => handleConfirmPurchaseBike(item.key)}
+              onClick={() => handleConfirmPurchaseBike(item)}
               size="small"
               style={{ fontSize: "12px", fontWeight: "600" }}
-              disabled={item?.isConfirmed}
+              disabled={item?.isConfirmed || item.status === "PAID"}
             >
               Confirm
             </Button>
@@ -149,9 +162,9 @@ const ConfirmPurchase = () => {
             <Button
               danger
               size="small"
-              onClick={() => handleCancelPurchaseBike(item.key)}
+              onClick={() => handleCancelPurchaseBike(item.bikeId)}
               style={{ fontSize: "12px", fontWeight: "600" }}
-              disabled={item?.isConfirmed}
+              disabled={item?.isConfirmed || item.status === "PAID"}
             >
               Cancel
             </Button>

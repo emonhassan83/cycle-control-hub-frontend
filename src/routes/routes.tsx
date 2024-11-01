@@ -8,6 +8,7 @@ import { buyerPaths } from "./buyer.routes";
 import ProtectedRoute from "@/components/layout/ProtectedRoute";
 import { adminPaths } from "./admin.routes";
 import BikeDetails from "@/pages/BikeDetails/BikeDetails";
+import PaymentPage from "@/pages/Payment/PaymentPage";
 
 const router = createBrowserRouter([
   {
@@ -48,6 +49,10 @@ const router = createBrowserRouter([
         <BikeDetails />
       </ProtectedRoute>
     ),
+  },
+  {
+    path: "/payment",
+    element: <PaymentPage />,
   },
   {
     path: "/login",

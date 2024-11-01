@@ -5,6 +5,8 @@ export type TPurchaseBike = {
   bike: TBike;
   buyingDate: string;
   isConfirmed: boolean;
+  status?: string;
+  transactionId: string;
   createdAt: string;
   updatedAt: string;
 };

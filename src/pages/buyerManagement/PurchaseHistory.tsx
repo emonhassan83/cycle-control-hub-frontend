@@ -18,19 +18,17 @@ const PurchasesHistory = () => {
   const [page, setPage] = useState(1);
   const { data: bikeData, isLoading, isFetching } = useGetSellerPurchaseBikesQuery([{ name: "page", value: page }]);
   const confirmedBikes = bikeData?.data?.filter((bike: any) => bike.isConfirmed || bike.status === "PAID");
-  // console.log(bikeData);
   
-
   const metaData = bikeData?.meta;
 
-  const tableData: TTableData[] = confirmedBikes?.map(({ _id, buyer, seller, bike, createdAt }) => ({
+  const tableData: TTableData[] = confirmedBikes?.map(({ _id, buyer, seller, bike, transactionId, createdAt }) => ({
     key: _id,
     buyerName: buyer.name,
     sellerName: seller.name,
     bikeName: bike.name,
     image: bike.image,
     price: bike.price,
-    transactionId: bike?.transactionId,
+    transactionId: transactionId,
     buyingDate: bike?.buyingDate ? new Date(bike?.buyingDate).toISOString() : "N/A",
     createdAt: createdAt
       ? new Intl.DateTimeFormat("en-US", { day: "2-digit", month: "short", year: "numeric" }).format(new Date(createdAt))

@@ -14,7 +14,7 @@ const baseUrl = "http://localhost:5000/api/v1";
 const baseQuery = fetchBaseQuery({
   baseUrl: baseUrl,
   prepareHeaders: (headers, { getState }) => {
-    const token = (getState() as RootState).auth.token;
+    const token = (getState() as RootState).auth?.token;
 
     if (token) {
       headers.set("Authorization", `${token}`);
@@ -55,6 +55,6 @@ const customBaseQuery: BaseQueryFn<
 export const baseApi = createApi({
   reducerPath: "baseApi",
   baseQuery: customBaseQuery,
-  tagTypes: ["Users", "Bike", "Buyer", "Coupon", "ServiceCategory", "Service"],
+  tagTypes: ["Users", "Bike", "Buyer", "Coupon", "ServiceCategory", "Service", "Payment"],
   endpoints: () => ({}),
 });
