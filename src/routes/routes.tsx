@@ -9,11 +9,13 @@ import ProtectedRoute from "@/components/layout/ProtectedRoute";
 import { adminPaths } from "./admin.routes";
 import BikeDetails from "@/pages/BikeDetails/BikeDetails";
 import PaymentPage from "@/pages/Payment/PaymentPage";
+import ErrorPage from "@/pages/ErrorPge/ErrorPage";
 
 const router = createBrowserRouter([
   {
     path: "/",
     element: <App />,
+    errorElement: <ErrorPage />,
   },
   {
     path: "/admin",
