@@ -59,35 +59,47 @@ const SignUp = () => {
   };
   return (
     <div
-      style={{
-        display: "flex",
-        flexDirection: "column",
-        justifyContent: "center",
-        alignItems: "center",
-        height: "100vh",
-      }}
+    style={{
+      display: "flex",
+      justifyContent: "center",
+      alignItems: "center",
+      height: "100vh",
+      backgroundImage: "url('https://i.ibb.co.com/FKJ5GY8/photo-1518057014654-ba829c396280.jpg')",
+      backgroundSize: "cover",
+      backgroundPosition: "center",
+      color: "#fff",
+    }}
     >
       <div
         style={{
-          border: "1px solid rgb(194, 192, 192)",
           borderRadius: "8px",
           padding: "40px",
-          boxShadow: "0 4px 8px rgba(0, 0, 0, 0.1)",
+          backgroundColor: "rgba(255, 255, 255, 0.137)",
+          boxShadow: "0 8px 16px rgba(0, 0, 0, 0.3)",
+          width: "100%",
+          maxWidth: "450px",
         }}
       >
-        <h5 style={{ fontSize: "20px", textAlign: "center" }}>Sign Up</h5>
+         <h2 style={{ fontSize: "24px", textAlign: "center", color: "#fff" }}>
+          Create Your Account
+        </h2>
+        <p style={{ fontSize: "14px", textAlign: "center", color: "#fff" }}>
+          Sign up to get started with your new account
+        </p>
         <Row justify="center" align="middle" style={{ marginTop: "25px" }}>
           <ReusableForm onSubmit={onSubmit} defaultValues={defaultValues}>
             <ReusableInput
               type="text"
               name="name"
               label="User Name"
+              color="#fff"
               width="400px"
             />
             <ReusableInput
               type="email"
               name="email"
               label="Email"
+              color="#fff"
               width="400px"
             />
             <ReusableToggleInput
@@ -103,6 +115,7 @@ const SignUp = () => {
                   name="contactNumber"
                   label="Contact Number"
                   width="100%"
+                  color="#fff"
                 />
               </Col>
               <Col span={12}>
@@ -111,6 +124,7 @@ const SignUp = () => {
                   name="address"
                   label="Address"
                   width="100%"
+                  color="#fff"
                 />
               </Col>
             </Row>
@@ -119,7 +133,7 @@ const SignUp = () => {
                 marginTop: "20px",
                 width: "100%",
                 borderRadius: "4px",
-                backgroundColor: "#1890ff",
+                backgroundColor: "rgba(255, 255, 255, 0.137)",
                 color: "#fff",
               }}
               htmlType="submit"
@@ -132,6 +146,7 @@ const SignUp = () => {
                 textAlign: "center",
                 marginTop: "10px",
                 fontWeight: "bold",
+                color: "#fff"
               }}
             >
               Already have an account?{" "}

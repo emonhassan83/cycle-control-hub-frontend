@@ -136,7 +136,7 @@ const Login = () => {
               }}
             >
               Don't have an account?{" "}
-              <Link to="/sign-up" style={{ color: "#fff", textDecoration: "underline" }}>
+              <Link to="/sign-up" style={{ textDecoration: "underline" }}>
                 Register
               </Link>
             </p>
