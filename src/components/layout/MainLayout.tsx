@@ -6,8 +6,11 @@ import { useAppDispatch } from "../../redux/hooks";
 import { logout } from "../../redux/features/auth/authSlice";
 import { toast } from "sonner";
 import Sidebar from "./Sidebar";
+import ProfileDropdown from "../dropdown/ProfileDropdown";
+import { useMyProfileQuery } from "@/redux/features/user/userApi";
 
 const MainLayout = () => {
+  const { data } = useMyProfileQuery("");
   const dispatch = useAppDispatch();
 
   const handleLogout = () => {
@@ -27,7 +30,8 @@ const MainLayout = () => {
             justifyContent: "flex-end",
           }}
         >
-          <Button className="bg-white" onClick={handleLogout}>Logout</Button>{" "}
+          {/* <Button className="bg-white" onClick={handleLogout}>Logout</Button>{" "} */}
+          <ProfileDropdown data={data}/>
         </Header>
         <Content style={{ margin: "24px 16px 0" }}>
           <div

@@ -28,6 +28,16 @@ const userApi = baseApi.injectEndpoints({
       providesTags: ["Users"],
     }),
 
+    myProfile: builder.query({
+      query: () => {
+        return {
+          url: "/user/my-profile",
+          method: "GET"
+        };
+      },
+      providesTags: ["Users"],
+    }),
+
     changeUserRole: builder.mutation({
         query: (userInfo) => {
           return {
@@ -52,4 +62,4 @@ const userApi = baseApi.injectEndpoints({
   }),
 });
 
-export const { useGetUsersQuery, useChangeUserRoleMutation, useDeleteUserMutation } = userApi;
+export const { useGetUsersQuery, useMyProfileQuery, useChangeUserRoleMutation, useDeleteUserMutation } = userApi;
