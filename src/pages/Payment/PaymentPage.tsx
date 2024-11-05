@@ -5,13 +5,12 @@ import { Result, Button } from "antd";
 const PaymentPage = () => {
     const location = useLocation();
     const [status, setStatus] = useState("");
-    console.log(location);
+    console.log(status);
     
-
     useEffect(() => {
         const queryParams = new URLSearchParams(location.search);
         setStatus(queryParams.get("status") || "");
-    }, [location.search]);
+    }, [location?.search]);
 
     return (
         <div style={{ display: "flex", justifyContent: "center", alignItems: "center", height: "100vh" }}>

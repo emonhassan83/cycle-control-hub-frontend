@@ -31,19 +31,19 @@ const ReusableToggleInput = ({
 
   return (
     <div style={{ marginBottom: "7px", ...style }}>
-      <p style={{ marginBottom: "5px" }}>{label ? label : null}</p>
+      <p style={{ marginBottom: "5px", color: "#fff" }}>{label ? label : null}</p>
       <Controller
         name={name}
         render={({ field }) => (
           <Input
-            style={{ width }}
+            style={{ width, backgroundColor: "rgba(255, 255, 255, 0.137)" }}
             type={inputType}
             id={name}
             placeholder={placeholder}
             suffix={
               type === "password" ? (
                 <span onClick={handleTogglePassword} style={{ cursor: "pointer" }}>
-                  {isPasswordVisible ? <EyeOutlined /> : <EyeInvisibleOutlined />}
+                  {isPasswordVisible ? <EyeOutlined style={{color: "#fff"}} /> : <EyeInvisibleOutlined style={{color: "#fff"}} />}
                 </span>
               ) : null
             }

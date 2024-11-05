@@ -15,9 +15,10 @@ const ShowCredentialButton = () => {
         style={{
           fontSize: "14px",
           fontWeight: "semibold",
+          color: "white",
           width: "100%",
         }}
-        icon={<DatabaseOutlined />}
+        icon={<DatabaseOutlined style={{color: "white"}} />}
       >
         Show Demo Credentials
       </Button>
