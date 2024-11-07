@@ -1,4 +1,3 @@
-// import { generatePDF } from "@/components/PDF/generatePDF";
 import {
   useCancelPurchaseBikesMutation,
   useConformPurchaseBikesMutation,
@@ -8,11 +7,12 @@ import { TPurchaseBike } from "@/types";
 import { Button, Pagination, Table, TableColumnsType, TableProps } from "antd";
 import { useState } from "react";
 import { toast } from "sonner";
-// import { saveAs } from "file-saver";
+import { saveAs } from "file-saver";
 import { useAppSelector } from "@/redux/hooks";
 import { selectCurrentUser } from "@/redux/features/auth/authSlice";
 import FullPageLoading from "@/components/Loader/FullPageLoader";
-import { useInitialPaymentMutation } from "@/redux/features/payment/paymentApi";
+import { generatePDF } from "@/components/PDF/generatePDF";
+import { useNavigate } from "react-router-dom";
 
 export type TTableData = Pick<TPurchaseBike, "isConfirmed"|"transactionId">;
 
@@ -24,9 +24,10 @@ const ConfirmPurchase = () => {
     isLoading,
   } = useGetSellerPurchaseBikesQuery([{ name: "page", value: page }]);
   const user = useAppSelector(selectCurrentUser);
-  const [initialPayment] = useInitialPaymentMutation();
+  // const [initialPayment] = useInitialPaymentMutation();
   const [conformPurchaseBikes] = useConformPurchaseBikesMutation();
   const [cancelPurchaseBikes] = useCancelPurchaseBikesMutation();
+  const navigate = useNavigate();
 
   const metaData = bikeData?.meta;
 
@@ -42,27 +43,29 @@ const ConfirmPurchase = () => {
     status,
     isConfirmed,
   }));
-
+  
   const handleConfirmPurchaseBike = async (bikeConfirmData: any) => {
     // const toastId = toast.loading("Trying to confirm purchase bike!");
     
-    const bike = bikeData?.data?.find((item: any) => item?.bike?._id === bikeConfirmData._id);
-
+    const bike = bikeData?.data?.find((item: any) => item?._id === bikeConfirmData?.key);
+    
     //* Confirm status to sent to server
     try {
       const res = await conformPurchaseBikes(bikeConfirmData.bikeId).unwrap();
 
       if (res?.success) {
-        const response = await initialPayment(bikeConfirmData?.key).unwrap();
-        if (response?.data?.paymentUrl) {
-          window.location.href = response.data.paymentUrl;
-        }
+        // const response = await initialPayment(bikeConfirmData?.key).unwrap();
+        // if (response?.data?.paymentUrl) {
+        //   window.location.href = response.data.paymentUrl;
+        // }
 
-        // toast.success("Confirm purchase bike successfully!", {
-        //   duration: 2000,
-        // });
+        toast.success("Confirm purchase bike successfully!", {
+          duration: 2000,
+        });
+
+        //* Navigate to the payment success page
+        navigate('/payment/success');
       }
-
 
       const invoiceDetails = {
         buyerName: user?.name,
@@ -80,9 +83,9 @@ const ConfirmPurchase = () => {
         totalAmount: bike && bike?.bike?.price + 100,
       };
 
-      // const pdfBlob = await generatePDF(invoiceDetails);
+      const pdfBlob = await generatePDF(invoiceDetails);
 
-      // saveAs(pdfBlob, `${bike?.bike?.name}-bike-invoice.pdf`);
+      saveAs(pdfBlob, `${bike?.bike?.name}-bike-invoice.pdf`);
     } catch (error: any) {
       toast.error(error.message, { duration: 2000 });
       console.error(error.message);
@@ -135,14 +138,14 @@ const ConfirmPurchase = () => {
     {
       title: "Action",
       key: "x1",
-      render: (item) => { 
+      render: (item) => {
         return (
           <div>
             <Button
               onClick={() => handleConfirmPurchaseBike(item)}
               size="small"
               style={{ fontSize: "12px", fontWeight: "600" }}
-              disabled={item?.isConfirmed }
+              disabled={item?.isConfirmed || item.status === "PAID" }
             >
               Confirm
             </Button>

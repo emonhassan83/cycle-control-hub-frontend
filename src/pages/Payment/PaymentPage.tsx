@@ -14,7 +14,7 @@ const PaymentPage = () => {
 
     return (
         <div style={{ display: "flex", justifyContent: "center", alignItems: "center", height: "100vh" }}>
-            {status === "success" && (
+            {status === "" && (
                 <Result
                     status="success"
                     title="Payment Successful!"
