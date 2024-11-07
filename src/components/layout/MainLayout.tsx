@@ -1,22 +1,13 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
-import { Button, Layout } from "antd";
+import { Layout } from "antd";
 const { Header, Content, Footer } = Layout;
 import { Outlet } from "react-router-dom";
-import { useAppDispatch } from "../../redux/hooks";
-import { logout } from "../../redux/features/auth/authSlice";
-import { toast } from "sonner";
 import Sidebar from "./Sidebar";
 import ProfileDropdown from "../dropdown/ProfileDropdown";
 import { useMyProfileQuery } from "@/redux/features/user/userApi";
 
 const MainLayout = () => {
   const { data } = useMyProfileQuery("");
-  const dispatch = useAppDispatch();
-
-  const handleLogout = () => {
-    toast.success("User logged out successfully!");
-    dispatch(logout());
-  };
 
   return (
     <Layout style={{ minHeight: "100vh" }}>
