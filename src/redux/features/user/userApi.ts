@@ -49,6 +49,18 @@ const userApi = baseApi.injectEndpoints({
         invalidatesTags: ["Users"],
       }),
 
+      updateMyProfile: builder.mutation({
+        query: (data) => {
+          return {
+            url: `/update-user/${data?.id}`,
+            method: "PUT",
+            body: data?.userData,
+          };
+        },
+  
+        invalidatesTags: ["Users"],
+      }),
+
     deleteUser: builder.mutation({
         query: (userInfo) => {   
           return {
@@ -62,4 +74,4 @@ const userApi = baseApi.injectEndpoints({
   }),
 });
 
-export const { useGetUsersQuery, useMyProfileQuery, useChangeUserRoleMutation, useDeleteUserMutation } = userApi;
+export const { useGetUsersQuery, useMyProfileQuery, useChangeUserRoleMutation, useUpdateMyProfileMutation, useDeleteUserMutation } = userApi;

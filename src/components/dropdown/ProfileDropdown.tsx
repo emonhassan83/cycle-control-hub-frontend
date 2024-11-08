@@ -30,12 +30,9 @@ const ProfileDropdown = ({ data }: any) => {
   const menuItems: MenuProps["items"] = [
     {
       label: (
-        // <a onClick={() => navigate(`/${data?.data?.role}/profile`)}>
-        //   <UserOutlined /> Visit Profile
-        // </a>
-        <p>
+        <a onClick={() => navigate(`/${data?.data?.role}/profile`)}>
           <UserOutlined /> Visit Profile
-        </p>
+        </a>
       ),
       key: "0",
     },

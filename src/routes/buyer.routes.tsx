@@ -4,6 +4,7 @@ import PurchasesHistory from "@/pages/buyerManagement/PurchaseHistory";
 import RequestMaintenance from "@/pages/buyerManagement/RequestMaintenance";
 import ServiceHistory from "@/pages/buyerManagement/ServiceHistory";
 import ServiceManagement from "@/pages/buyerManagement/ServiceManagement";
+import ProfilePage from "@/pages/ProfilePage/ProfilePage";
 
 import {
   AppstoreOutlined,
@@ -52,5 +53,11 @@ export const buyerPaths = [
     path: "service-history",
     icon: <FileTextOutlined />,
     element: <ServiceHistory />,
+  },
+  {
+    name: "My Profile",
+    path: "profile",
+    icon: <FileTextOutlined />,
+    element: <ProfilePage />,
   },
 ];
