@@ -8,6 +8,8 @@ import { useState } from "react";
 import { useMyProfileQuery, useUpdateMyProfileMutation } from "@/redux/features/user/userApi";
 import FullPageLoading from "@/components/Loader/FullPageLoader";
 import uploadImageToImgbb from "@/components/ImageUploader/ImageUploader";
+import UserInformation from "./components/UserInfo";
+import ChangePasswordSection from "./components/ChangePasswordSection";
 
 const ProfilePage = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -61,8 +63,8 @@ const ProfilePage = () => {
           />
         </Col>
         <Col xs={24} md={16}>
-          {/* <UserInformation data={data} />
-          <ChangePasswordSection /> */}
+          <UserInformation data={data?.data} />
+          <ChangePasswordSection />
         </Col>
       </Row>
     </>

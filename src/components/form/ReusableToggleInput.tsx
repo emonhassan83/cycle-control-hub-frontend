@@ -9,6 +9,7 @@ type TInputProps = {
   label?: string;
   placeholder?: string;
   style?: React.CSSProperties;
+  color?: string;
   width?: string;
 };
 
@@ -18,6 +19,7 @@ const ReusableToggleInput = ({
   label,
   placeholder,
   style,
+  color = "#fff",
   width = "100%",
 }: TInputProps) => {
   const [isPasswordVisible, setPasswordVisible] = useState(false);
@@ -31,7 +33,7 @@ const ReusableToggleInput = ({
 
   return (
     <div style={{ marginBottom: "7px", ...style }}>
-      <p style={{ marginBottom: "5px", color: "#fff" }}>{label ? label : null}</p>
+      <p style={{ marginBottom: "5px", color }}>{label ? label : null}</p>
       <Controller
         name={name}
         render={({ field }) => (
@@ -43,7 +45,7 @@ const ReusableToggleInput = ({
             suffix={
               type === "password" ? (
                 <span onClick={handleTogglePassword} style={{ cursor: "pointer" }}>
-                  {isPasswordVisible ? <EyeOutlined style={{color: "#fff"}} /> : <EyeInvisibleOutlined style={{color: "#fff"}} />}
+                  {isPasswordVisible ? <EyeOutlined style={{color}} /> : <EyeInvisibleOutlined style={{color}} />}
                 </span>
               ) : null
             }
