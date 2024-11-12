@@ -1,8 +1,11 @@
-const uploadImageToImgbb = async (file: File) => {
-    const url = `https://api.imgbb.com/1/upload?key=${process.env.NEXT_PUBLIC_IMGBB_KEY}`;
+const uploadImageToImgbb = async (file: File) => {  
+    const url = `https://api.imgbb.com/1/upload?key=${process.env.IMGBB_KEY}`;
 
+    console.log(url);
+    
     const formData = new FormData();
     formData.append("image", file);
+    
   
     try {
       const response = await fetch(url, {
@@ -10,6 +13,8 @@ const uploadImageToImgbb = async (file: File) => {
         body: formData,
       });
       const imageData = await response.json();
+      
+      console.log({file, formData, imageData});
       if (imageData.status === 200) {
         const imageUrl = imageData?.data?.display_url;
         return imageUrl;
