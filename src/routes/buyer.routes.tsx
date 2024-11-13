@@ -13,6 +13,7 @@ import {
   ToolOutlined,
   FileDoneOutlined,
   FileTextOutlined,
+  ProfileOutlined,
 } from "@ant-design/icons";
 
 export const buyerPaths = [
@@ -57,7 +58,7 @@ export const buyerPaths = [
   {
     name: "My Profile",
     path: "profile",
-    icon: <FileTextOutlined />,
+    icon: <ProfileOutlined />,
     element: <ProfilePage />,
   },
 ];

@@ -2,25 +2,24 @@ import { Button, Col, Row, Typography } from "antd";
 import ReusableForm from "@/components/form/ReusableForm";
 import { FieldValues } from "react-hook-form";
 import ReusableToggleInput from "@/components/form/ReusableToggleInput";
-// import { useChangePasswordMutation } from '@/redux/api/authApi';
+import { useChangePasswordMutation } from "@/redux/features/auth/authApi";
+import { toast } from "sonner";
 
 const { Title } = Typography;
 
 const ChangePasswordSection = () => {
-  //   const [passwordData, { isLoading }] = useChangePasswordMutation();
+    const [passwordData] = useChangePasswordMutation();
 
   const onSubmit = async (data: FieldValues) => {
-    console.log(data);
-
-    // try {
-    //   const res = await passwordData(values);
-    //   if (res?.data?.message) {
-    //     toast.success(res.data.message);
-    //   }
-    // } catch (error: any) {
-    //   toast.error(error.message);
-    //   console.error(error.message);
-    // }
+    try {
+      const res = await passwordData(data).unwrap();
+      if (res?.success) {
+        toast.success("Password updated successfully!");
+      }
+    } catch (error: any) {
+      toast.error(error.message);
+      console.error(error.message);
+    }
   };
 
   return (
@@ -34,7 +33,7 @@ const ChangePasswordSection = () => {
           <Col xs={24} sm={12}>
             <ReusableToggleInput
               type="password"
-              name="password"
+              name="oldPassword"
               label="Current Password"
               color="#000"
             />
@@ -42,7 +41,7 @@ const ChangePasswordSection = () => {
           <Col xs={24} sm={12}>
             <ReusableToggleInput
               type="password"
-              name="newPass"
+              name="newPassword"
               label="New Password"
               color="#000"
             />

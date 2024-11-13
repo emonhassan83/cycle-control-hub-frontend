@@ -9,7 +9,9 @@ import {
   EyeOutlined,
   ToolOutlined,
   HistoryOutlined,
+  ProfileOutlined,
 } from "@ant-design/icons";
+import ProfilePage from "@/pages/ProfilePage/ProfilePage";
 
 export const sellerPaths = [
   {
@@ -43,5 +45,11 @@ export const sellerPaths = [
     path: "bike-services-history",
     icon: <HistoryOutlined />,
     element: <MyAllServicesHistory />,
+  },
+  {
+    name: "My Profile",
+    path: "profile",
+    icon: <ProfileOutlined />,
+    element: <ProfilePage />,
   },
 ];

@@ -6,6 +6,7 @@ import CreateCoupon from "@/pages/admin/CreateCoupon";
 import CreateServiceCategory from "@/pages/admin/CreateServiceCategory";
 import SalesHistory from "@/pages/admin/SalesHistory";
 import ServiceCategories from "@/pages/admin/ServiceCategories";
+import ProfilePage from "@/pages/ProfilePage/ProfilePage";
 import AddABike from "@/pages/sellerManagement/AddABike";
 import {
   UserOutlined,
@@ -17,6 +18,7 @@ import {
   DatabaseOutlined,
   SettingOutlined,
   AppstoreOutlined,
+  ProfileOutlined,
 } from "@ant-design/icons";
 
 export const adminPaths = [
@@ -76,5 +78,11 @@ export const adminPaths = [
     path: "all-services-management",
     icon: <AppstoreOutlined />,
     element: <AllServicesManagement />,
+  },
+  {
+    name: "My Profile",
+    path: "profile",
+    icon: <ProfileOutlined />,
+    element: <ProfilePage />,
   },
 ];
