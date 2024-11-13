@@ -4,6 +4,7 @@ import { FieldValues } from "react-hook-form";
 import { toast } from "sonner";
 import ReusableInput from "../form/ReusableInput";
 import ReusableSelect from "../form/ReusableSelect";
+import { useUpdateMyProfileMutation } from "@/redux/features/user/userApi";
 
 type TDefaultValues = {
   name?: string;
@@ -13,6 +14,7 @@ type TDefaultValues = {
   address?: string;
 };
 const ProfileUpdateModal = ({ data, isModalOpen, setIsModalOpen }: any) => {
+  const [updateMyProfile] = useUpdateMyProfileMutation();
   const user = data?.data;
 
   const defaultValues: TDefaultValues = {
@@ -24,12 +26,25 @@ const ProfileUpdateModal = ({ data, isModalOpen, setIsModalOpen }: any) => {
   };
 
   const handleSubmit = async (data: FieldValues) => {
-    toast.loading("Assigning coupon to service in!");
-    console.log(data);
-  };
+    const toastId = toast.loading("Update my Profile  in!");
+    const userUpdateData = {
+      id: user?._id,
+      userData: data
+    }
 
-  const showModal = () => {
-    setIsModalOpen(true);
+    try {
+      const res = await updateMyProfile(userUpdateData).unwrap();
+      if (res?.success) {
+        toast.success("Update my Profile successfully!", {
+          id: toastId,
+          duration: 3000,
+        });
+
+        setIsModalOpen(false);
+      }
+    } catch (error: any) {
+      toast.error(error.message, {id: toastId});
+    }
   };
 
   const handleCancel = () => {
@@ -38,13 +53,6 @@ const ProfileUpdateModal = ({ data, isModalOpen, setIsModalOpen }: any) => {
 
   return (
     <>
-      <Button
-        onClick={showModal}
-        size="small"
-        style={{ fontSize: "12px", fontWeight: "600" }}
-      >
-        Update Profile
-      </Button>
       <Modal
         title="Update Profile Model"
         open={isModalOpen}
@@ -62,9 +70,9 @@ const ProfileUpdateModal = ({ data, isModalOpen, setIsModalOpen }: any) => {
                 name="gender"
                 label="Gender"
                 options={[
-                  { value: "Male", label: "Male" },
-                  { value: "Female", label: "Female" },
-                  { value: "Unknown", label: "Unknown" },
+                  { value: "male", label: "Male" },
+                  { value: "female", label: "Female" },
+                  { value: "unknown", label: "Unknown" },
                 ]}
               />
             </Col>

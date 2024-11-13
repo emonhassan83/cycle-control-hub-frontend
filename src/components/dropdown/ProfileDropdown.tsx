@@ -62,8 +62,8 @@ const ProfileDropdown = ({ data }: any) => {
       <a onClick={(e) => e.preventDefault()}>
         <Space>
           <Avatar
-            src={data?.photoUrl}
-            icon={!data?.photoUrl && <UserOutlined />}
+            src={data?.data?.photoUrl}
+            icon={!data?.data?.photoUrl && <UserOutlined />}
             style={{ backgroundColor: "#a8a4a4" }}
           />
           <DownOutlined style={{ color: "#fff" }} />

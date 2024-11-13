@@ -52,7 +52,7 @@ const userApi = baseApi.injectEndpoints({
       updateMyProfile: builder.mutation({
         query: (data) => {
           return {
-            url: `/update-user/${data?.id}`,
+            url: `/user/update-user/${data?.id}`,
             method: "PUT",
             body: data?.userData,
           };

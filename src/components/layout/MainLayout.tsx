@@ -21,7 +21,6 @@ const MainLayout = () => {
             justifyContent: "flex-end",
           }}
         >
-          {/* <Button className="bg-white" onClick={handleLogout}>Logout</Button>{" "} */}
           <ProfileDropdown data={data}/>
         </Header>
         <Content style={{ margin: "24px 16px 0" }}>
