@@ -1,11 +1,8 @@
 const uploadImageToImgbb = async (file: File) => {  
     const url = `https://api.imgbb.com/1/upload?key=${process.env.IMGBB_KEY}`;
-
-    console.log(url);
     
     const formData = new FormData();
     formData.append("image", file);
-    
   
     try {
       const response = await fetch(url, {
