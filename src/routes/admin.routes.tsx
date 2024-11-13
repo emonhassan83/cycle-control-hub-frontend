@@ -1,3 +1,4 @@
+import AdminDashboard from "@/pages/admin/AdminDashboard";
 import AllMyBikesManagement from "@/pages/admin/AllBikesManagement";
 import AllServicesManagement from "@/pages/admin/AllServicesManagement";
 import AllUsers from "@/pages/admin/AllUsers";
@@ -19,9 +20,16 @@ import {
   SettingOutlined,
   AppstoreOutlined,
   ProfileOutlined,
+  ProductOutlined,
 } from "@ant-design/icons";
 
 export const adminPaths = [
+  {
+    name: "Dashboard",
+    path: "dashboard",
+    icon: <ProductOutlined />,
+    element: <AdminDashboard />,
+  },
   {
     name: "User Management",
     path: "all-users",

@@ -1,3 +1,4 @@
+import BuyerDashboard from "@/pages/buyerManagement/BuyerDashboard";
 import ConfirmPurchase from "@/pages/buyerManagement/ConfirmPurchase";
 import PurchasesBike from "@/pages/buyerManagement/PurchaseBike";
 import PurchasesHistory from "@/pages/buyerManagement/PurchaseHistory";
@@ -14,9 +15,16 @@ import {
   FileDoneOutlined,
   FileTextOutlined,
   ProfileOutlined,
+  ProductOutlined,
 } from "@ant-design/icons";
 
 export const buyerPaths = [
+  {
+    name: "Dashboard",
+    path: "dashboard",
+    icon: <ProductOutlined />,
+    element: <BuyerDashboard />,
+  },
   {
     name: "Available Bikes",
     path: "available-bikes",

@@ -10,10 +10,18 @@ import {
   ToolOutlined,
   HistoryOutlined,
   ProfileOutlined,
+  ProductOutlined,
 } from "@ant-design/icons";
 import ProfilePage from "@/pages/ProfilePage/ProfilePage";
+import SellerDashboard from "@/pages/sellerManagement/SellerDashboard";
 
 export const sellerPaths = [
+  {
+    name: "Dashboard",
+    path: "dashboard",
+    icon: <ProductOutlined />,
+    element: <SellerDashboard />,
+  },
   {
     name: "Add a Bike",
     path: "add-a-bike",
@@ -26,13 +34,6 @@ export const sellerPaths = [
     icon: <EyeOutlined />,
     element: <ViewMyBikes />,
   },
-  // Uncomment if BulkDeleteBikes is added back
-  // {
-  //   name: "Bulk Delete Bikes",
-  //   path: "bulk-delete-bikes",
-  //   icon: <DeleteOutlined />,
-  //   element: <BulkDeleteBikes />,
-  // },
   //* service management
   {
     name: "Services Management",
