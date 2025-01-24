@@ -1,6 +1,7 @@
 import { Button, Result } from "antd";
 import { useNavigate } from "react-router-dom";
 import { FrownOutlined } from "@ant-design/icons";
+import Meta from "@/components/Meta/Meta";
 
 const ErrorPage = () => {
   const navigate = useNavigate();
@@ -10,6 +11,13 @@ const ErrorPage = () => {
   };
 
   return (
+    <>
+    <Meta
+        title="Error Page | Bikeside - Bike Shop & Service Management System"
+        description="This is the error page of Bikeside where all users can show this page when page is not available or not found."
+        keywords="React, Meta Tags, SEO, JavaScript"
+      />
+
     <div
       style={{
         display: "flex",
@@ -42,6 +50,7 @@ const ErrorPage = () => {
         }
       />
     </div>
+    </>
   );
 };
 

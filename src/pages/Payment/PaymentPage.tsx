@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
 import { Result, Button } from "antd";
+import Meta from "@/components/Meta/Meta";
 
 const PaymentPage = () => {
     const location = useLocation();
@@ -13,6 +14,13 @@ const PaymentPage = () => {
     }, [location?.search]);
 
     return (
+        <>
+        <Meta
+        title="Buyer Payment | Bikeside - Bike Shop & Service Management System"
+        description="This is the buyer payment page of Medico where buyer can pay their pending payment then show this page, and more."
+        keywords="React, Meta Tags, SEO, JavaScript"
+      />
+
         <div style={{ display: "flex", justifyContent: "center", alignItems: "center", height: "100vh" }}>
             {status === "" && (
                 <Result
@@ -39,6 +47,7 @@ const PaymentPage = () => {
                 />
             )}
         </div>
+        </>
     );
 };
 

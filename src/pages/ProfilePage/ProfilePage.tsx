@@ -11,6 +11,7 @@ import UserInformation from "./components/UserInfo";
 import ChangePasswordSection from "./components/ChangePasswordSection";
 import ProfileUpdateModal from "@/components/dialog/ProfileUpdateModal";
 import { toast } from "sonner";
+import Meta from "@/components/Meta/Meta";
 
 const ProfilePage = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -43,6 +44,12 @@ const ProfilePage = () => {
 
   return (
     <>
+    <Meta
+        title="Profile | Bikeside - Bike Shop & Service Management System"
+        description="This is the profile page of Bikeside where users can show all their information and update their information."
+        keywords="React, Meta Tags, SEO, JavaScript"
+      />
+
       <ProfileUpdateModal
         isModalOpen={isModalOpen}
         setIsModalOpen={setIsModalOpen}

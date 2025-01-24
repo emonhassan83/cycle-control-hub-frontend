@@ -13,6 +13,7 @@ import ShowCredentialButton from "@/components/buttons/ShowCredentialsButton";
 import ReusableToggleInput from "@/components/form/ReusableToggleInput";
 import { useState } from "react";
 import ForgetPasswordModal from "@/components/dialog/ForgotPasswordDialog";
+import Meta from "@/components/Meta/Meta";
 
 const Login = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -71,6 +72,12 @@ const Login = () => {
 
   return (
     <>
+     <Meta
+        title="Login | Bikeside - Bike Shop & Service Management System"
+        description="This is the login page of Bikeside where all users can login their account and provide access to the service."
+        keywords="React, Meta Tags, SEO, JavaScript"
+      />
+
     <ForgetPasswordModal open={isModalOpen} setOpen={setIsModalOpen} />
     <div
       style={{
@@ -89,7 +96,7 @@ const Login = () => {
           borderRadius: "8px",
           padding: "40px",
           backgroundColor: "rgba(255, 255, 255, 0.137)",
-          boxShadow: "0 8px 16px rgba(0, 0, 0, 0.3)",
+          boxShadow: "0 8px 16px rgba(0, 0, 0, 0.1)",
           width: "100%",
           maxWidth: "450px",
         }}
