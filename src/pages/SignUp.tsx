@@ -10,6 +10,7 @@ import ReusableInput from "../components/form/ReusableInput";
 import ReusableForm from "../components/form/ReusableForm";
 import { verifyToken } from "@/utils/verifyToken";
 import ReusableToggleInput from "@/components/form/ReusableToggleInput";
+import Meta from "@/components/Meta/Meta";
 
 const SignUp = () => {
   const defaultValues = {
@@ -58,6 +59,13 @@ const SignUp = () => {
     }
   };
   return (
+    <>
+    <Meta
+        title="Register | Bikeside - Bike Shop & Service Management System"
+        description="This is the Register page of Medico where all buyer can Register their account and provide access to the service."
+        keywords="React, Meta Tags, SEO, JavaScript"
+      />
+
     <div
     style={{
       display: "flex",
@@ -158,6 +166,7 @@ const SignUp = () => {
         </Row>
       </div>
     </div>
+    </>
   );
 };
 
