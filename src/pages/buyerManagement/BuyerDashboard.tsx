@@ -1,8 +1,14 @@
+import { useMyProfileQuery } from "@/redux/features/user/userApi";
+import ProfileCardSection from "./components/ProfileCardSection";
+
 const BuyerDashboard = () => {
+    const { data, profileLoading } = useMyProfileQuery("");
+    
     return (
-        <div>
-            Buyer Dashboard
-        </div>
+        <>
+            <ProfileCardSection data={data?.data}/>
+
+        </>
     );
 };
 

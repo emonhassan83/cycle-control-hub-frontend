@@ -11,6 +11,7 @@ import { toast } from "sonner";
 import { TBike, TQueryParam } from "@/types";
 import { useState } from "react";
 import BikeSaleModal from "@/components/dialog/BikeSaleModal";
+import FullPageLoading from "@/components/Loader/FullPageLoader";
 
 export type TTableData = Pick<
   TBike,
@@ -269,8 +270,9 @@ const AllMyBikesManagement = () => {
       //* set params array for filter
       setParams(queryParams);
     }
+    
     if (isLoading) {
-      return <p>Loading...</p>;
+      return <FullPageLoading/>;
     }
   };
 
