@@ -278,10 +278,6 @@ const AllMyBikesManagement = () => {
 
   return (
     <>
-      <h1 className="text-xs font-semibold text-red-500 text-center mb-6">
-        *Warning: Admin can update, delete and create-variant all bikes in
-        Database*
-      </h1>
       <Table
         loading={isFetching}
         columns={columns}

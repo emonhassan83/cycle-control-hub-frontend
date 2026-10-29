@@ -1,4 +1,5 @@
 import FullPageLoading from "@/components/Loader/FullPageLoader";
+import Meta from "@/components/Meta/Meta";
 import { TUser } from "@/redux/features/auth/authSlice";
 import {
   useChangeUserRoleMutation,
@@ -188,7 +189,7 @@ const AllUsers = () => {
               onClick={() => handleDeleteUser(item?.key)}
               danger
               size="small"
-              disabled={item.role === "admin"}
+              disabled={item.role === "admin" || item?.email === "jane.smith@example.com" || item?.email === "emma.jones@example.com"}
             >
               Delete
             </Button>
@@ -212,7 +213,12 @@ const AllUsers = () => {
   };
 
   return (
-    <div>
+    <>
+    <Meta
+        title="List of Users | Bikeside - Bike Shop & Service Management System"
+        description="This is the users of list of Bikeside where admin can manage their profile manage like change role and delete, and more."
+        keywords="React, Meta Tags, SEO, JavaScript"
+      />
       <Table
         loading={isFetching}
         columns={columns}
@@ -227,7 +233,7 @@ const AllUsers = () => {
         pageSize={metaData?.limit}
         total={metaData?.total}
       />
-    </div>
+    </>
   );
 };
 

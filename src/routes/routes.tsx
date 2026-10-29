@@ -54,7 +54,11 @@ const router = createBrowserRouter([
   },
   {
     path: "/payment/success",
-    element: <PaymentPage />,
+    element: (
+      <ProtectedRoute role="buyer">
+        <PaymentPage />
+      </ProtectedRoute>
+    ),
   },
   {
     path: "/login",
